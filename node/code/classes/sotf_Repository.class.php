@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.50 2003/07/29 13:40:52 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.51 2004/02/27 17:53:12 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -93,7 +93,10 @@ class sotf_Repository {
       $obj = new $class($objectId, $data);
     } else {
       $table = array_search($tc, $this->tableCodes);
-      $obj = new sotf_NodeObject($table, $objectId, $data);
+			if($table)
+				$obj = new sotf_NodeObject($table, $objectId, $data);
+			else
+				raiseError('Invalid id, stop this', $objectId);
     }
     if(!$obj->exists()) {
 		debug("Object does not exist",$objectId);

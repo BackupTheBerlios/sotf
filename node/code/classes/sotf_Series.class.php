@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Series.class.php,v 1.12 2003/06/04 13:19:59 andras Exp $
+ * $Id: sotf_Series.class.php,v 1.13 2004/02/27 17:53:12 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -34,14 +34,11 @@ class sotf_Series extends sotf_ComplexNodeObject {
 
   /** private: Checks and creates subdirs if necessary. */
   function checkDirs() {
-	global $repository;
-
 	$station = $this->getObject($this->get('station_id'));
-	$stationName = $station->get('name');
-	$dir = $repository->rootdir . '/' . $stationName;
+	$dir = $station->getDir();
 	if(!is_dir($dir))
-	  raiseError("Station $station does not exist!");
-	$dir = $station->getDir() . '/series_' . $this->id;
+	  raiseError("Station does not exist!", $dir);
+	$dir = $dir . '/series_' . $this->id;
 	//$dir = $this->getDir();
 	if(!is_dir($dir)) {
 	  debug("created series dir", $dir);
@@ -51,7 +48,6 @@ class sotf_Series extends sotf_ComplexNodeObject {
   }
 
   function getDir() {
-	 global $repository;
 	 $station = $this->getObject($this->get('station_id'));
 	 $dir = $station->getDir() . '/series_' . $this->id;
 	 return $dir;

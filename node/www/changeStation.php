@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: changeStation.php,v 1.1 2003/10/21 08:48:14 andras Exp $
+ * $Id: changeStation.php,v 1.2 2004/02/27 17:53:15 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -23,11 +23,7 @@ checkPerm($prgId, 'change');
 $save = sotf_Utils::getParameter('save');
 if($save) {
   $newStationId = sotf_Utils::getParameter('station_id');
-  if($prg->get('station_id') != $newStationId) {
-	 $prg->set("station_id", $newStationId);
-	 $prg->set("series_id", NULL);
-	 $prg->update();
-  }
+  $prg->changeStation($newStationId);
   $page->redirect("closeAndRefresh.php");
 }
 

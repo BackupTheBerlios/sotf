@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.23 2003/10/13 07:49:34 andras Exp $
+ * $Id: get.php,v 1.24 2004/02/27 17:53:15 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -19,11 +19,11 @@ if($id) {
 
   $prg = &$repository->getObject($id);
   if(!$prg)
-	 raiseError("no_such_object");
+	 raiseError("no_such_object", $id);
 
   if(!$prg->getBool('published')) {
 	 if(!hasPerm($prg->id, 'change')) {
-		raiseError("not_published_yet");
+		raiseError("not_published_yet", $id);
 		exit;
 	 }
 	 $smarty->assign("UNPUBLISHED", 1);
@@ -58,7 +58,17 @@ if($id) {
 
   // audio files 
   $audioFiles = $prg->getAssociatedObjects('sotf_media_files', 'main_content DESC, filename');
-  for($i=0; $i<count($audioFiles); $i++) {
+  $to = count($audioFiles);
+  for($i=0; $i<$to; $i++) {
+	 if($prg->isLocal()) {
+		// if local, we check if file disappeared in the meantime
+		$path = $prg->getFilePath($audioFiles[$i]);
+		if(!is_readable($path)) {
+		  debug("DISAPPEARED FILE", $path);
+		  unset($audioFiles[$i]);
+		  continue;
+		}
+	 }
     $audioFiles[$i] =  array_merge($audioFiles[$i], sotf_AudioFile::decodeFormatFilename($audioFiles[$i]['format']));
 	 $audioFiles[$i]['playtime_string'] = strftime('%M:%S', $audioFiles[$i]['play_length']);
   }

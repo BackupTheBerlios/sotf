@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: search.php,v 1.8 2003/05/16 16:12:54 andras Exp $
+ * $Id: search.php,v 1.9 2004/02/27 17:53:15 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -17,6 +17,10 @@ $station = sotf_Utils::getSQLSafeParameter('station');
 
 if($pattern) {
   //  debug("language", $language);
+  //  if(strpos($pattern, '?') || strpos($pattern, '*') || strpos($pattern, '+')) {
+  //	 $invalidPattern = 1;
+  //}
+  $pattern = str_replace(array('?','*','+'), array(), $pattern);
 
   if ($language == "any_language") $language = false;
 

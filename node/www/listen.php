@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.17 2003/09/16 12:00:06 andras Exp $
+ * $Id: listen.php,v 1.18 2004/02/27 17:53:15 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -28,7 +28,7 @@ $fileid = sotf_Utils::getParameter('fileid');
 $jingle = sotf_Utils::getParameter('jingle');
 
 if(empty($id)) {
-  raiseError("Missing parameters!");
+  raiseError("Missing parameters!", 'id');
 }
 
 $playlist = new sotf_Playlist();
@@ -36,7 +36,7 @@ $playlist = new sotf_Playlist();
 if($jingle) {
   $obj = $repository->getObject($id);
   if(!$obj)
-	 raiseError("no_such_object");
+	 raiseError("no_such_object", $id);
   if(!$obj->isLocal()) {
 	 // have to send user to home node of this programme
 	 sotf_Node::redirectToHomeNode($obj, 'listen.php');

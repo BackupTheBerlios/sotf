@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: export.php,v 1.2 2003/12/04 08:27:50 andras Exp $
+ * $Id: export.php,v 1.3 2004/02/27 17:53:15 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -14,10 +14,10 @@ $type = sotf_Utils::getParameter('type');
 $prg = & new sotf_Programme($id);
 
 if(!$prg)
-	  raiseError("no_such_object");
+  raiseError("no_such_object", $id);
 
 if(!$prg->isLocal()) {
-  raiseError("works only for local objects!");
+  raiseError("works only for local objects!", $id);
   exit;
 }
 

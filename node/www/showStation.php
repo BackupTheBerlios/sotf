@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showStation.php,v 1.12 2003/09/16 12:00:06 andras Exp $
+ * $Id: showStation.php,v 1.13 2004/02/27 17:53:15 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -20,7 +20,7 @@ if(!$stationid)
 
 $st = & $repository->getObject($stationid);
 if(!$st)
-	  raiseError("no_such_object");
+  raiseError("no_such_object", $stationid);
 
 $page->errorURL = $scriptUrl . '/' . $stationid;
 $page->setTitle($st->get('name'));
