@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearch.php,v 1.12 2003/03/05 09:11:39 andras Exp $
+ * $Id: advsearch.php,v 1.13 2003/04/25 08:42:00 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -175,6 +175,7 @@ $smarty->assign("SQLqueryfields", $advsearch->GetSQLqueryfields());	//translated
 
 $smarty->assign("EQdate", $advsearch->GetEQdate());			//EQ dropdown for date
 $smarty->assign("EQstring", $advsearch->GetEQstring());			//EQ dropdown for string
+$smarty->assign("EQtopic", $advsearch->GetEQtopic());			//EQ dropdown for topics
 $smarty->assign("EQlang", $advsearch->GetEQlang());			//EQ dropdown for lang
 $smarty->assign("EQlength", $advsearch->GetEQlength());			//EQ dropdown for length
 $smarty->assign("EQnumber", $advsearch->GetEQnumber());			//EQ dropdown for numbers
