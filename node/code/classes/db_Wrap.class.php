@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.11 2003/02/04 15:03:05 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.12 2003/02/12 10:21:47 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -15,6 +15,7 @@ class db_Wrap extends DB_pgsql {
   /** When debug is on, logged query texts will be truncated to this length. */
   var $traceLength = 350;
 
+  /*
 	function getDBConn($dsn, $persistent) {
 	  @$obj = & new db_Wrap;
     global $debug;
@@ -23,6 +24,15 @@ class db_Wrap extends DB_pgsql {
 	  $dsninfo = DB::parseDSN($dsn);
 	  $obj->connect($dsninfo, $persistent);
 	  return $obj;
+	}
+  */
+
+	function makeConnection($dsn, $persistent) {
+    if($this->debug)
+      logger("DB","connecting to: $dsn");
+	  $dsninfo = DB::parseDSN($dsn);
+	  $success = $this->connect($dsninfo, $persistent);
+    return $success;
 	}
 
 	function errorNative() {

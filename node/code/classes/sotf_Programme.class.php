@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.20 2003/01/30 15:30:34 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.21 2003/02/12 10:21:48 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -411,11 +411,11 @@ class sotf_Programme extends sotf_ComplexNodeObject {
       $fileInfo->set('type', $file->type);
       if(is_numeric($file->bitrate)) {
         // constant bitrate
-        $fileInfo->set('kbps', $file->bitrate);
+        $fileInfo->set('kbps', round($file->bitrate));
         $fileInfo->set('vbr', 'f');
       } else {
         // variable bitrate
-        $fileInfo->set('kbps', $file->average_bitrate);
+        $fileInfo->set('kbps', round($file->average_bitrate));
         $fileInfo->set('vbr', 't');
       }
       $fileInfo->set('format', $file->getFormatFilename());

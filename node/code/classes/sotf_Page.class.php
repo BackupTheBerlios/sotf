@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Page.class.php,v 1.17 2003/02/04 15:00:34 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.18 2003/02/12 10:21:48 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -50,8 +50,11 @@ class sotf_Page
 		$user = $this->user;
 
 		// determine language
-		if($this->user)
+		if($this->user) {
 		  $lang = $this->user->language;
+      if(!in_array($lang, $outputLanguages))
+        $lang = ''; // user's language is not allowed yet
+    }
 		if(!$lang && in_array($_SERVER['HTTP_ACCEPT_LANGUAGE'], $outputLanguages))
 		  $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		if(!$lang)
