@@ -7,7 +7,7 @@ if(!defined("METAL_LIBRARY_XML_XML_WRITER_CLASS"))
  *
  * Copyright © (C) Manuel Lemos 2001-2002
  *
- * @(#) $Id: xmlwriterclass.php,v 1.2 2003/04/09 13:12:35 andras Exp $
+ * @(#) $Id: xmlwriterclass.php,v 1.3 2003/09/24 10:48:09 andras Exp $
  *
  */
 
@@ -80,7 +80,7 @@ class xml_writer_class
 	
 	Function encodedata($data,&$encodeddata)
 	{
-		if(!strcmp($this->inputencoding,$this->outputencoding))
+		if(!strcmp($this->inputencoding,$this->outputencoding)) 
 			$encodeddata=$this->escapedata($data);
 		else
 		{
