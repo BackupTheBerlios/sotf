@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.54 2003/07/29 11:19:08 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.55 2003/07/29 12:13:01 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -219,6 +219,7 @@ class sotf_NodeObject extends sotf_Object {
 	  if(count($oldData) > 0) {
 		 if($this->internalData['change_stamp'] && $this->internalData['change_stamp'] > $oldData['change_stamp']) {
 			// this is newer, save it
+			debug("arrived newer version of", $this->id);
 			sotf_Object::update();
 			// save internal data
 			$this->internalData['arrived'] = $db->getTimestampTz();
@@ -244,6 +245,7 @@ class sotf_NodeObject extends sotf_Object {
 			$changed = false;
 		 }
 	  } else {
+		 debug("arrived new object", $this->id);
 		 $this->internalData['arrived'] = $db->getTimestampTz();
 		 $internalObj = new sotf_Object('sotf_node_objects', $this->id, $this->internalData);
 		 $internalObj->create();
