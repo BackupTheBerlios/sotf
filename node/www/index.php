@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.15 2003/06/02 09:12:55 andras Exp $
+ * $Id: index.php,v 1.16 2003/07/29 08:27:16 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -96,7 +96,7 @@ if($defQuery) {
 }
 
 // get topics with most content
-$smarty->assign('TOPICS', $repository->getTopTopics(5));
+$smarty->assign('TOPICS', $vocabularies->getTopTopics(5));
 
 $db->commit();
 

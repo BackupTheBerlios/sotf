@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.19 2003/05/30 08:23:41 andras Exp $
+ * $Id: get.php,v 1.20 2003/07/29 08:27:16 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -47,7 +47,7 @@ if($id) {
   // topics
   $smarty->assign('TOPICS', $prg->getTopics());
 
-  $smarty->assign('GENRE', $repository->getGenreName($prg->get('genre_id')));
+  $smarty->assign('GENRE', $vocabularies->getGenreName($prg->get('genre_id')));
   // language
   $smarty->assign('LANGUAGE', $prg->getLanguagesLocalized());
   // rights sections

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editMeta.php,v 1.17 2003/06/16 16:13:40 andras Exp $
+ * $Id: editMeta.php,v 1.18 2003/07/29 08:27:15 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -24,7 +24,7 @@ $okURL = sotf_Utils::getParameter('okURL');
 // delete topic
 $delTopic = sotf_Utils::getParameter('deltopic');
 if($delTopic) {
-  $repository->delFromTopic($delTopic);
+  $vocabularies->delFromTopic($delTopic);
   $page->redirect("editMeta.php?id=$prgId#topics");
   exit;
 }
@@ -207,7 +207,7 @@ $smarty->assign('PERMISSIONS', $permissions->listUsersAndPermissionsLocalized($p
 $smarty->assign('TOPICS', $prg->getTopics());
 
 // genres
-$genres = $repository->getGenres();
+$genres = $vocabularies->getGenres();
 array_unshift($genres, array('id'=>0, 'name'=> $page->getlocalized("no_genre")));
 $smarty->assign('GENRES_LIST', $genres);
 

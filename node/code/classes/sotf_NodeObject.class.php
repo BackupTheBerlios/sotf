@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.50 2003/06/20 16:24:33 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.51 2003/07/29 08:27:15 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -29,15 +29,50 @@ class sotf_NodeObject extends sotf_Object {
 	 return $repository->getObject($id);
   }
 
+  /** Tells if the given object id is for one of the global controlled vocabularies (roles, genres, topics). */
+  function isVocabularyTable($tablename) {
+	 global $repository;
+    $tc = $repository->getTableCode($tablename);
+    //debug('tc', $tc);
+    if($tc == 'tt' || $tc == 'td' || $tc == 'to' || $tc == 'ge' || $tc == 'ro' || $tc == 'rn') {
+      debug("vocabulary entry");
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function makeId($nodeId, $tablename, $serial) {
+	 global $repository;
+    $tableCode = $repository->getTableCode($tablename);
+    //if($this->isVocabularyTable($tablename)) 
+    //  $nodeId = 0;
+	 if(is_numeric($serial))
+		return sprintf("%03d%2s%d", $nodeId, $tableCode, $serial);
+	 else
+		return sprintf("%03d%2s%s", $nodeId, $tableCode, $serial);
+  }
+
+  /** Generates the ID for a new persistent object. */
+  function generateID() {
+    global $config;
+    if($config['nodeId'] == 0)
+      raiseError('Please set config[nodeId] to a positive integer in config.inc.php');
+    $localId = $this->db->nextId($this->tablename);
+	 $id = $this->makeId($config['nodeId'], $this->tablename, $localId);
+    debug("generated ID", $id);
+    return $id;
+  }
+
   /** Creates a new persistent replicated object */
   function create() {
 	 global $db, $config, $repository;
 
 	 if(empty($this->id)) {
-		$this->id = $repository->generateID($this);
+		$this->id = $this->generateID();
 		//$this->internalData['id'] = $this->id;
 	 }
-	 if($repository->isVocabularyTable($this->tablename))
+	 if($this->isVocabularyTable($this->tablename))
 		$this->internalData['node_id'] = '0';
 	 else
 		$this->internalData['node_id'] = $config['nodeId'];

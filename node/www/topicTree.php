@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: topicTree.php,v 1.4 2003/07/24 09:41:56 andras Exp $
+ * $Id: topicTree.php,v 1.5 2003/07/29 08:27:16 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -17,14 +17,14 @@ $open = sotf_Utils::getParameter('open');
 $treeId = sotf_Utils::getParameter('tree');
 if(!$treeId) {
   if($open) {
-	 $info = $repository->getTopicInfo($open, $lang);
+	 $info = $vocabularies->getTopicInfo($open, $lang);
 	 $treeId = $info['tree_id'];
   } else {
-	 $treeId = $repository->getDefaultTreeId();
+	 $treeId = $vocabularies->getDefaultTreeId();
   }
 }
 debug("treeid", $treeId);
-$rootId = $repository->getTopicTreeRoot($treeId);
+$rootId = $vocabularies->getTopicTreeRoot($treeId);
 
 if($prgid) { 
   $addMode = 1;
@@ -33,16 +33,16 @@ if($prgid) {
 $smarty->assign('ADD_MODE', $addMode);
 
 // list all topic trees
-$smarty->assign('TREES', $repository->listTopicTrees($lang));
+$smarty->assign('TREES', $vocabularies->listTopicTrees($lang));
 
 // TODO; use user's language
-$info = $repository->getTopicTreeInfo($treeId, $lang);
-//debug("INFO", $info);
+$info = $vocabularies->getTopicTreeInfo($treeId, $lang);
+debug("INFO", $info);
 $treeLang = $lang;
 if(strpos($info['languages'], $lang) === FALSE)
 	  $treeLang = 'eng'; // fall back to English
 
-$result = $repository->getTree($treeId, $treeLang, true);
+$result = $vocabularies->getTree($treeId, $treeLang, true);
 $smarty->assign('TREE_ID', $treeId);
 $smarty->assign("TREE", $result);
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.25 2003/06/18 14:12:06 andras Exp $
+ * $Id: admin.php,v 1.26 2003/07/29 08:27:15 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -58,7 +58,7 @@ if(sotf_Utils::getParameter('retemplate')) {
 
 // update topic counts
 if(sotf_Utils::getParameter('updatetopics')) {
-  $repository->updateTopicCounts();
+  $vocabularies->updateTopicCounts();
   $page->redirect("admin.php");
   $page->logRequest();
   exit;  

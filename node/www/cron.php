@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.23 2003/06/18 16:06:04 andras Exp $
+ * $Id: cron.php,v 1.24 2003/07/29 08:27:15 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -101,7 +101,7 @@ if(!empty($prgIds)) {
 //******** Update topic counts
 
 debug("updating", "topic counts");
-$repository->updateTopicCounts();
+$vocabularies->updateTopicCounts();
 
 //******** Clean caches and tmp dirs
 

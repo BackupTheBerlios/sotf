@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContact.php,v 1.8 2003/06/04 13:20:00 andras Exp $
+ * $Id: showContact.php,v 1.9 2003/07/29 08:27:16 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -35,7 +35,7 @@ while(list(,$row)=each($refs)) {
 	 }
     $class = get_class($obj);
     $data = array();
-    $data['role'] = $repository->getRoleName($role);
+    $data['role'] = $vocabularies->getRoleName($role);
 	 $data['name'] = $obj->get('name');
     if($class == 'sotf_station') {
       $data['url'] = $config['rootUrl'] . "/showStation.php/$id";
