@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.13 2003/04/04 11:18:40 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.14 2003/05/14 15:30:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -18,8 +18,8 @@ class db_Wrap extends DB_pgsql {
   /*
 	function getDBConn($dsn, $persistent) {
 	  @$obj = & new db_Wrap;
-    global $debug;
-    $obj->debug = $debug;
+    global $config;
+    $obj->debug = $config['debug'];
 	  debug("DB","connecting to: $dsn");
 	  $dsninfo = DB::parseDSN($dsn);
 	  $obj->connect($dsninfo, $persistent);

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Blob.class.php,v 1.2 2003/01/30 15:30:34 andras Exp $
+// $Id: sotf_Blob.class.php,v 1.3 2003/05/14 15:30:39 andras Exp $
 
 /**
 * @author Andras Micsik - micsik@sztaki.hu
@@ -51,11 +51,11 @@ class sotf_Blob extends sotf_NodeObject {
   /** static, this places the icon into the www/tmp, so that you can refer to
       it with <img src=, returns true if there is an icon for this object */
   function cacheIcon($id) {
-    global $cachedir;
+    global $config;
     $cacheTimeout = 2*60; // 2 minutes
     if(!$id)
       raiseError("missing id");
-    $fname = "$cachedir/" . $id . '.png';
+    $fname = $config['cacheDir'] . "/" . $id . '.png';
     if(is_readable($fname)) {
       $stat = stat($fname);
       if(time() - $stat['mtime'] <= $cacheTimeout)

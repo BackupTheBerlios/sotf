@@ -1,15 +1,15 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearch.php,v 1.14 2003/04/29 09:06:53 andras Exp $
+ * $Id: advsearch.php,v 1.15 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
 require("init.inc.php");
-require("$classdir/sotf_AdvSearch.class.php");
-require("$classdir/sotf_ParamCache.class.php");				//paramcache
+require($config['classdir'] . "/sotf_AdvSearch.class.php");
+require($config['classdir'] . "/sotf_ParamCache.class.php");				//paramcache
 
 $paramcache = & new sotf_ParamCache();					//paramcache
 $paramcache->setMaxCache(10);						//paramcache

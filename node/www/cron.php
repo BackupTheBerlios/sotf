@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.8 2003/03/05 09:44:09 alex Exp $
+ * $Id: cron.php,v 1.9 2003/05/14 15:30:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -8,7 +8,7 @@
  */
 
 require("init.inc.php");
-require_once("$classdir/rpc_Utils.class.php");
+require_once($config['classdir'] . "/rpc_Utils.class.php");
 
 /** This page has to be called periodically (e.g. using wget) and it
  *  performs all periodic maintenance tasks for the node server
@@ -20,7 +20,7 @@ function line($msg) { // just for screen output (testing)
 
 ?>
 <html>
-<head><title><?php echo $nodeId?> CRON</title></head>
+<head><title><?php echo $config['nodeId']?> CRON</title></head>
 <body>
 <?php 
 
@@ -48,7 +48,7 @@ if(count($neighbours) > 0) {
 }
 
 //********* IMPORT ARRIVED XBMF
-$dirPath = $xbmfInDir;
+$dirPath = $config['xbmfInDir'];
 $dir = dir($dirPath);
 while($entry = $dir->read()) {
 	if ($entry != "." && $entry != "..") {
@@ -60,10 +60,10 @@ while($entry = $dir->read()) {
 }
 $dir->close();
 foreach($XBMF as $xbmfFile) {
-	$id = sotf_Programme::importXBMF("$xbmfInDir/$xbmfFile", $publishxbmf);
+	$id = sotf_Programme::importXBMF($config['xbmfInDir'] . "/$xbmfFile", $config['publishXbmf']);
 	if($id) {
 		debug("CRON","Imported new XBMF: $xbmfFile");
-    unlink("$xbmfInDir/$xbmfFile");
+    unlink($config['xbmfInDir'] . "/$xbmfFile");
 	} else {
     logger("CRON","Import FAILED for XBMF: $xbmfFile");
 	}

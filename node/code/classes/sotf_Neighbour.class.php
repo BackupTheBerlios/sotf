@@ -1,14 +1,14 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.19 2003/02/19 17:06:35 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.20 2003/05/14 15:30:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
-require_once("$classdir/rpc_Utils.class.php");
+require_once($config['classdir'] . "/rpc_Utils.class.php");
 
 class sotf_Neighbour extends sotf_Object {
 
@@ -95,7 +95,7 @@ class sotf_Neighbour extends sotf_Object {
     debug("SYNCing with ", $this->get("node_id"));
 
     $rpc = new rpc_Utils;
-    if($debug)
+    if($config['debug'])
       $rpc->debug = true;
     $timestamp = $this->db->getTimestampTz();
     $remoteId = $this->get('node_id');
@@ -109,7 +109,7 @@ class sotf_Neighbour extends sotf_Object {
     debug("neighbour", $this);
     $localNodeData = $localNode->getAll();
     // check if url is correct...
-    $localNodeData['url'] = $rootdir;
+    $localNodeData['url'] = $config['rootUrl'];
     // calculate chunking
     $currentStamp = $sotfVars->get('sync_stamp', 0);
     $lastSyncStamp = $this->lastSyncStamp();
@@ -200,13 +200,13 @@ class sotf_Neighbour extends sotf_Object {
   }
 
   function saveSyncStatus($lastSync, $syncStamp) {
-    global $nodeId;
+    global $config;
     $this->set('sync_stamp', $syncStamp);
     $this->set('last_sync', $lastSync);
     $node = $this->getNode();
     if($node) {
       $node->set('last_sync', $lastSync); //TODO: get receipt from recieving sync response??
-      $node->set('authorizer', $nodeId);
+      $node->set('authorizer', $config['nodeId']);
       $node->update();
       if($this->get('pending_url')) {
         // take out from pending nodes

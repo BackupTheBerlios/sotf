@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editFiles.php,v 1.8 2003/03/05 09:11:39 andras Exp $
+ * $Id: editFiles.php,v 1.9 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -122,7 +122,7 @@ if($missing) {
 $checker = & new sotf_AudioCheck($prgAudiolist);
 
 $PRG_AUDIO = array();
-for ($i=0;$i<count($audioFormats);$i++)
+for ($i=0;$i<count($config['audioFormats']);$i++)
 {
   $PRG_AUDIO[$i] = array("format" => $checker->getFormatFileName($i),
                          "index" => $i);

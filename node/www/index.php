@@ -1,14 +1,14 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.11 2003/04/04 11:18:40 andras Exp $
+ * $Id: index.php,v 1.12 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
 require("init.inc.php");
-require("$classdir/sotf_AdvSearch.class.php");
+require($config['classdir'] . "/sotf_AdvSearch.class.php");
 
 if($_REQUEST['select_station']) {
   $page->redirect("showStation.php?stationid=" . $_POST['station']);
@@ -38,7 +38,7 @@ $smarty->assign($data);
 
 $smarty->assign('STATIONS', sotf_Station::listStationNames());
 
-$searchLangs = $languages;
+$searchLangs = $config['languages'];
 array_unshift($searchLangs, "any_language");
 
 for($i=0; $i<count($searchLangs); $i++) {

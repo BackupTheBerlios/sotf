@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: register.php,v 1.4 2003/03/05 09:11:40 andras Exp $
+ * $Id: register.php,v 1.5 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -91,7 +91,7 @@ elseif(isset($user))
 }
 
 
-$smarty->assign('LANGUAGES',$outputLanguages);
+$smarty->assign('LANGUAGES',$config['outputLanguages']);
 
 $smarty->assign(array(
 					"USERID"     => $username,

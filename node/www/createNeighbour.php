@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: createNeighbour.php,v 1.4 2003/03/05 09:11:39 andras Exp $
+ * $Id: createNeighbour.php,v 1.5 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -48,7 +48,7 @@ if($createNew) {
 $nodes = sotf_Node::listAll();
 $nodeData = array();
 while(list(,$node)= each($nodes)) {
-  if(!sotf_Neighbour::isNeighbour($node->get('node_id')) && $nodeId != $node->get('node_id')) {
+  if(!sotf_Neighbour::isNeighbour($node->get('node_id')) && $config['nodeId'] != $node->get('node_id')) {
     $nodeData[] = $node->getAll();
   }
 }

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editor.php,v 1.11 2003/04/25 08:42:00 andras Exp $
+ * $Id: editor.php,v 1.12 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -47,7 +47,7 @@ $stationId = sotf_Utils::getParameter('stationid');
 if($stationId)
 	  $smarty->assign('SELECTED_STATION', $stationId);
 
-$userFtpUrl = str_replace('ftp://', "ftp://$user->name@", $userFTP);
+$userFtpUrl = str_replace('ftp://', "ftp://$user->name@", $config['userFTP']);
 	$smarty->assign("USERFTPURL", $userFtpUrl); 
 
 $stations = $permissions->listStationsForEditor();

@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Node.class.php,v 1.9 2002/12/18 15:07:22 andras Exp $
+// $Id: sotf_Node.class.php,v 1.10 2003/05/14 15:30:39 andras Exp $
 
 class sotf_Node extends sotf_NodeObject {
 
@@ -28,8 +28,8 @@ class sotf_Node extends sotf_NodeObject {
 	 * @method static getLocalNode
 	 */
 	function getLocalNode() {
-		global $db, $nodeId;
-		return sotf_Node::getNodeById($nodeId);
+		global $db, $config;
+		return sotf_Node::getNodeById($config['nodeId']);
 	}
 
 	/** returns a list of all such objects: can be slow!!

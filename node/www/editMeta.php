@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editMeta.php,v 1.12 2003/03/05 09:11:39 andras Exp $
+ * $Id: editMeta.php,v 1.13 2003/05/14 15:30:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -204,10 +204,10 @@ array_unshift($genres, array('id'=>0, 'name'=> $page->getlocalized("no_genre")))
 $smarty->assign('GENRES_LIST', $genres);
 
 // languages
-for($i=0; $i<count($languages); $i++) {
-  $langNames[$i] = $page->getlocalized($languages[$i]);
+for($i=0; $i<count($config['languages']); $i++) {
+  $langNames[$i] = $page->getlocalized($config['languages'][$i]);
 }
-$smarty->assign('LANG_CODES', $languages);
+$smarty->assign('LANG_CODES', $config['languages']);
 $smarty->assign('LANG_NAMES', $langNames);
 
 // rights sections

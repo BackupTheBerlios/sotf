@@ -1,14 +1,14 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: search.php,v 1.6 2003/04/08 14:21:59 andras Exp $
+ * $Id: search.php,v 1.7 2003/05/14 15:30:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
 require("init.inc.php");
-require("$classdir/sotf_AdvSearch.class.php");
+require($config['classdir'] . "/sotf_AdvSearch.class.php");
 
 
 $pattern = sotf_Utils::getSQLSafeParameter('pattern');
@@ -36,7 +36,7 @@ if($pattern) {
   $smarty->assign('LANGUAGE', $language);
 }
 
-$searchLangs = $languages;
+$searchLangs = $config['languages'];
 array_unshift($searchLangs, "any_language");
 
 for($i=0; $i<count($searchLangs); $i++) {
