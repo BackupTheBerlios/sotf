@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.55 2003/06/05 14:49:06 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.56 2003/06/06 14:47:10 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -328,6 +328,11 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		$retval[] = new sotf_Programme($item['id'], $item);
 	 }*/
 	 return $plist;
+  }
+
+  function getExpiredProgrammes() {
+	 global $db, $config;
+	 return $db->getCol("SELECT p.id FROM sotf_programmes p, sotf_node_objects n WHERE p.id=n.id AND expiry_date < CURRENT_DATE AND n.node_id='".$config['nodeId'] . "'"); 
   }
 
   /************************************************

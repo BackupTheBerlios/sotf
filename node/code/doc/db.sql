@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.48 2003/06/05 14:49:07 andras Exp $
+--  $Id: db.sql,v 1.49 2003/06/06 14:47:10 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -116,9 +116,9 @@ CREATE TABLE "sotf_contacts" (
 	"intro" text,
 	"email" varchar(100),
 	"address" varchar(255),
-	"phone" varchar(20),
-	"cellphone" varchar(20),
-	"fax" varchar(20),
+	"phone" varchar(50),
+	"cellphone" varchar(50),
+	"fax" varchar(50),
 	"url" varchar(255)
 );
 

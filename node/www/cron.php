@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.18 2003/06/05 14:49:07 andras Exp $
+ * $Id: cron.php,v 1.19 2003/06/06 14:47:11 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -90,11 +90,22 @@ if(!empty($XBMF)) {
 
 //******** Expire old programmes
 
+$prgIds = sotf_Programme::getExpiredProgrammes();
+if(!empty($prgIds)) {
+  debug("deleting expired", $prgIds);
+  $db->begin();
+  foreach($prgIds as $id) {
+    $prg = & $repository->getObject($id);
+    $prg->delete();
+  }
+  $db->commit();
+}
+
 // *** regenerate metadata files??
 
 //******** Update topic counts
 
-//$repository->updateTopicCounts();
+$repository->updateTopicCounts();
 
 //******** Clean caches adn tmp dirs
 

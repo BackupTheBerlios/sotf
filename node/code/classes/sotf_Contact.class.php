@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Contact.class.php,v 1.9 2003/06/05 14:49:06 andras Exp $
+ * $Id: sotf_Contact.class.php,v 1.10 2003/06/06 14:47:10 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *					at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -150,7 +150,7 @@ class sotf_Contact extends sotf_ComplexNodeObject {
 	function searchContactNames($pattern) {
 		global $db, $config, $user;
 		$pattern = sotf_Utils::magicQuotes($pattern);
-		$res = $db->getAssoc("SELECT c.id AS id, c.name AS name FROM sotf_contacts c WHERE name ~ '$pattern' ORDER BY name");
+		$res = $db->getAssoc("SELECT c.id AS id, c.name AS name FROM sotf_contacts c WHERE name ~* '$pattern' ORDER BY name");
 		if(DB::isError($res))
 			raiseError($res);
 		return $res;
