@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.38 2003/06/20 07:19:06 andras Exp $
+ * $Id: init.inc.php,v 1.39 2003/06/25 14:57:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -88,6 +88,19 @@ require($config['classdir'] . '/sotf_Object.class.php');
 require($config['classdir'] . '/sotf_Vars.class.php');
 require($config['classdir'] . '/sotf_Permission.class.php');
 require($config['classdir'] . '/sotf_Repository.class.php');
+
+///////////////////////////////////////////////////
+// Handle language change
+///////////////////////////////////////////////////
+if($_GET['uilang']) {
+	if(!setcookie('uiLang', $_GET['uilang'])) {
+		die("could not set cookie for uilang");
+	}
+	$url = $_GET['okURL'];
+	if(!$url) $url = $config['localPrefix'];
+	header ("Location: " . $url);
+	exit;
+}
 
 //PEAR::setErrorHandling(PEAR_ERROR_TRIGGER);
 //PEAR::setErrorHandling(PEAR_ERROR_DIE);
@@ -220,6 +233,7 @@ if ($page->loggedIn()) {
 if($config['debug']) {
   $smarty->assign("VIEWLOG", $page->logURL());
 }
+$smarty->assign("UI_LANGS", $config['outputLanguages']);
 
 debug("action", $page->action);
 debug("lang", $lang);

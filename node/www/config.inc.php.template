@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: config.inc.php.template,v 1.18 2003/06/18 15:43:28 andras Exp $
+ * $Id: config.inc.php.template,v 1.19 2003/06/25 14:57:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -145,10 +145,10 @@ $config['debug'] = true;
 //////////////////////////////////////////////////////////////////////////
 
 // selectable languages for user interface
-$config['outputLanguages'] = array("en");
+$config['outputLanguages'] = array("eng", "ger", "hun");
 
 // default language if user's language cannot be determined
-$config['defaultLanguage'] = "en";
+$config['defaultLanguage'] = "eng";
 
 // languages appearing in language select boxes
 $config['languages'] = array("eng", "deu", "hun", "dut", "fra", "ita", "esl", "ces", "slo", "pol", "rum", "rom");
