@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.36 2003/05/27 09:29:04 andras Exp $
+--  $Id: db.sql,v 1.37 2003/05/27 15:52:23 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -40,7 +40,7 @@ CREATE TABLE "sotf_node_objects" (
 -- basis of replication + generic node object properties
 	"id" varchar(12) PRIMARY KEY,
 	"last_change" timestamptz DEFAULT CURRENT_TIMESTAMP,
-   "change_stamp" int2 DEFAULT 0,
+   "change_stamp" int DEFAULT 0,
 	"arrived" timestamptz DEFAULT CURRENT_TIMESTAMP,
 	"node_id" int2 --- REFERENCES sotf_nodes(node_id)
 ---	"st_id" varchar(40), -- id used at the station management side
