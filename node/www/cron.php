@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.9 2003/05/14 15:30:39 andras Exp $
+ * $Id: cron.php,v 1.10 2003/05/22 11:14:17 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -79,6 +79,8 @@ foreach($XBMF as $xbmfFile) {
 //******** Clean caches adn tmp dirs
 
 // remove m3us and pngs from tmpdir
+
+// update subject tree language availability
 
 
 

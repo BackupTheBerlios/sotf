@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.32 2003/05/20 16:08:16 andras Exp $
+--  $Id: db.sql,v 1.33 2003/05/22 11:14:17 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -287,9 +287,10 @@ CREATE TABLE "sotf_topic_trees" (
 -- REPLICATED
 	"id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
 	"tree_id" int2 UNIQUE NOT NULL,
-	"subtree_id" varchar(12) REFERENCES sotf_topic_tree_defs(id),
+	"subtopic_of" varchar(12) REFERENCES sotf_topic_tree_defs(id),
 	"name" varchar(255), -- default non-localized name
-	"url" varchar(100) -- URL to help on or homepage of this topic tree
+	"url" varchar(100), -- URL to help on or homepage of this topic tree
+	"languages" varchar(255) -- comma separated list of language codes in which tree is available
 );
 
 CREATE SEQUENCE "sotf_topics_seq";

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: config.inc.php.template,v 1.12 2003/05/14 15:30:39 andras Exp $
+ * $Id: config.inc.php.template,v 1.13 2003/05/22 11:14:17 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -42,7 +42,7 @@ $config['adminEmail'] = "nobody@nowhere.com";
 // NODE SETUP --------------------------------------------
 //////////////////////////////////////////////////////////////////////////
 
-// id (positive integer) of this node in the node network: you should negotiate this with others in the network
+// id (between 1-999) of this node in the node network: you should negotiate this with others in the network
 // otherwise choose a random number (later connecting to node network is impossible if this id is in use there)
 $config['nodeId'] = "";
 
