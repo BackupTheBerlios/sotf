@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.15 2003/06/19 10:07:55 andras Exp $
+ * $Id: listen.php,v 1.16 2003/06/20 07:19:06 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -25,14 +25,6 @@ if(sotf_Utils::getParameter('stop')) {
 
 $id = sotf_Utils::getParameter('id');
 $fileid = sotf_Utils::getParameter('fileid');
-
-if(!$id) {
-  sotf_Utils::collectPathinfoParams();
-  if(!$id)
-	 $id = $pathinfoParams['id'];
-  if(!$fileid)
-	 $id = $pathinfoParams['fileid'];
-}
 
 if(empty($id)) {
   raiseError("Missing parameters!");
