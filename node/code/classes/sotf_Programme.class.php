@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.70 2003/10/14 10:18:19 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.71 2003/10/16 08:01:58 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -529,12 +529,12 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 global $config;
 	 $fileInfo = $file->allInfo;
 	 $id3 = $fileInfo['id3v1'];
-	 $id3['comment'] =  $config['rootUrl'];
+	 $id3['comment'] =  substr(substr($config['rootUrl'], 7), 0, 30);
 	 $id3['album'] =  "id: " . $this->id;
 	 if(!$id3['title'])
-		$id3['title'] = $this->get('title');
+		$id3['title'] = substr($this->get('title'), 0, 30);
 	 if(!$id3['artist'])
-		$id3['artist'] = $this->getCreatorNames();
+		$id3['artist'] = substr($this->getCreatorNames(), 0, 30);
 	 debug("writing ID3V1", $id3);
 	 $succ = WriteID3v1($file->path, $id3['title'], $id3['artist'], $id3['album'], $id3['year'], $id3['comment'], $id3['genre'], NULL /*track*/);
 	 if(!$succ)
