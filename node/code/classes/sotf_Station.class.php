@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.5 2002/11/13 17:12:56 andras Exp $
+// $Id: sotf_Station.class.php,v 1.6 2002/11/15 16:11:23 andras Exp $
 
 class sotf_Station extends sotf_NodeObjectWithPerm {		
 
@@ -42,15 +42,14 @@ class sotf_Station extends sotf_NodeObjectWithPerm {
 
 	function create($stationName, $desc) {
 		global $nodeId;
-		$st = & new sotf_Station();
-		$st->set('name', $stationName);
-		$st->set('description', $desc);
-		$dir = $st->getDir();
+		$this->set('name', $stationName);
+		$this->set('description', $desc);
+    parent::create();
+		$dir = $this->getDir();
 		if(!is_dir($dir)) {
 			mkdir($dir, 0775);
 			mkdir("$dir/station", 0775);
 		}
-    parent::create();
 	}
 	
 	function delete(){
@@ -134,10 +133,16 @@ class sotf_Station extends sotf_NodeObjectWithPerm {
 	*/
 	function getLogo()
 	{
-		global $db;
-
 		return $this->getBlob("icon");
 	} // end func getLogo
+
+  /*
+  function cacheLogo() {
+    global $cachedir, $cacheprefix;
+    $fname = "$cachedir/" . $this->id . "
+    if(is_readable($fname))
+  }
+  */
 
 	/**
 	* Sets jingle of the station.

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_NodeObject.class.php,v 1.1 2002/11/13 17:12:56 andras Exp $
+// $Id: sotf_NodeObject.class.php,v 1.2 2002/11/15 16:11:22 andras Exp $
 
 /**
 * Objects that are replicated in the network
@@ -13,22 +13,23 @@ class sotf_NodeObject extends sotf_Object {
    * @return (void)
    */
   function sotf_NodeObject($tablename, $id='', $data='') {
-    debug("constructor", 'sotf_NodeObject');
-	 $this->sotf_Object($tablename, $id, $data);
+    //debug("constructor", 'sotf_NodeObject');
+    $this->sotf_Object($tablename, $id, $data);
   }						
 
   function generateID() {
-	 $localId = $this->db->nextId($this->tablename . "_seq");
-	 $id = sprintf("%03d%2s%d", $GLOBALS['nodeId'], $this->repository->getTableCode($this->tablename), $localId);
-	 debug("generated ID", $id);
+    global $nodeId;
+    $localId = $this->db->nextId($this->tablename);
+    $id = sprintf("%03d%2s%d", $nodeId, $this->repository->getTableCode($this->tablename), $localId);
+    debug("generated ID", $id);
 	 return $id;
   }
 
   function create() {
 	 global $nodeId;
-	 $this->setID($this->generateID());
-	 $this->db->query("INSERT INTO sotf_node_objects ('id','node_id') VALUES('" . $this->id . "','$nodeId')");
-	 return parent::create();
+	 $this->id = $this->generateID();
+	 $this->db->query("INSERT INTO sotf_node_objects (id, node_id) VALUES('" . $this->id . "','$nodeId')");
+	 parent::create();
   }
 
   function update() {

@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.4 2002/11/11 17:26:33 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.5 2002/11/15 16:11:23 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_NodeObjectWithPerm.class.php');
@@ -18,7 +18,7 @@ class sotf_Repository {
 									"sotf_nodes" => "no",
 									"sotf_contacts" => "co",
 									"sotf_stations" => "st",
-									"sotf_roles" => "sr",
+									"sotf_object_roles" => "sr",
 									"sotf_series" => "se",
 									"sotf_programmes" => "pr",
 									"sotf_rights" => "ri",
@@ -31,7 +31,8 @@ class sotf_Repository {
 									"sotf_topics" => "to",
 									"sotf_prog_topics" => "pt",
 									"sotf_genres" => "ge",
-									"sotf_role_names" => "ro",
+									"sotf_roles" => "ro",
+									"sotf_role_names" => "rn",
 									"sotf_deletions" => "de",
 									"sotf_prog_rating" => "ra",
 									"sotf_refs" => "re",
@@ -60,6 +61,11 @@ class sotf_Repository {
 	 if(!$tc)
 		raiseError("no table code for table $tablename");
 	 return $tc;
+  }
+
+  function getTable($objectId) {
+    $tc = substr($objectId, 3,2);
+    return array_search($tc, $this->tableCodes);
   }
 
   //TODO
