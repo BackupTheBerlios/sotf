@@ -1,7 +1,7 @@
 <?php
 
 /*  
- * $Id: portal_popup.php,v 1.4 2003/06/11 08:16:55 andras Exp $
+ * $Id: portal_popup.php,v 1.5 2003/10/14 16:03:36 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: Máté Pataki, András Micsik
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -43,8 +43,15 @@ if ($cell["resource"] == 'text')			//if text analyze html code
 	$html = new html();
 	$cell["value"] = $html->analyze_text($cell["value"]);
 }
-
-
+elseif ($cell["resource"] == 'query')
+{
+	$qs = $portal->getQueries();
+	if (!array_key_exists($cell["value"], $qs))
+	{
+		$qskey = array_keys($qs);
+		$cell["value"] = $qskey[0];
+	}
+}
 
 if (sotf_Utils::getParameter('insert_after'))		//insert after button pressed
 {
