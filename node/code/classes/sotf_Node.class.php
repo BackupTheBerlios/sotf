@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Node.class.php,v 1.6 2002/12/15 14:37:21 andras Exp $
+// $Id: sotf_Node.class.php,v 1.7 2002/12/17 15:13:50 andras Exp $
 
 class sotf_Node extends sotf_NodeObject {
 
@@ -38,6 +38,7 @@ class sotf_Node extends sotf_NodeObject {
 		$res = $db->getAll($sql);
 		if(DB::isError($res))
 			raiseError($res);
+    $slist = array();
 		foreach($res as $st) {
 			$slist[] = new sotf_Node($st['id'], $st);
 		}

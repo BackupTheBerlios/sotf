@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.12 2002/12/13 17:28:29 andras Exp $
+// $Id: sotf_User.class.php,v 1.13 2002/12/17 15:13:50 andras Exp $
 
 /**
 * This is a class for handling users
@@ -88,6 +88,7 @@ class sotf_User
 		}
 	}
 
+  // TODO: when deleting user delete from sotf_user_permissions
 	
 	function getUserDir() {
 		global $userDirs;
