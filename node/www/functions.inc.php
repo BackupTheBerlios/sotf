@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.20 2004/08/19 08:53:00 micsik Exp $
+ * $Id: functions.inc.php,v 1.21 2004/08/19 12:54:05 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -196,6 +196,16 @@ function moveUploadedFile($fieldName, $file) {
 function excludeRobots() {
 	global $smarty;
 	$smarty->append('META_TAGS', '<META NAME="ROBOTS" CONTENT="NOINDEX,NOFOLLOW">');
+}
+
+function checkAdminAccess() {
+	global $config;
+	$host = getHostName();
+	debug('admin check', $config['adminDomain']);
+	if(!preg_match('/' . $config['adminDomain'] . '/i', $host))
+		raiseError("no access", "to admin page: " . myGetenv("REQUEST_URI"));
+	else
+		debug("admin access OK for", $host); 
 }
 
 ?>
