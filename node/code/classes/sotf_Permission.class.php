@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.23 2003/06/16 16:13:40 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.24 2003/10/21 08:48:14 andras Exp $
 
 /**
  * This is a class for handling permossions.
@@ -161,11 +161,13 @@ class sotf_Permission {
 	  return false;
 	}
 	
-	function listStationsForEditor() {
+	function listStationsForEditor($withSeries = true) {
 	  if(!isset($this->currentPermissions))
 		 return NULL;  // not logged in yet
 	  global $db, $user;
 	  $retval1 = $db->getAll("SELECT 'station' AS type, s.name AS name, s.id AS id FROM sotf_stations s, sotf_user_permissions u, sotf_permissions p WHERE u.user_id = '$user->id' AND u.object_id=s.id AND p.id = u.permission_id AND ( p.permission='create' OR p.permission='admin')");
+	  if(!$withSeries)
+		 return $retval1;
 	  $retval2 = $db->getAll("SELECT 'series' AS type, s.name AS name, s.id AS id, s.station_id FROM sotf_series s, sotf_user_permissions u, sotf_permissions p WHERE u.user_id = '$user->id' AND u.object_id=s.id AND p.id = u.permission_id AND ( p.permission='create' OR p.permission='admin')");
     return array_merge($retval1, $retval2);
   }

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editMeta.php,v 1.20 2003/09/24 14:17:02 andras Exp $
+ * $Id: editMeta.php,v 1.21 2003/10/21 08:48:14 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -194,6 +194,13 @@ $smarty->assign('BROADCAST_TIME', strtotime($prg->get('broadcast_date')));
 // station data
 $station = $prg->getStation();
 $smarty->assign('STATION_DATA', $station->getAllForHTML());
+
+// other stations
+$stations = $permissions->listStationsForEditor(false);
+//debug("stations", $stations);
+if(count($stations) > 1) {
+  $smarty->assign("CHANGE_STATION", 1);
+}
 
 // series data
 $series = $prg->getSeries();
