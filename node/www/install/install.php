@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: install.php,v 1.7 2003/02/25 12:40:04 andras Exp $
+ * $Id: install.php,v 1.8 2003/02/25 14:16:25 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -42,7 +42,7 @@ function RunTest($number, $testname, $required = -1)		//returns if or not to run
 		$retval = (($install_run_test == "Run test ".$number) OR ($install_test_result[$number] == NULL));		//if button pressed or no results (not run yet)
 	else				//if a pervious test needs to be OK
 		$retval = ( ($install_run_test == "Run test ".$number) OR (($install_test_result[$number] == NULL) AND ($install_color[$required] == $install_green)) );	//same but the other test must be OK
-	debug("RunTest $number", $retval);
+	error_log("RunTest $number: $retval", 0);
 	return $retval;
 }
 
