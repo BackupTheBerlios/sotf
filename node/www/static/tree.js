@@ -1,4 +1,4 @@
-/* $Id: tree.js,v 1.3 2002/12/12 18:18:26 andras Exp $ */
+/* $Id: tree.js,v 1.4 2003/02/04 15:00:34 andras Exp $ */
 
 
 // These scripts were originally found on cooltype.com.
@@ -260,4 +260,3 @@ else {
 } // end of adding styles
 
 
-onload = initIt;

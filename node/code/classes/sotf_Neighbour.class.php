@@ -1,7 +1,7 @@
 <?php
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Neighbour.class.php,v 1.17 2003/02/03 14:56:48 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.18 2003/02/04 15:00:34 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -115,6 +115,8 @@ class sotf_Neighbour extends sotf_Object {
     $lastSyncStamp = $this->lastSyncStamp();
     $count = sotf_NodeObject::countModifiedObjects($remoteId, $lastSyncStamp);
     $numChunks = ceil($count / $objectsPerRPCRequest);
+    if($numChunks == 0) 
+      $numChunks = 1;
     $thisChunk = 1;
     $chunkInfo = array("old_stamp" => $lastSyncStamp,
                        "current_stamp" => $currentStamp,
@@ -143,8 +145,8 @@ class sotf_Neighbour extends sotf_Object {
         return;
       }
       // save received data
-      $chunkInfo = $response[1];
-      $newObjects = $response[2];
+      $chunkInfo = $response[0];
+      $newObjects = $response[1];
       $objectsReceived = $objectsReceived + count($newObjects);
       debug("number of received objects", count($newObjects));
       if(count($newObjects) > 0) {

@@ -1,13 +1,11 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.10 2003/01/31 17:07:05 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.11 2003/02/04 15:03:05 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
-
-include_once($peardir . '/DB/pgsql.php');
 
 class db_Wrap extends DB_pgsql {
 
