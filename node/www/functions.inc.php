@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.16 2004/02/27 17:53:15 micsik Exp $
+ * $Id: functions.inc.php,v 1.17 2004/03/05 14:38:08 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -40,7 +40,7 @@ function logError($msg, $private='') {
 	$email = $config['adminEmail'];
 	$host = getHostName();
   error_log("$host: ERROR: $msg. $private", 0);
-	if($email)
+	if($email && $config['sendMailAboutErrors'])
 		mail($email, "SOTF error - $host", "$host: $msg\n$private");
 }
 

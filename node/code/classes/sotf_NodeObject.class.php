@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.58 2003/07/29 14:15:23 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.59 2004/03/05 14:38:07 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -174,6 +174,7 @@ class sotf_NodeObject extends sotf_Object {
 			 $db->query("INSERT INTO sotf_object_status (id, node_id) VALUES('$id', $nei)");
 		  }
 	 }
+	 debug("added to refresh table");
   }
 
   /** can be static */

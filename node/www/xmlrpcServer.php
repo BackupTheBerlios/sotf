@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.31 2004/02/27 17:53:15 micsik Exp $
+ * $Id: xmlrpcServer.php,v 1.32 2004/03/05 14:38:08 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -203,12 +203,20 @@ function getProgrammes($params)
 }
 
 function putEvents($params) {
-	global $config, $db, $repository;
-	$events = xmlrpc_decode($params->getParam(0));
+  global $config, $db, $repository;
+  $events = xmlrpc_decode($params->getParam(0));
   foreach($events as $event) {
+    debug("PORTAL EVENT", $event);
     $progId = $event['prog_id'];
     if($progId) {
-      $nodeId = $repository->getNodeId($progId);
+      if($repository->looksLikeId($progId))
+	$prg = &$repository->getObject($progId);
+      if(!$prg) {
+	logError("Invalid prog_id arrived in portal event: $progId");
+	continue;
+      }
+      $nodeId = $prg->getNodeId();
+      //$nodeId = $repository->getNodeId($progId);
       if($nodeId != $config['nodeId']) {
         // event for remote object
         sotf_NodeObject::createForwardObject('event', $event, $progId , $nodeId);
@@ -218,7 +226,7 @@ function putEvents($params) {
     $repository->processPortalEvent($event);
   }
   $retval = xmlrpc_encode(count($events));
-	return new xmlrpcresp($retval);
+  return new xmlrpcresp($retval);
 }
 
 stopTiming();
