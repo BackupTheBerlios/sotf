@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.19 2003/06/06 14:47:11 andras Exp $
+ * $Id: cron.php,v 1.20 2003/06/06 15:56:21 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -101,21 +101,46 @@ if(!empty($prgIds)) {
   $db->commit();
 }
 
-// *** regenerate metadata files??
-
 //******** Update topic counts
 
 $repository->updateTopicCounts();
 
-//******** Clean caches adn tmp dirs
+//******** Clean caches and tmp dirs
 
-// remove m3us and pngs from tmpdir
+$clearTime = time() - 24*60*60;
+$dir = dir($config['tmpDir']);
+while($entry = $dir->read()) {
+  if ($entry == "." || $entry == "..")
+    continue;
+  $file = $config['tmpDir'] . "/$entry";
+  if(is_dir($file))
+    continue;
+  //if (preg_match('/\.png$/', $entry) || preg_match('/\.m3u$/', $entry)) {
+  if(filemtime($file) < $clearTime) {
+    if(!unlink($file))
+      logError("could not delete: $file");
+  }
+}
+$dir->close();
 
-// update subject tree language availability
+$clearTime = time() - 60*60;
+$dir = dir($config['cacheDir']);
+while($entry = $dir->read()) {
+  if ($entry == "." || $entry == "..")
+    continue;
+  $file = $config['cacheDir'] . "/$entry";
+  if(is_dir($file))
+    continue;
+  if(filemtime($file) < $clearTime) {
+    if(!unlink($file))
+      logError("could not delete: $file");
+  }
+}
+$dir->close();
 
-
+// TODO update subject tree language availability
 
 stopTiming();
 $page->logRequest();
 debug("--------------- CRON FINISHED -----------------------------------");
-echo "<h4>Cron.php completed</h4>";
+//echo "<h4>Cron.php completed</h4>";

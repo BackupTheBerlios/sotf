@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.39 2003/06/05 14:49:07 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.40 2003/06/06 15:56:21 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -276,10 +276,9 @@ class sotf_Repository {
   /** private recursive function to calculate topic totals including subtopics */
   function sumTopics(&$topics, $index) {
     // calculate total for $topics[$index]
-    debug("sumTopics", "$index, " . $topics[$index]['id']);
+    //debug("sumTopics", "$index, " . $topics[$index]['id']);
     if(isset($topics[$index]['total'])) {
       // it's already calculated
-      debug("mar kesz", $topics[$index]['total']);
       return $topics[$index]['total'];
     }
     $topicId = $topics[$index]['id'];
@@ -289,7 +288,7 @@ class sotf_Repository {
         $total = $total + $this->sumTopics($topics, $i);
     }
     $topics[$index]['total'] = $total;
-    debug("szamitva", $topics[$index]['total']);
+    //debug("calculated", $topics[$index]['total']);
     return $topics[$index]['total'];
   }
 
