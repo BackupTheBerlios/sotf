@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Repository.class.php,v 1.19 2003/02/04 15:00:34 andras Exp $
+ * $Id: sotf_Repository.class.php,v 1.20 2003/02/26 13:32:56 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -108,7 +108,7 @@ class sotf_Repository {
   /** Tells if the given object id is for one of the global controlled vocabularies (roles, genres, topics). */
   function isVocabularyTable($tablename) {
     $tc = $this->getTableCode($tablename);
-    debug('tc', $tc);
+    //debug('tc', $tc);
     if($tc == 'tt' || $tc == 'td' || $tc == 'to' || $tc == 'ge' || $tc == 'ro' || $tc == 'rn') {
       debug("vocabulary entry");
       return true;

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.25 2003/02/26 11:18:39 andras Exp $
+ * $Id: init.inc.php,v 1.26 2003/02/26 13:32:56 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -129,7 +129,7 @@ if($debug)
 {
   error_log("------------------------------------------", 0);
   error_log("REQUEST_URI: " . myGetenv("REQUEST_URI"), 0);
-	error_log("REMOTE_HOST: " . myGetenv('REMOTE_HOST') ,0);
+	error_log("REMOTE_HOST: " . getHostName() ,0);
   error_log("USER_AGENT: " . myGetenv('HTTP_USER_AGENT') ,0);
   error_log("REFERER: " . myGetenv('HTTP_REFERER'),0);
   foreach($_GET as $key => $value) {

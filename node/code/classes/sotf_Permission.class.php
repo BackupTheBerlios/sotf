@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.13 2003/02/26 11:22:29 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.14 2003/02/26 13:32:56 andras Exp $
 
 /**
 * This is a class for handling permossions.
@@ -31,7 +31,7 @@ class sotf_Permission
       $permissions[$row["object_id"]][] = $row["permission"];	// object permission
     }
     if($debug) {
-      debug("current permissions: ");
+      debug("current permissions");
       if(count($permissions) > 0) {
         foreach($permissions as $key => $value) {
           error_log("PERMISSION: $key = " . join(' ',$value),0);

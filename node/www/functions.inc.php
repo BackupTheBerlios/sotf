@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.4 2003/02/26 11:18:39 andras Exp $
+ * $Id: functions.inc.php,v 1.5 2003/02/26 13:32:56 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -109,8 +109,9 @@ function hasPerm($object) {
   global $permissions;
 	$perm_list = func_get_args();
 	for ($i = 1; $i <count($perm_list); $i++) {
-		debug('checking for permission', $perm_list[$i]);
-		if($permissions->hasPermission($object, $perm_list[$i]))
+		$perm = $permissions->hasPermission($object, $perm_list[$i]);
+		debug("checking for permission " . $perm_list[$i], $perm);
+		if($perm)
 			return true;
 	}
 	return false;
