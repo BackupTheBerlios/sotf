@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: config.inc.php.template,v 1.13 2003/05/22 11:14:17 andras Exp $
+ * $Id: config.inc.php.template,v 1.14 2003/05/23 11:03:27 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -115,7 +115,7 @@ $config['icePort'] = "8000";
 $config['encoderPassword'] = "hackme";
 
 // The command to start streaming: __XX__ style tokens are replaced with the actual value
-$config['streamCmd'] = "/usr/bin/perl " . $config['basedir'] . "/code/contrib/iceplay -b __BITRATE__ -s " . $config['iceServer'] . "-P " . $config['icePort'] . " -p " . $config['encoderPassword'] . "-l __PLAYLIST__ -n __NAME__ -v >>" . $config['basedir'] . "/logs/play.log 2>&1 &";
+$config['streamCmd'] = "/usr/bin/perl " . $config['basedir'] . "/code/contrib/iceplay -b __BITRATE__ -s " . $config['iceServer'] . " -P " . $config['icePort'] . " -p " . $config['encoderPassword'] . " -l __PLAYLIST__ -n __NAME__ -v >>" . $config['basedir'] . "/logs/play.log 2>&1 &";
 
 // The server will not start more streams than this
 $config['maxNumberOfStreams'] = 30;

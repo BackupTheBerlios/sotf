@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.29 2003/05/20 16:08:16 andras Exp $
+ * $Id: init.inc.php,v 1.30 2003/05/23 11:03:27 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -176,7 +176,7 @@ $page = new sotf_Page;
 // we need trick for making pages indexed by Google
 // therefore we pass some parameters in pathinfo
 // after this call getParameter can be used to get these parameters as well
-$pathinfoParamExceptions = array('getFile','getIcon','getJingle','getUserFile');
+$pathinfoParamExceptions = array('listen', 'getFile','getIcon','getJingle','getUserFile');
 if(!in_array($page->action, $pathinfoParamExceptions)) {
 	sotf_Utils::collectPathinfoParams();
 }
