@@ -1,13 +1,24 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editRight.php,v 1.6 2003/07/29 09:13:43 andras Exp $
+ * $Id: editRight.php,v 1.7 2003/12/03 10:23:09 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
 require("init.inc.php");
+
+// get number of seconds from time in seconds or in min:seconds format
+function getTime($text) {
+  if(is_numeric($text))
+	 return $text;
+  if(preg_match("/(\d+):(\d+)/", trim($text), $mm)) {
+	 $time = $mm[1]*60+$mm[2];
+	 return $time;
+  }
+  return NULL;
+}
 
 $smarty->assign('PAGETITLE',$page->getlocalized('edit_right'));
 
@@ -35,8 +46,8 @@ if($rightId) {
 }
 
 if($save) {
-  $startTime = sotf_Utils::getParameter('start_time');
-  $stopTime = sotf_Utils::getParameter('stop_time');
+  $startTime = getTime(sotf_Utils::getParameter('start_time'));
+  $stopTime = getTime(sotf_Utils::getParameter('stop_time'));
   $rightsText = sotf_Utils::getParameter('rights_text');
   $fullProg = sotf_Utils::getParameter('fullprog');
   // save
