@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
   /*  
-	* $Id: rss.php,v 1.17 2004/03/03 15:12:01 micsik Exp $
+	* $Id: rss.php,v 1.18 2005/03/09 12:50:06 micsik Exp $
 	* Created for the StreamOnTheFly project (IST-2001-32226)
 	* Authors: András Micsik, Máté Pataki, Tamás Kézdi 
 	*          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -20,6 +20,10 @@ $seriesId = sotf_Utils::getParameter('series');
 $userName = sotf_Utils::getParameter('user');
 $queryName = sotf_Utils::getParameter('qname');
 $query = sotf_Utils::getParameter('query');
+$from = sotf_Utils::getParameter('from');
+$count = sotf_Utils::getParameter('count');
+if(!$count)
+  $count = ITEMS_IN_RSS;
 
 function createImageTag($url, $title, $link) {
   return "<url>$url</url><title>$title</title><link>$link</link>";
@@ -224,7 +228,7 @@ if($prgId) {
 	 }
 
 	 // add items
-	 $newProgs = $series->listProgrammes(0, ITEMS_IN_RSS);
+	 $newProgs = $series->listProgrammes($from, $count);
 	 //debug("progs", $newProgs);
 	 foreach($newProgs as $prog) {
 		$properties=array();
@@ -287,7 +291,7 @@ if($prgId) {
 		  }
 
 		  // add items
-		  $newProgs = $station->listProgrammes(0, ITEMS_IN_RSS);
+		  $newProgs = $station->listProgrammes($from, $count);
 		  //debug("progs", $newProgs);
 		  foreach($newProgs as $prog) {
 			 $properties=array();
@@ -343,7 +347,7 @@ if($prgId) {
 		$advsearch = new sotf_AdvSearch();
 		$advsearch->Deserialize($query);
 		$query = $advsearch->GetSQLCommand();
-		$res = $db->limitQuery($query, 0, ITEMS_IN_RSS);
+		$res = $db->limitQuery($query, $from, $count);
 		$hits = array();
 		while (DB_OK === $res->fetchInto($row)) {
 		  //$row['icon'] = sotf_Blob::cacheIcon($row['id']);
@@ -382,7 +386,7 @@ if($prgId) {
 		$advsearch = new sotf_AdvSearch();
 		$advsearch->Deserialize($query);
 		$query = $advsearch->GetSQLCommand();
-		$res = $db->limitQuery($query, 0, ITEMS_IN_RSS);
+		$res = $db->limitQuery($query, $from, $count);
 		$hits = array();
 		while (DB_OK === $res->fetchInto($row)) {
 		  //$row['icon'] = sotf_Blob::cacheIcon($row['id']);
@@ -417,7 +421,7 @@ if($prgId) {
 		$rss_writer_object->addimage($properties);
 	
 		//  Then add your channel items one by one.
-		$newProgs = sotf_Programme::getNewProgrammes($fromDay, ITEMS_IN_RSS);
+		$newProgs = sotf_Programme::getNewProgrammes($fromDay, $count);
 		if(!empty($newProgs)) {
 		  foreach($newProgs as $prog) {
 			 $properties=array();
