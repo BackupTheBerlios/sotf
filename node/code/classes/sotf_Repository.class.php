@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.47 2003/07/24 09:41:56 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.48 2003/07/24 14:34:34 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -398,7 +398,7 @@ class sotf_Repository {
 				$more = false;
 			} else {
 				if(preg_match('/^\s*([\w_]+)\s*=\s*(.*)/', $line, $items)) {
-					$treedata[$items[1]] = trim($items[2]);
+					$treedata[$items[1]] = utf8_encode(trim($items[2]));
 				} else {
 					logError("Bad line: $line");
 				}
@@ -461,7 +461,7 @@ class sotf_Repository {
 			debug("tree items", $items);
 			$id = $items[1];
 			$l = $items[2];
-			$name = trim($items[3]);
+			$name = utf8_encode(trim($items[3]));
 			if($level < $l) {
 				$roots[] = $parentId;
 				$parentId = $prevId;
@@ -512,7 +512,7 @@ class sotf_Repository {
 			}
 			debug("role item", $items);
 			$id = $items[1];
-			$name = trim($items[2]);
+			$name = utf8_encode(trim($items[2]));
 
 			$o1 = new sotf_NodeObject("sotf_roles");
 			$o1->set('role_id', $id);
@@ -580,7 +580,7 @@ class sotf_Repository {
 			}
 			debug("genre item", $items);
 			$id = $items[1];
-			$name = trim($items[2]);
+			$name = utf8_encode(trim($items[2]));
 
 			$o1 = new sotf_NodeObject("sotf_genres");
 			$o1->set('genre_id', $id);

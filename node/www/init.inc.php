@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.41 2003/07/24 09:41:56 andras Exp $
+ * $Id: init.inc.php,v 1.42 2003/07/24 14:34:34 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -18,7 +18,6 @@ startTiming();
 //////////////////////////////////////////////////////////////////////////
 require_once('config.inc.php');
 //////////////////////////////////////////////////////////////////////////
-
 
 // this is valid only until we have an SQL connection to get persistent vars
 $config['debug'] = $config['debug'] ? false : true;
@@ -53,6 +52,7 @@ $config['cacheDir'] = $config['wwwdir'] . '/tmp/cache';
 $config['cacheUrl'] =  $config['rootUrl'] . '/tmp/cache';
 
 umask(0002);
+
 
 // load system files
 
@@ -236,5 +236,16 @@ $smarty->assign("UI_LANGS", $config['outputLanguages']);
 debug("action", $page->action);
 debug("lang", $lang);
 debug("userid", $user->id);
+
+// character encoding tricks
+/*
+if(!ini_set('default_charset', 'UTF-8')) {
+	logError("Could not change default charset");
+}
+debug("default_charset", ini_get('default_charset'));
+*/
+//if(!in_array($page->action, array('getFile','getIcon','getJingle','getUserFile','listen'))) {
+header("Content-Type: text/html; charset=UTF-8");
+
 
 ?>
