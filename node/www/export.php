@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: export.php,v 1.4 2004/03/03 15:12:01 micsik Exp $
+ * $Id: export.php,v 1.5 2004/03/05 15:35:11 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -26,9 +26,8 @@ checkPerm($prg, 'change');
 if ($type == 1) {
   // send XBMF metadata
 
-  //$md = $prg->getXBMFMetadata();
   $meta = new sotf_Metadata($prg);
-  $md = $meta->getMetadataForXBMF();
+  $md = $meta->getXBMFMetadata();
 
   header("Content-type: application/xml\n");
   //header("Content-type: text/plain\n");
