@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: topicTree.php,v 1.3 2003/06/26 14:06:45 andras Exp $
+ * $Id: topicTree.php,v 1.4 2003/07/24 09:41:56 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -36,7 +36,13 @@ $smarty->assign('ADD_MODE', $addMode);
 $smarty->assign('TREES', $repository->listTopicTrees($lang));
 
 // TODO; use user's language
-$result = $repository->getTree($treeId, 'eng', true);
+$info = $repository->getTopicTreeInfo($treeId, $lang);
+//debug("INFO", $info);
+$treeLang = $lang;
+if(strpos($info['languages'], $lang) === FALSE)
+	  $treeLang = 'eng'; // fall back to English
+
+$result = $repository->getTree($treeId, $treeLang, true);
 $smarty->assign('TREE_ID', $treeId);
 $smarty->assign("TREE", $result);
 
