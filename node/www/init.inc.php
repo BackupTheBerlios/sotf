@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.53 2004/01/16 14:49:01 andras Exp $
+ * $Id: init.inc.php,v 1.54 2004/01/16 14:50:26 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -68,7 +68,8 @@ if(!strstr($oldPath, $config['peardir'])) {
 	if($oldPath) {
 		$newPath = $config['peardir'].$PATH_SEP.$oldPath;
 	} else {
-		$newPath = $config['peardir'].$PATH_SEP.".";
+		//$newPath = $config['peardir'].$PATH_SEP.".";
+		$newPath = $config['peardir'];
 	}
 	if(!ini_set("include_path", $newPath))
 		die("Failed to set include_path!!");
