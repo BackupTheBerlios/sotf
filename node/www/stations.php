@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: stations.php,v 1.12 2003/05/16 16:12:54 andras Exp $
+ * $Id: stations.php,v 1.13 2003/06/02 09:12:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -18,7 +18,11 @@ $station = sotf_Utils::getParameter('station');
 $delete = sotf_Utils::getParameter('delete');
 
 if ($delete) {
-  checkPerm('node','delete');
+  if(!hasPerm('node','delete') !! !hasPerm($station,'admin')) {
+	 $permTransl = $page->getlocalized('perm_delete');
+	 $msg = $page->getlocalizedWithParams('no_permission', $permTransl);
+	 raiseError($msg);
+  }
   $st = & $repository->getObject($station);
   $st->delete();
   $page->addStatusMsg('delete_ok');
