@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.15 2003/01/16 13:14:42 andras Exp $
+// $Id: sotf_User.class.php,v 1.16 2003/02/26 11:18:39 andras Exp $
 
 /**
 * This is a class for handling users
@@ -106,6 +106,8 @@ class sotf_User
 		while (false!==($f = readdir($handle))) {
 			if ($f == "." || $f == "..")
 				continue;
+      if(is_dir($f))
+        continue;
 			$list[] = $f;
 		}
 		closedir($handle);

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.9 2003/02/21 18:13:26 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.10 2003/02/26 11:18:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -68,7 +68,7 @@ function syncResp($params) {
 
 function getQueryResults($params)
 {
-	global $classdir, $db, $wwwdir;
+	global $classdir, $db, $rootdir;
 	$query = xmlrpc_decode($params->getParam(0));
 	require("$classdir/sotf_AdvSearch.class.php");
 	$advsearch = new sotf_AdvSearch();	//create new search object object with this array
@@ -76,7 +76,9 @@ function getQueryResults($params)
 	$query = $advsearch->GetSQLCommand();
 	$results = $db->getAll($query." LIMIT 30 OFFSET 0");
 	foreach($results as $key => $result)
-		$results[$key]['icon'] = $wwwdir.sotf_Blob::cacheIcon($result['id']);
+		$results[$key]['icon'] = $rootdir."/".sotf_Blob::cacheIcon($result['id']);
+	//{$CACHEDIR}/{$item.id}.png
+	//"{$IMAGEDIR}/noicon.png"
 	$retval = xmlrpc_encode($results);
 	return new xmlrpcresp($retval);
 }

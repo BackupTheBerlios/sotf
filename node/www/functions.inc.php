@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.3 2003/02/25 10:09:31 andras Exp $
+ * $Id: functions.inc.php,v 1.4 2003/02/26 11:18:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -103,7 +103,7 @@ function noErrors() {
 }
 
 /** shortcut for permission check: hasPerm(<objectId>, <permName1>, <permName2>, ...)
-will return true if the current user has at least on of the listed permissions for the object.
+will return true if the current user has at least one of the listed permissions for the object.
 Also used in smarty templates to check permissions. */
 function hasPerm($object) {
   global $permissions;
@@ -116,10 +116,19 @@ function hasPerm($object) {
 	return false;
 }
 
+/** shortcut for permission check: hasAnyPerm(<objectId>)
+will return true if the current user has some kind of permission for the object.
+Also used in smarty templates to check permissions. */
+function hasAnyPerm($object) {
+  global $permissions;
+	return $permissions->hasAnyPermission($object);
+}
+
+/** wrapper function for move_uploaded_file, because sometimes chmod is needed afterwards. */
 function moveUploadedFile($fieldName, $file) {
   if(!move_uploaded_file($_FILES[$fieldName]['tmp_name'], $file))
 		raiseError("Could not move uploaded file from " . $_FILES[$fieldName]['tmp_name'] . " to $file");
-	debug("Moved uploaded file", $_FILES[$fieldName]['tmp_name'] . " to $file");
+	//debug("Moved uploaded file", $_FILES[$fieldName]['tmp_name'] . " to $file");
   if(!chmod($file, 0660)) {
 		logger("Could not chmod file $file!");
 	}

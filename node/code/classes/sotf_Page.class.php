@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.21 2003/02/20 14:07:47 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.22 2003/02/26 11:18:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -33,10 +33,6 @@ class sotf_Page
 	{
 		global $lang, $user, $outputLanguages, $smarty, $defaultLanguage;
 		global $nodeId, $basedir, $lang, $rootdir, $imagedir, $smartyDebug, $debug;
-
-		// start session
-		if(!headers_sent())
-			session_start();
 
 		// load user data
 		if($_SESSION['userid'])

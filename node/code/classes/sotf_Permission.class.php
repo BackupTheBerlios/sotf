@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.11 2002/12/18 17:30:57 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.12 2003/02/26 11:18:39 andras Exp $
 
 /**
 * This is a class for handling permossions.
@@ -20,7 +20,7 @@ class sotf_Permission
   }
 
   function getUserPermissions($userid='') {
-    global $db, $user;
+    global $db, $user, $debug;
     if(!$userid && is_object($user)) {
       $userid = $user->id;
     }
@@ -30,7 +30,12 @@ class sotf_Permission
     while(list(,$row) = each($permtable)) {
       $permissions[$row["object_id"]][] = $row["permission"];	// object permission
     }
-    //debug("current permissions: ", $permissions);
+    if($debug) {
+      debug("current permissions: ");
+      foreach($permissions as $key => $value) {
+        error_log("PERMISSION: $key = " . join(' ',$value),0);
+      }
+    }
     return $permissions;
   }
 
@@ -64,6 +69,21 @@ class sotf_Permission
         return false;
     }
 	}
+
+  function hasAnyPermission($object, $userid='') {
+    if(empty($userid)) {
+      if($this->currentPermissions && is_array($this->currentPermissions[$object]))
+        return true;
+      else
+        return false;
+    } else {
+      global $db;
+      if ($db->getOne("SELECT count(*) FROM sotf_user_permissions u, sotf_permissions p WHERE u.user_id = '$userid' AND u.object_id = '$object' AND p.id=u.permission_id"))
+        return true;
+      else
+        return false;
+    }
+  }
 
 	function addPermission($objectId, $userid, $perm) {
     global $db;
