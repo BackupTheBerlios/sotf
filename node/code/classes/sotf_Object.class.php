@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.29 2003/06/12 16:46:58 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.30 2003/06/16 16:13:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -284,6 +284,14 @@ class sotf_Object {
 	 $this->set($prop_name, sotf_Utils::getParameter($param_name));
   }
 
+	/** similar to setWithParam, but parameter value may have text conversions (strip tags) */
+  function setWithTextParam($prop_name, $param_name='') {
+	 if(!$param_name)
+		$param_name = $prop_name;
+	 $this->set($prop_name, strip_tags(sotf_Utils::getParameter($param_name)));
+  }
+
+	/** similar to setWithParam, but parameter should be an URL here */
   function setWithUrlParam($prop_name, $param_name='') {
 		global $page;
 		if(!$param_name)

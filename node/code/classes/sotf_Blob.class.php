@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Blob.class.php,v 1.3 2003/05/14 15:30:39 andras Exp $
+// $Id: sotf_Blob.class.php,v 1.4 2003/06/16 16:13:40 andras Exp $
 
 /**
 * @author Andras Micsik - micsik@sztaki.hu
@@ -52,30 +52,32 @@ class sotf_Blob extends sotf_NodeObject {
       it with <img src=, returns true if there is an icon for this object */
   function cacheIcon($id) {
     global $config;
-    $cacheTimeout = 2*60; // 2 minutes
+    $cacheTimeout = 10*60; // 10 minutes
     if(!$id)
       raiseError("missing id");
     $fname = $config['cacheDir'] . "/" . $id . '.png';
     if(is_readable($fname)) {
-      $stat = stat($fname);
-      if(time() - $stat['mtime'] <= $cacheTimeout)
+      //$stat = stat($fname);
+      //if(time() - $stat['mtime'] <= $cacheTimeout)
         return true;
     }
     $icon = sotf_Blob::findBlob($id, 'icon');
     if(!$icon)
       return false;
-    // TODO: cache cleanup!
-    ////debug("cache: ". filesize($fname) ."==" . strlen($icon));
-    /* todo: touch!
-    if(is_readable($fname) && filesize($fname)==strlen($icon)) {
-      return true;
-    }
-    */
     debug("cached icon for", $id);
     sotf_Utils::save($fname, $icon);
     return true;
   }
 
-
+  function uncacheIcon($id) {
+    global $config;
+    if(!$id)
+      raiseError("missing id");
+    $fname = $config['cacheDir'] . "/" . $id . '.png';
+    if(is_file($fname)) {
+      if(!unlink($fname))
+        logError("Could not uncache icon for $id!");
+    }
+  }
 
 }

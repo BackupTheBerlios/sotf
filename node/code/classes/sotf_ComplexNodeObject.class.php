@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.23 2003/06/12 16:46:58 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.24 2003/06/16 16:13:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -67,6 +67,10 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		return $retval;
 	}
 
+	function cacheIcon() {
+	  return sotf_Blob::cacheIcon($this->id);
+	}
+
 	function getStationId() {
 		//debug("class", get_class($this));
 		switch($this->tablename) {
@@ -111,12 +115,15 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	  global $page;
 	  if(!$languages)
 		 $languages = $this->get('language');
-	  $langs = explode(',',$languages);
-	  for($i=0; $i<count($langs); $i++) {
-		 if($i>0)
-			$lstring .= ', ';
-		 $lstring .= $page->getlocalized($langs[$i]);
+	  if(!empty($languages)) {
+		 $langs = explode(',',$languages);
+		 for($i=0; $i<count($langs); $i++) {
+			if($i>0)
+			  $lstring .= ', ';
+			$lstring .= $page->getlocalized($langs[$i]);
+		 }
 	  }
+	  debug("lstring", $lstring);
 	  return $lstring;
 	}
 	
@@ -242,6 +249,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		  debug("remove tmpfile", $tmpfile);
 		  unlink($tmpfile);
 		}
+		sotf_Blob::uncacheIcon($this->id);
 		return true;
 	} // end func setIcon
 

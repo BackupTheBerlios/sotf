@@ -1,5 +1,5 @@
 
---  $Id: update.sql,v 1.3 2003/06/12 16:46:59 andras Exp $
+--  $Id: update.sql,v 1.4 2003/06/16 16:13:40 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -45,8 +45,19 @@ DROP TABLE "sotf_contacts_1054910234";
 
 -- 2003-06-11
 
+-- change in contacts handling
+
 ALTER TABLE sotf_contacts ADD COLUMN "station_id" varchar(12) REFERENCES sotf_stations(id) ON DELETE CASCADE;
 
 UPDATE sotf_contacts SET station_id=pr.station_id FROM sotf_object_roles r, sotf_programmes pr WHERE r.contact_id=sotf_contacts.id AND r.object_id=pr.id; 
 UPDATE sotf_contacts SET station_id=se.station_id FROM sotf_object_roles r, sotf_series se WHERE r.contact_id=sotf_contacts.id AND r.object_id=se.id; 
 UPDATE sotf_contacts SET station_id=r.object_id FROM sotf_object_roles r WHERE r.contact_id=sotf_contacts.id AND r.object_id LIKE '%st%' 
+
+-- 2003-06-13
+
+-- change in permission system
+
+DELETE FROM "sotf_permissions" WHERE permission='add_prog';
+SELECT * FROM "sotf_user_permissions" where permission_id=3; -- if any exists, you may change these permissions to 4 (create)
+-- DELETE FROM "sotf_user_permissions" where permission_id=3; 
+

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.35 2003/06/04 12:01:08 andras Exp $
+ * $Id: init.inc.php,v 1.36 2003/06/16 16:13:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -186,6 +186,7 @@ if(!in_array($page->action, $pathinfoParamExceptions)) {
 
 // permissions object is for managing and asking for permissions
 $permissions = new sotf_Permission;
+$permissions->debug = true;
 
 // the repository of radio stations
 $repository = new sotf_Repository($config['repositoryDir'], $db);

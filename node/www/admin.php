@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.23 2003/06/12 16:46:59 andras Exp $
+ * $Id: admin.php,v 1.24 2003/06/16 16:13:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -123,10 +123,13 @@ if(sotf_Utils::getParameter('delneighbour')) {
 $delperm = sotf_Utils::getParameter('delperm');
 if(sotf_Utils::getParameter('delperm')) {
 	checkPerm('node', 'authorize');
-  $username = sotf_Utils::getParameter('username');
-  $userid = $user->getUserid($username);
+  $userid = sotf_Utils::getParameter('userid');
   if(empty($userid) || !is_numeric($userid)) {
-    raiseError("Invalid username: $username");
+    raiseError("Invalid userid: $userid");
+  }
+  $username = $user->getUsername($userid);
+  if(empty($username)) {
+    raiseError("Invalid userid: $userid");
   }
   $permissions->delPermission('node', $userid);
   $msg = $page->getlocalizedWithParams("deleted_permissions_for", $username);

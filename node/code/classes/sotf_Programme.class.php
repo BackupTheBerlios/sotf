@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.57 2003/06/12 16:46:58 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.58 2003/06/16 16:13:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -335,6 +335,13 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 return $db->getCol("SELECT p.id FROM sotf_programmes p, sotf_node_objects n WHERE p.id=n.id AND expiry_date < CURRENT_DATE AND n.node_id='".$config['nodeId'] . "'"); 
   }
 
+  function getMyExpiringProgrammes($days) {
+	 global $db, $user;
+	 if(!is_numeric($days))
+		raiseError('invalid_parameter');
+	 return $db->getCol("SELECT p.id FROM sotf_programmes p, sotf_user_permissions u WHERE p.id=u.object_id AND u.user_id='$user->id' AND u.permission_id=1 AND expiry_date < CURRENT_DATE + interval '$days days'"); 
+  }
+
   /************************************************
    *  FILE MANAGEMENT
    ************************************************/
@@ -623,8 +630,8 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		if(is_array($foreignUser)) {
 		  $userId = sotf_User::getUserid($foreignUser['login']);
 		  if($userId) {
-			 if($permissions->hasPermission($station->id, 'add_prog') ||
-				 ($series && $permissions->hasPermission($series->id, 'add_prog'))) {
+			 if($permissions->hasPermission($station->id, 'create', $userId) ||
+				 ($series && $permissions->hasPermission($series->id, 'create', $userId))) {
 				// add permission for user
 				$permissions->addPermission($newPrg->id, $userId, 'admin');
 				$admins[] = $userId;

@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.51 2003/06/12 16:46:58 andras Exp $
+--  $Id: db.sql,v 1.52 2003/06/16 16:13:40 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -572,7 +572,7 @@ INSERT INTO "sotf_permissions" ("id", "permission") VALUES('1', 'admin');
 SELECT nextval('sotf_permissions_id_seq');
 INSERT INTO "sotf_permissions" ("id", "permission") VALUES('2', 'change');
 SELECT nextval('sotf_permissions_id_seq');
-INSERT INTO "sotf_permissions" ("id", "permission") VALUES('3', 'add_prog');
+INSERT INTO "sotf_permissions" ("id", "permission") VALUES('3', 'add_prog'); -- not used any more!
 SELECT nextval('sotf_permissions_id_seq');
 INSERT INTO "sotf_permissions" ("id", "permission") VALUES('4', 'create');
 SELECT nextval('sotf_permissions_id_seq');

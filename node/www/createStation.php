@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: createStation.php,v 1.3 2003/03/05 09:11:39 andras Exp $
+ * $Id: createStation.php,v 1.4 2003/06/16 16:13:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -20,10 +20,14 @@ checkPerm('node','create');
 
 if ($new) {
 
-  $userid = $user->getUserid($manager);
-  if(empty($userid) || !is_numeric($userid)) {
-    $page->addStatusMsg('select_manager');
-    $problem = 1;
+  if($manager) {
+	 $userid = $user->getUserid($manager);
+	 if(empty($userid) || !is_numeric($userid)) {
+		$page->addStatusMsg('invalid_user');
+		$problem = 1;
+	 }
+  } else {
+	 $userid = $user->id;
   }
 
   $station_old = $station;
@@ -41,9 +45,13 @@ if ($new) {
 	if(!$problem)	{
     $st = & new sotf_Station();
     $st->create($station, $desc);
-    $permissions->addPermission($st->getID(), $userid, 'admin');
+	 if($manager || !hasPerm('node', 'change'))
+		$permissions->addPermission($st->getID(), $userid, 'admin');
     $page->addStatusMsg('station_created');
-    $page->redirect("stations.php");
+	 if(hasPerm('node', 'change') || !$manager)
+		$page->redirect("editStation.php?stationid=" . $st->id);
+	 else
+		$page->redirect("stations.php");
   }
 }
 

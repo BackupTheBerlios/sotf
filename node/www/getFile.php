@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getFile.php,v 1.10 2003/05/30 16:31:58 andras Exp $
+ * $Id: getFile.php,v 1.11 2003/06/16 16:13:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -44,6 +44,10 @@ if ($file->type != "none")
 }
 else
 	raiseError("download_problem");
+
+// add this download to statistics
+$prg->addStat($file->id, "downloads");
+
 
 $page->logRequest();
 
