@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Contact.class.php,v 1.1 2002/11/26 18:27:00 andras Exp $
+// $Id: sotf_Contact.class.php,v 1.2 2003/01/16 13:14:42 andras Exp $
 
 //define('ERROR_NAME_USED', 123);
 
@@ -50,6 +50,25 @@ class sotf_Contact extends sotf_ComplexNodeObject {
 		if(DB::isError($res))
       raiseError($res);
     return $res;
+  }
+
+  function countProgrammes() {
+    return $this->db->getOne("SELECT count(p.id) FROM sotf_contacts c, sotf_object_roles r, sotf_programmes p WHERE c.id = '$this->id' AND c.id=r.contact_id AND r.object_id = p.id");
+  }
+
+  function references() {
+    return $this->db->getAll("SELECT r.object_id, r.role_id FROM sotf_contacts c, sotf_object_roles r WHERE c.id = '$this->id' AND c.id=r.contact_id");
+  }
+
+  function listProgrammes($start, $hitsPerPage) {
+    $sql = "SELECT p.*, r.role_id FROM sotf_contacts c, sotf_object_roles r, sotf_programmes p WHERE c.id = '$this->id' AND c.id=r.contact_id AND r.object_id = p.id";
+    $res = $this->db->limitQuery($sql, $start, $hitsPerPage);
+		if(DB::isError($res))
+			raiseError($res);
+    while (DB_OK === $res->fetchInto($item)) {
+			$list[] = $item;
+		}
+		return $list;
   }
 
 }

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.14 2002/12/18 09:16:45 andras Exp $
+// $Id: sotf_User.class.php,v 1.15 2003/01/16 13:14:42 andras Exp $
 
 /**
 * This is a class for handling users
@@ -165,7 +165,7 @@ class sotf_User
 		debug("USERDB", "registering user: ". $name);
 		$name = sotf_Utils::magicQuotes($name);
 		$passwd = sotf_Utils::magicQuotes($password);
-		$query = "INSERT INTO authenticate (username,passwd) VALUES('$name','$password')";
+		$query = "INSERT INTO authenticate (username,passwd,general_id,user_type) VALUES('$name','$password',1,'member')";
 		$userdb->query($query);
 		$id = $userdb->getOne("SELECT auth_id FROM authenticate WHERE username='$name'");
 		//		$query = "INSERT INTO user_preferences (RealName,language,last_visit,num_logins) ";

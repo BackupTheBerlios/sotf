@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: stations.php,v 1.9 2002/12/11 17:40:53 andras Exp $
+// $Id: stations.php,v 1.10 2003/01/16 13:14:42 andras Exp $
 
 require("init.inc.php");
 $hitsPerPage = $sotfVars->get("hitsPerPage", 15);
@@ -25,26 +25,17 @@ $limit = $page->splitList(sotf_Station::countAll(), "$php_self");
 
 $stations = sotf_Station::listStations($limit["from"] , $limit["maxresults"]);
 
-for($i=0; $i<count($stations); $i++)
-{
+for($i=0; $i<count($stations); $i++) {
 	
-	if ($stations[$i]->getIcon()) {
-    $hasIcon = true;
-    $stations[$i]->cacheIcon();
-  } else
-    $hasIcon = false;
+  $sprops = $stations[$i]->getAllWithIcon();
+  
+  $sprops['numProgs'] = $stations[$i]->numProgrammes();
+  $sprops['isLocal'] = $stations[$i]->isLocal();
+  if(hasPerm('node','delete')) {
+    $sprops['managers'] = $permissions->listUsersWithPermission($stations[$i]->id, 'admin');
+  }
 
-	 $sprops = array('id'		=> $stations[$i]->id,
-                   'name'	=> $stations[$i]->get('name'),
-                   'description'	=> $stations[$i]->get('description'),
-                   'numProgs'		=> $stations[$i]->numProgrammes(),
-                   'hasIcon'			=> $hasIcon,
-                   'isLocal'			=> $stations[$i]->isLocal());
-   if(hasPerm('node','delete')) {
-     $sprops['managers'] = $permissions->listUsersWithPermission($stations[$i]->id, 'admin');
-   }
-
-   $STATION_LIST[] = $sprops;
+  $STATION_LIST[] = $sprops;
 }
 
 $smarty->assign('STATIONS',$STATION_LIST);
