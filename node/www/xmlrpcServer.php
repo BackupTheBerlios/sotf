@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.20 2003/05/28 14:49:54 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.21 2003/05/29 06:54:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -96,7 +96,7 @@ function forwardResp($params) {
   $chunkInfo = xmlrpc_decode($params->getParam(0));
   $fromNode = $chunkInfo['from_node'];
   $objects = xmlrpc_decode($params->getParam(1));
-  $node = sotf_Node::getByNodeId($fromNode);
+  $node = sotf_Node::getNodeById($fromNode);
   if(!$node) {
     logError("No access: you are not in my node list!");
     return new xmlrpcresp(0, XMLRPC_ERR_NO_ACCESS, "No access: you are not in my node list!");

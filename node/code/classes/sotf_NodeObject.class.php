@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.42 2003/05/29 06:35:52 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.43 2003/05/29 06:54:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -340,7 +340,7 @@ class sotf_NodeObject extends sotf_Object {
 	 global $db, $config, $repository;
 
 	 // select objects to send to neighbour
-	 $result = $db->limitQuery("SELECT * FROM sotf_to_forward WHERE node_id = '$remoteNode' ORDER BY when", 0, $objectsPerPage);
+	 $result = $db->limitQuery("SELECT * FROM sotf_to_forward WHERE node_id = '$remoteNode' ORDER BY entered", 0, $objectsPerPage);
 	 while (DB_OK === $result->fetchInto($row)) {
 		$objects[] = $row;
 	 }

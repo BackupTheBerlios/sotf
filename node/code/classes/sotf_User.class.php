@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.22 2003/05/14 15:30:39 andras Exp $
+// $Id: sotf_User.class.php,v 1.23 2003/05/29 06:54:41 andras Exp $
 
 /** 
 * This is a class for basic handling of users. Preferences and
@@ -181,7 +181,7 @@ class sotf_User
 		$_SESSION['currentUserId'] = '';
 	}
 
-  /** Returns the name of the user given with ID. */
+  /** static: Returns the name of the user given with ID. */
 	function getUsername($user_id) {
 		global $userdb;
 		if (is_numeric($user_id))
@@ -189,7 +189,7 @@ class sotf_User
 		return false;
 	}
 
-  /** Retrieves userid for a username. */
+  /** static: Retrieves userid for a username. */
 	function getUserid($username) {
 		global $userdb;
 		return $userdb->getOne("SELECT auth_id FROM authenticate WHERE username = '$username'");

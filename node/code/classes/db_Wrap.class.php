@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.15 2003/05/26 13:11:09 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.16 2003/05/29 06:54:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -125,9 +125,10 @@ class db_Wrap extends DB_pgsql {
 	}
 
   function begin($serializable = false) {
+    $succ = $this->query("BEGIN TRANSACTION");
     if($serializable)
-      $this->query("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-    return $this->query("BEGIN TRANSACTION");
+      $succ = $this->query("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+    return $succ;
   }
 
   function commit() {

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.13 2003/05/29 06:35:52 andras Exp $
+ * $Id: cron.php,v 1.14 2003/05/29 06:54:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -52,8 +52,9 @@ if(count($neighbours) > 0) {
 $nodes = sotf_Node::listAll();
 if(count($nodes) > 0) {
   while(list(,$node) = each($nodes)) {
-    if($node->getID() != $config['nodeId'])
+    if($node->get('node_id') != $config['nodeId']) {
       $node->forwardObjects();
+    }
   }
 }
 

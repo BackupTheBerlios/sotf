@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.18 2003/05/20 16:08:15 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.19 2003/05/29 06:54:41 andras Exp $
 
 /**
  * This is a class for handling permossions.
@@ -129,22 +129,22 @@ class sotf_Permission {
   }
 
   function listUsersWithPermission($objectId, $perm) {
-    global $db, $user;
+    global $db;
 		$retval = $db->getAll("SELECT u.user_id AS id FROM sotf_user_permissions u, sotf_permissions p WHERE u.object_id='$objectId' AND p.id = u.permission_id AND ( p.permission='$perm' OR p.permission='admin')");
     for($i=0;$i<count($retval);$i++) {
-      $retval[$i]['name'] = $user->getUserName($retval[$i]['id']);
+      $retval[$i]['name'] = sotf_User::getUserName($retval[$i]['id']);
     }
     return $retval;
   }
 
 	function listUsersAndPermissionsLocalized($objectId) {
-    global $db, $user, $page;
+    global $db, $page;
 		$plist = $db->getAll("SELECT u.user_id AS id, p.permission AS perm FROM sotf_user_permissions u, sotf_permissions p WHERE p.id = u.permission_id AND u.object_id = '$objectId'");
     if(DB::isError($retval))
       raiseError($retval);
     $retval = array();
     while(list(,$perm) = each($plist)) {
-      $name = $user->getUserName($perm['id']);
+      $name = sotf_User::getUserName($perm['id']);
       $retval[$name][] = $page->getlocalized('perm_' . $perm['perm']);
     }
     ksort($retval);

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.14 2003/05/29 06:35:48 andras Exp $
+ * $Id: sotf_Node.class.php,v 1.15 2003/05/29 06:54:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -99,7 +99,7 @@ class sotf_Node extends sotf_NodeObject {
 		 $rpc->debug = true;
 	  $timestamp = $db->getTimestampTz();
 	  $remoteId = $this->get('node_id');
-	  $url = $this->getUrl();
+	  $url = $this->get('url');
 	  // remove trailing '/'
 	  while(substr($url, -1) == '/')
 		 $url = substr($url, 0, -1);

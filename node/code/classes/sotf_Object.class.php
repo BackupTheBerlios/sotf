@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.23 2003/05/29 06:35:52 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.24 2003/05/29 06:54:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -356,7 +356,7 @@ class sotf_Object {
 				$rating->updateInstant($item['row_id']);
 				break;
 			case 'sotf_stats':
-				$obj = new sotf_Object('sotf_stats', $item['row_id']);
+				$obj = new sotf_Statistics($item['row_id']);
 				$obj->updateStats();
 				break;
 			default:
