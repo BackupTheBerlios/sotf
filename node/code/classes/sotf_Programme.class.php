@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.64 2003/06/24 14:54:32 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.65 2003/06/26 14:06:45 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -916,7 +916,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 
 	 // determine role
 	 if($contactData['role']) {
-		$language = 'en'; // for now
+		$language = 'eng'; // for now
 		$rid = $repository->getRoleId($contactData['role'], $language);
 		if($rid)
 		  $contactRole = $rid;

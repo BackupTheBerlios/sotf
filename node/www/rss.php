@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: rss.php,v 1.3 2003/05/16 16:12:54 andras Exp $
+ * $Id: rss.php,v 1.4 2003/06/26 14:06:45 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Kézdi 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -68,7 +68,7 @@ if($stationName) {
 
   // add items
   $newProgs = $station->listProgrammes(0, ITEMS_IN_RSS);
-  debug("progs", $newProgs);
+  //debug("progs", $newProgs);
   foreach($newProgs as $prog) {
 	 $properties=array();
 	 $properties["description"]= $prog->get('abstract');

@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---  $Id: update.sql,v 1.10 2003/06/23 09:42:33 andras Exp $
+--  $Id: update.sql,v 1.11 2003/06/26 14:06:45 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -92,4 +92,20 @@ CREATE TABLE "sotf_portals" (
 	"last_access" timestamptz,
 	"last_update" timestamptz
 );
+
+-- 2003-06-26
+
+UPDATE sotf_roles SET creator='t' WHERE role_id=5;
+UPDATE sotf_roles SET creator='t' WHERE role_id=12;
+UPDATE sotf_roles SET creator='t' WHERE role_id=16;
+UPDATE sotf_roles SET creator='t' WHERE role_id=24;
+
+ALTER TABLE sotf_comments ADD COLUMN "sent" bool;
+ALTER TABLE sotf_comments ALTER sent SET DEFAULT 'f'::bool;
+
+ALTER TABLE sotf_user_prefs ADD COLUMN "feedback" bool;
+ALTER TABLE sotf_user_prefs ALTER feedback SET DEFAULT 't'::bool;
+
+ALTER TABLE sotf_contacts ADD COLUMN "feedback" bool;
+ALTER TABLE sotf_contacts ALTER feedback SET DEFAULT 'f'::bool;
 

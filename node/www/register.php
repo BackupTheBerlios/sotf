@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: register.php,v 1.5 2003/05/14 15:30:39 andras Exp $
+ * $Id: register.php,v 1.6 2003/06/26 14:06:45 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -55,39 +55,36 @@ if($filled)
 		//$errorMsg = appendWith($errorMsg, $page->getlocalized("password_mismatch"));
 	}
 	// TODO: check email?
-	if(!$error)
-	{
-		if($change) { // existing user
-      $user->realname = $realname;
-      $user->language = $language;
-      $user->email = $email;
-      $user->save($password);
-		}
-		else // new user
-		{
-			$error = sotf_User::register($password, $username, $realname, $language, $email);
-      if(!$error) {
-        $error = sotf_User::login($username, $password);
-      }
-      if($error)
-        $smarty->assign('ERRORMSG',$error);
-		}
-		if(!$error) {
-      if ($okURL) {
-        $page->redirect($okURL);
-      } else {
-        $page->redirect('index.php');
-      }
-      exit;
-		}
+	if(!$error) {
+	  $page->setUILanguage($language);
+	  if($change) { // existing user
+		 $user->realname = $realname;
+		 $user->language = $language;
+		 $user->email = $email;
+		 $user->save($password);
+	  } else { 
+		 // new user
+		 $error = sotf_User::register($password, $username, $realname, $language, $email);
+		 if(!$error) {
+			$error = sotf_User::login($username, $password);
+		 }
+		 if($error)
+			$smarty->assign('ERRORMSG',$error);
+	  }
+	  if(!$error) {
+		 if ($okURL) {
+			$page->redirect($okURL);
+		 } else {
+			$page->redirect('index.php');
+		 }
+		 exit;
+	  }
 	}
-}
-elseif(isset($user))
-{
-		$username = $user->name;
-		$realname = $user->realname;
-		$language = $user->language;
-		$email = $user->email;
+} elseif(isset($user)) {
+  $username = $user->name;
+  $realname = $user->realname;
+  $language = $user->language;
+  $email = $user->email;
 }
 
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.39 2003/06/25 14:57:55 andras Exp $
+ * $Id: init.inc.php,v 1.40 2003/06/26 14:06:45 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -88,19 +88,6 @@ require($config['classdir'] . '/sotf_Object.class.php');
 require($config['classdir'] . '/sotf_Vars.class.php');
 require($config['classdir'] . '/sotf_Permission.class.php');
 require($config['classdir'] . '/sotf_Repository.class.php');
-
-///////////////////////////////////////////////////
-// Handle language change
-///////////////////////////////////////////////////
-if($_GET['uilang']) {
-	if(!setcookie('uiLang', $_GET['uilang'])) {
-		die("could not set cookie for uilang");
-	}
-	$url = $_GET['okURL'];
-	if(!$url) $url = $config['localPrefix'];
-	header ("Location: " . $url);
-	exit;
-}
 
 //PEAR::setErrorHandling(PEAR_ERROR_TRIGGER);
 //PEAR::setErrorHandling(PEAR_ERROR_DIE);
@@ -189,6 +176,17 @@ debug('scripturl', $scriptUrl);
 // page object is for request handling and page generation
 $page = new sotf_Page;
 
+///////////////////////////////////////////////////
+// Handle language change
+///////////////////////////////////////////////////
+if($_GET['uilang']) {
+	$page->setUILanguage($_GET['uilang']);
+	$url = $_GET['okURL'];
+	if(!$url) $url = $config['localPrefix'];
+	$page->redirect($url);
+	exit;
+}
+
 // we need trick for making pages indexed by Google
 // therefore we pass some parameters in pathinfo
 // after this call getParameter can be used to get these parameters as well
@@ -199,7 +197,7 @@ if(!in_array($page->action, $pathinfoParamExceptions)) {
 
 // permissions object is for managing and asking for permissions
 $permissions = new sotf_Permission;
-$permissions->debug = true;
+//$permissions->debug = true;
 
 // the repository of radio stations
 $repository = new sotf_Repository($config['repositoryDir'], $db);
