@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.75 2003/12/04 08:27:50 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.76 2003/12/05 13:22:37 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -358,7 +358,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   /** static */
   function getFileStats() {
 	 global $db;
-	 return $db->getRow("SELECT sum(filesize) AS filesize, sum(play_length) AS play_length FROM sotf_media_files");
+	 return $db->getRow("SELECT sum(f.filesize) AS filesize, sum(f.play_length) AS play_length FROM sotf_media_files f LEFT JOIN sotf_programmes p ON f.prog_id=p.id WHERE p.id IS NOT NULL ");
   }
 
   function getRefs() {
