@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editMeta.php,v 1.19 2003/09/16 12:00:06 andras Exp $
+ * $Id: editMeta.php,v 1.20 2003/09/24 14:17:02 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -79,7 +79,7 @@ if($save || $finish || $finishpublish) {
 	        . sotf_Utils::getParameter($param . 'Month') . '-'
 	        . sotf_Utils::getParameter($param . 'Day');
 			if($param == 'broadcast_date') {
-			  $value = $value . ' ' . sotf_Utils::getParameter('broadcast_timeHour') . ':' . sotf_Utils::getParameter('broadcast_timeMinute') . ' ' . $db->myTZ();
+			  $value = $value . ' ' . sotf_Utils::getParameter('broadcast_dateHour') . ':' . sotf_Utils::getParameter('broadcast_dateMinute') . ' ' . $db->myTZ();
 			}
 		} else {
 		  $value = NULL;
