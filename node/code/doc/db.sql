@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.38 2003/05/27 15:54:31 andras Exp $
+--  $Id: db.sql,v 1.39 2003/05/27 16:44:20 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -163,7 +163,7 @@ CREATE TABLE "sotf_series" (
 CREATE SEQUENCE "sotf_programmes_seq";
 
 CREATE TABLE "sotf_programmes" (
--- used to store generic and searchable metadata about radio programmes
+-- used to store generic and searchable metadata about radio programmes XXX
 -- REPLICATED
 	"id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
 	"guid" varchar(76) UNIQUE NOT NULL,							-- globally unique id

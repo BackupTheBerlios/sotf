@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearchresults.php,v 1.11 2003/05/14 15:30:39 andras Exp $
+ * $Id: advsearchresults.php,v 1.12 2003/05/27 16:44:20 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -56,7 +56,15 @@ for($i =0; $i<$max; $i++)	//$selected will contain all the information about the
 {
 	foreach($result[$i] as $key => $value)
 		if (array_key_exists($key, $fields) AND $key != 'title')		//title is presented on a diferent level
-		if ($key == 'language' AND $value != "") $values[$fields[$key]] = $page->getlocalized($value);	//language need to be translated
+		if ($key == 'language' AND $value != "")			//language need to be translated
+		{
+			$languages = explode(',', $value);
+			foreach ($languages as $language)
+			{
+				if ($values[$fields[$key]] == "") $values[$fields[$key]] .= $page->getlocalized($language);
+				else $values[$fields[$key]] .= ", ".$page->getlocalized($language);
+			}
+		}
 		else $values[$fields[$key]] = $value;
 	if (array_key_exists("person", $fields))		//person is a special filed
 	{
