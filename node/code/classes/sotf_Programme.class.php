@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.37 2003/03/05 16:44:49 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.38 2003/03/06 09:57:52 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -618,18 +618,17 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 
     // type...
     $newPrg->set('language', $metadata['language']);
+	
+    $newPrg->update();
 		
 		// topic
 		$topicz = explode(",",$metadata['type']);
 		foreach($topicz as $topic){
 			$topic_id = $db->getOne("SELECT topic_id FROM sotf_topics WHERE topic_name = '" . trim($topic) . "'");
 			if(!empty($topic_id)){
-				$db->query("INSERT INTO sotf_prog_topics(prog_id, topic_id) VALUES('" . $newPrg->id . "','$topic_id')");
+				$db->query("INSERT INTO sotf_prog_topics(id, prog_id, topic_id) VALUES('" . $this->getID() . "','" . $newPrg->id . "','$topic_id')");
 			}
 		}
-		
-		
-    $newPrg->update();
 
     // rights
     $rights = new sotf_NodeObject("sotf_rights");
