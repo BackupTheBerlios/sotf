@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: addFiles.php,v 1.9 2003/03/05 09:11:39 andras Exp $
+ * $Id: addFiles.php,v 1.10 2003/07/29 09:13:43 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -26,6 +26,7 @@ checkPerm($prgId, "change");
 $upload = sotf_Utils::getParameter('upload');
 if($upload) {
   $fname = $_FILES['userfile']['name'];
+  debug("_FILES", $_FILES['userfile']);
   $file = $user->getUserDir() . '/' . $fname;
   moveUploadedFile('userfile',  $file);
   $prg = new sotf_Programme($prgId);

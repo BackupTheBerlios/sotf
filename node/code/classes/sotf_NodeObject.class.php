@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.51 2003/07/29 08:27:15 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.52 2003/07/29 09:13:43 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -55,10 +55,10 @@ class sotf_NodeObject extends sotf_Object {
 
   /** Generates the ID for a new persistent object. */
   function generateID() {
-    global $config;
+    global $config, $db;
     if($config['nodeId'] == 0)
       raiseError('Please set config[nodeId] to a positive integer in config.inc.php');
-    $localId = $this->db->nextId($this->tablename);
+    $localId = $db->nextId($this->tablename);
 	 $id = $this->makeId($config['nodeId'], $this->tablename, $localId);
     debug("generated ID", $id);
     return $id;

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editRight.php,v 1.5 2003/03/05 09:11:39 andras Exp $
+ * $Id: editRight.php,v 1.6 2003/07/29 09:13:43 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -47,7 +47,7 @@ if($save) {
     $rights->set('stop_time', null);
   } else {
     // check input params
-    if(!is_int($startTime) || !is_int($stopTime))
+    if(!is_numeric($startTime) || !is_numeric($stopTime))
       raiseError("not_integer");
     $rights->set('start_time', $startTime);
     $rights->set('stop_time', $stopTime);
