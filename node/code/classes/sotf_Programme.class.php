@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.71 2003/10/16 08:01:58 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.72 2003/11/28 16:51:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -243,7 +243,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 $xml = $xml . "\n</$name>\n";
 	 // TODO: save more data from other tables as well !!!!!
 
-	 $file = $this->getDir() . '/metadump.xml';
+	 $file = $this->getMetaDir() . '/metadump.xml';
 	 debug("dumping metadata xml in", $file);
 	 $fp = fopen("$file", "w");
 	 fwrite($fp, $xml);
@@ -849,10 +849,18 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 }
 	 $dir->close();
 
+	 // insert metadata
+	 if(is_readable($metaFile)) {
+		debug("insert meta", $metaFile);
+		$target = $newPrg->getMetaDir() . '/metadata.xml';
+		if(!copy($metaFile, $target))
+		  logError("Could not copy metadata into $target");
+	 }
+
 	 // insert icon
 	 $logoFile = $pathToFile . $folderName . "/icon.png";
 	 if(is_readable($logoFile)) {
-		debug("insert icon", $currentFile);
+		debug("insert icon", $logoFile);
 		$newPrg->setIcon($logoFile);
 	 }
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.48 2003/11/27 10:11:32 andras Exp $
+ * $Id: init.inc.php,v 1.49 2003/11/28 16:51:52 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -76,6 +76,8 @@ if(!ini_set("include_path", $newPath))
 require($config['peardir'] . '/DB.php');
 // change this if you want to use other DBMS not Postgres
 require_once($config['peardir'] . '/DB/pgsql.php');
+if($config['userDbType'] == 'mysql')
+	require_once($config['peardir'] . '/DB/mysql.php');
 require($config['smartydir'] . '/Smarty.class.php');
 require($config['smartydir'] . '/Config_File.class.php');
 require($config['classdir'] . '/db_Wrap.class.php');
@@ -90,35 +92,40 @@ require($config['classdir'] . '/sotf_Vars.class.php');
 require($config['classdir'] . '/sotf_Permission.class.php');
 require($config['classdir'] . '/sotf_Repository.class.php');
 require($config['classdir'] . '/sotf_Vocabularies.class.php');
+require_once($config['classdir'] . '/' . $config['userDbClass'] . '.class.php');
 
 //PEAR::setErrorHandling(PEAR_ERROR_TRIGGER);
 //PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-// create database connections
-
+// create sotf database connection
 $config['sqlDSN'] = 'pgsql://' . $config['nodeDbUser'] . ':' . $config['nodeDbPasswd'] . '@' . $config['nodeDbHost'] .':'. $config['nodeDbPort'] .'/'. $config['nodeDbName'];
 debug("sqlDSN", $config['sqlDSN']);
-$config['sqlUserDSN'] = 'pgsql://' . $config['userDbUser'] .':'. $config['userDbPasswd'] .'@'. $config['userDbHost'] .':'. $config['userDbPort'] .'/'. $config['userDbName'];
-debug("sqlUserDSN", $config['sqlUserDSN']);
-
 
 $db = new db_Wrap;
 $db->debug = $config['debug'];
-$success = $db->makeConnection($config['sqlDSN'], false);
+$success = $db->makeConnection($config['sqlDSN'], false, 'node');
 if (DB::isError($success))
 {
   die ("Node DB connection to " . $config['sqlDSN'] . " failed: \n" . $success->getMessage());
 } 
 $db->setFetchmode(DB_FETCHMODE_ASSOC);
 
-$userdb = new db_Wrap;
-$userdb->debug = $config['debug'];
-$success = $userdb->makeConnection($config['sqlUserDSN'], false);
-if (DB::isError($success))
-{
-  die ("User DB connection to " . $config['sqlUserDSN'] . " failed: \n" . $success->getMessage());
+if($config['selfUserDb']) {
+	$userdb = &$db;
+} else {
+	// create user database connection
+	$config['sqlUserDSN'] = $config['userDbType'] . '://' . $config['userDbUser'] .':'. $config['userDbPasswd'] .'@'. $config['userDbHost'] .':'. $config['userDbPort'] .'/'. $config['userDbName'];
+	debug("sqlUserDSN", $config['sqlUserDSN']);
+
+	$userdb = new db_Wrap;
+	$userdb->debug = $config['debug'];
+	$success = $userdb->makeConnection($config['sqlUserDSN'], false, 'user');
+	if (DB::isError($success))
+		{
+			die ("User DB connection to " . $config['sqlUserDSN'] . " failed: \n" . $success->getMessage());
+		}
+	$userdb->setFetchmode(DB_FETCHMODE_ASSOC);
 }
-$userdb->setFetchmode(DB_FETCHMODE_ASSOC);
 
 // persistent server variables
 $sotfVars = new sotf_Vars($db, 'sotf_vars');
