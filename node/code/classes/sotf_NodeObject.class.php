@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.48 2003/06/04 12:01:08 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.49 2003/06/04 13:30:16 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -118,7 +118,9 @@ class sotf_NodeObject extends sotf_Object {
 
   function isLocal() {
 	 global $config;
-	 return ($this->getNodeId()==$config['nodeId']);
+	 $retval = ($this->getNodeId()==$config['nodeId']);
+	 debug("isLocal1", $retval);
+	 return $retval;
   }
 
   /************************************************

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.19 2003/06/04 13:19:59 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.20 2003/06/04 13:30:16 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -24,11 +24,11 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	//function getMetaDir()
 	//function checkDirs
 
+	/** overrides function in sotf_NodeObject */
 	function isLocal() {
-		return is_dir($this->getDir()); 
-		// alternative:
-		// global $config;
-		//return ($this->getNodeId()==$config['nodeId']);
+		$retval = is_dir($this->getDir()); 
+		debug("isLocal2", $retval);
+		return $retval;
 	}
 
 	function create() {
