@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.26 2003/05/09 15:11:55 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.27 2003/05/12 15:59:17 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -305,7 +305,7 @@ class sotf_Repository {
   }
 
   function getGenreName($id) {
-	 return $this->genres[$id];
+	 return $this->genres[$id-1];
   }
 
   /************************************************

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editLink.php,v 1.3 2003/03/05 09:11:39 andras Exp $
+ * $Id: editLink.php,v 1.4 2003/05/12 15:59:17 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -33,19 +33,24 @@ if($linkId) {
 
 // save general data
 if($save) {
-    $link->set('url', sotf_Utils::getParameter('url'));
-    $link->set('caption', sotf_Utils::getParameter('caption'));
-    if(sotf_Utils::getParameter('public_access'))
-      $b = "true";
-    else
-      $b = "false";
-    $link->set('public_access', $b);
+  $url = sotf_Utils::getParameter('url');
+  $link->set('url', $url);
+  $link->set('caption', sotf_Utils::getParameter('caption'));
+  if(sotf_Utils::getParameter('public_access'))
+	 $b = "true";
+  else
+	 $b = "false";
+  $link->set('public_access', $b);
+  if(sotf_Utils::is_valid_URL($url)) {
     if($linkId)
       $link->update();
     else
       $link->create();
     $page->redirect("closeAndRefresh.php?anchor=links");
     exit;
+  } else {
+	 $page->addStatusMsg("invalid-url");
+  }
 }
 
 // general data

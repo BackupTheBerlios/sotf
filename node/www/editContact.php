@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editContact.php,v 1.10 2003/03/05 09:11:39 andras Exp $
+ * $Id: editContact.php,v 1.11 2003/05/12 15:59:17 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -63,11 +63,17 @@ if($save || $finish1 || $finish2) {
     $contact->set('phone', sotf_Utils::getParameter('phone'));
     $contact->set('cellphone', sotf_Utils::getParameter('cellphone'));
     $contact->set('fax', sotf_Utils::getParameter('fax'));
-    $contact->set('url', sotf_Utils::getParameter('url'));
+	 $url = sotf_Utils::getParameter('url');
+	 if(sotf_Utils::is_valid_URL($url))
+		$contact->set('url', $url);
+	 else {
+		$error = 1;
+		$page->addStatusMsg("invalid-url");
+	 }
     $contact->update();
   }
 
-  if($save) {
+  if($save || $error) {
     $page->redirect("editContact.php?id=$contactId");
   } else {
     $page->redirect("closeAndRefresh.php?anchor=roles");
