@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: rss.php,v 1.8 2003/07/29 08:27:16 andras Exp $
+ * $Id: rss.php,v 1.9 2003/07/31 14:19:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Kézdi 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -75,7 +75,7 @@ if($prgId) {
 
   // add metadata as item
   $properties=array();
-  $smarty->assign('ID', $id);
+  $smarty->assign('ID', $prgId);
   //  $smarty->assign('LANG', 'eng');
   // general data
   $smarty->assign('PRG_DATA', $prgData);
@@ -99,7 +99,7 @@ if($prgId) {
   $properties["description"] = $text;
   $properties["link"]= $config['rootUrl'] . "/get.php/" . $prgId . '#general';
   debug("LANG in rss", $lang);
-  $properties["title"]= $page->getlocalized('Metadata');
+  $properties["title"]= ''; //$page->getlocalized('Metadata');
   //$properties["dc:date"]= $prog->get('production_date');
   $rss_writer_object->additem($properties);
 
@@ -108,7 +108,7 @@ if($prgId) {
   $smarty->assign('ROLES', $prg->getRoles());
   $text = $smarty->fetch('rssContributors.htm');
   $properties["description"] = $text;
-  $properties["link"]= $config['rootUrl'] . "/get.php/" . $prgId . '#roles';
+  $properties["link"]= ""; //$config['rootUrl'] . "/get.php/" . $prgId . '#roles';
   $properties["title"]= $page->getlocalized('Roles');
   //$properties["dc:date"]= $prog->get('production_date');
   $rss_writer_object->additem($properties);
@@ -123,9 +123,9 @@ if($prgId) {
   $smarty->assign('AUDIO_FILES', $audioFiles);
   $text = $smarty->fetch('rssListen.htm');
   $properties["description"] = $text;
-  $properties["link"]= $config['rootUrl'] . "/get.php/" . $prgId . '#mfiles';
+  $properties["link"]= ''; //$config['rootUrl'] . "/get.php/" . $prgId . '#mfiles';
   //$properties["link"]= $config['rootUrl'] . '/listen.php/audio.m3u?id=' . $prgId;
-  $properties["title"]= $page->getlocalized('Listen');
+  $properties["title"]= "<img src=\"" . $config['imageUrl'] . "/listen.gif\" border=\"0\"> " . $page->getlocalized('listen');
   //$properties["dc:date"]= $prog->get('production_date');
   $rss_writer_object->additem($properties);
 
@@ -141,7 +141,7 @@ if($prgId) {
   $text = $smarty->fetch('rssRating.htm');
   $properties["description"] = $text;
   $properties["link"]= $config['rootUrl'] . "/get.php/" . $prgId . "#stats";
-  $properties["title"]= $page->getlocalized('Statistics');
+  $properties["title"]= ''; //$page->getlocalized('Statistics');
   //$properties["dc:date"]= $prog->get('production_date');
   $rss_writer_object->additem($properties);
 

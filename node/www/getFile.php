@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getFile.php,v 1.11 2003/06/16 16:13:40 andras Exp $
+ * $Id: getFile.php,v 1.12 2003/07/31 14:19:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -13,6 +13,9 @@ $filename = sotf_Utils::getParameter('filename');
 $id = sotf_Utils::getParameter('id');
 $mainAudio = sotf_Utils::getParameter('audio');
 $prg = & new sotf_Programme($id);
+
+if(!$prg)
+	  raiseError("no_such_object");
 
 if(!$prg->isLocal()) {
   // have to send user to home node of this programme
