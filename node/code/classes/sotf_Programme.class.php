@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.27 2003/02/26 10:58:55 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.28 2003/03/03 16:32:54 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -102,7 +102,9 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   }
 
   function getStation() {
-    return new sotf_Station($this->get('station_id'));
+    if(!$this->station)
+      $this->station = new sotf_Station($this->get('station_id'));
+    return $this->station;
   }
 
   function getSeries() {

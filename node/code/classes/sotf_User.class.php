@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.19 2003/02/27 16:13:10 andras Exp $
+// $Id: sotf_User.class.php,v 1.20 2003/03/03 16:32:54 andras Exp $
 
 /**
 * This is a class for handling users
@@ -77,7 +77,7 @@ class sotf_User
       
       // get some more data from sadm
 			$data = $userdb->getRow("SELECT * FROM user_preferences WHERE auth_id = '$id'");
-      debug("user_preferences", $data);
+      // debug("user_preferences", $data);
 			$this->realname = $data['RealName'];
 			$this->language = $data['language'];
 			$this->email = $data['email'];

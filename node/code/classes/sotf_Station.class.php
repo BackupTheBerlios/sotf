@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.15 2003/02/21 18:13:25 andras Exp $
+// $Id: sotf_Station.class.php,v 1.16 2003/03/03 16:32:54 andras Exp $
 
 class sotf_Station extends sotf_ComplexNodeObject {		
 
@@ -143,7 +143,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
 	* @return	mixed	Returns the path of the jingle if exist, else return boolean false
 	* @use	$audioFormats
 	*/
-	function getJingle($index)
+	function getJingle($index = 1)
 	{
 		global $audioFormats;
 

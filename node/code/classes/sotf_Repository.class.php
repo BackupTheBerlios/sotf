@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Repository.class.php,v 1.21 2003/02/28 14:01:52 andras Exp $
+ * $Id: sotf_Repository.class.php,v 1.22 2003/03/03 16:32:54 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -17,7 +17,8 @@ require_once($classdir . '/sotf_Series.class.php');
 require_once($classdir . '/sotf_Programme.class.php');
 require_once($classdir . '/sotf_Contact.class.php');
 require_once($classdir . '/sotf_Rating.class.php');
-require_once($classdir . '/sotf_PlayList.class.php');
+require_once($classdir . '/sotf_Playlist.class.php');
+require_once($classdir . '/sotf_UserPlaylist.class.php');
 require_once($classdir . '/sotf_Blob.class.php');
 
 class sotf_Repository {
