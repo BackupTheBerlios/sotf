@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.54 2003/06/20 16:24:33 andras Exp $
+--  $Id: db.sql,v 1.55 2003/06/23 07:26:21 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -444,8 +444,9 @@ CREATE TABLE "sotf_prog_refs" (
 	"id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
 	"prog_id" varchar(12) NOT NULL,							-- programme being referenced
 	"station_id" varchar(12) NOT NULL,
-	"url" varchar(255) NOT NULL,					-- URL of portal referencing to the program
+	"url" varchar(255) NOT NULL,					-- URL of portal page referencing to the program
 	"portal_name" varchar(200),					-- name of portal
+	"portal_home" varchar(200),					-- homepage of portal
 	"start_date" timestamptz,						-- date when prog appeared on portal  
 	"end_date" timestamptz, 						-- date when prog disappeared from portal
 	"visits" int,										-- number of visits
@@ -566,7 +567,8 @@ CREATE TABLE "sotf_streams" (
 
 CREATE TABLE "sotf_portals" (
 -- list of portals connected to this node 
-	"id" serial PRIMARY KEY, 					-- just an id
+-- REPLICATED
+	"id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
 	"name" varchar(50) NOT NULL,				-- name of portal
 	"url" varchar(255) UNIQUE NOT NULL,		-- url of portal (identifies portal)
 	"page_impression" int,						-- number of downloads of starting page 
