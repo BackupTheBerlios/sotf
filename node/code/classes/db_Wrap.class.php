@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.12 2003/02/12 10:21:47 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.13 2003/04/04 11:18:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -13,7 +13,7 @@ class db_Wrap extends DB_pgsql {
   var $debug = false;
 
   /** When debug is on, logged query texts will be truncated to this length. */
-  var $traceLength = 350;
+  var $traceLength = 500;
 
   /*
 	function getDBConn($dsn, $persistent) {

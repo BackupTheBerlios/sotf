@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.10 2003/03/05 09:11:40 andras Exp $
+ * $Id: index.php,v 1.11 2003/04/04 11:18:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -14,9 +14,6 @@ if($_REQUEST['select_station']) {
   $page->redirect("showStation.php?stationid=" . $_POST['station']);
 }
 
-/* defaults for main "index" page   */
-
-define("MAX_ITEMS_IN_INDEX", 10);
 
 $data['numNodes'] = sotf_Node::countAll();
 if($data['numNodes']==0) {
@@ -68,7 +65,9 @@ if ($page->loggedIn()) {
   $defQuery = $prefs->getDefaultQuery();
 }
 
-// show default query instead of new programmes
+// show default query or new programmes
+$maxItemsIndexPage = $sotfVars->get("maxItemsIndexPage", 10);
+
 if($defQuery) {
   $smarty->assign("DEF_QUERY", 1);
     debug("default query", $defQuery);
@@ -81,7 +80,7 @@ if($defQuery) {
     $max = $db->getOne("SELECT count(*) FROM ( $query ) as foo ");       
     $smarty->assign("DEF_QUERY_MAX", $max);
 
-    $res = $db->limitQuery($query, 0, MAX_ITEMS_IN_INDEX);
+    $res = $db->limitQuery($query, 0, $maxItemsIndexPage);
 
     $hits = '';
     while (DB_OK === $res->fetchInto($row)) {
@@ -92,7 +91,7 @@ if($defQuery) {
 
 } else {
   // get new programmes
-  $smarty->assign('NEWS', sotf_Programme::getNewProgrammes($fromDay, MAX_ITEMS_IN_INDEX));
+  $smarty->assign('NEWS', sotf_Programme::getNewProgrammes($fromDay, $maxItemsIndexPage));
 }
 
 // get topics with most content

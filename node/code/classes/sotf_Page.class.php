@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.26 2003/03/05 09:11:39 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.27 2003/04/04 11:18:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -301,7 +301,7 @@ class sotf_Page
 	function splitList($rp_count, $rp_url, $anchor = "")
 	{
 		global $smarty, $sotfVars;
-		$rp_maxresults = $sotfVars->get("hitsPerPage", 30);		//display maximal so many results
+		$rp_maxresults = $sotfVars->get("hitsPerPage", 10);		//display maximal so many results
 		//$rp_maxresults = 2;
 		$rp_from = sotf_Utils::getParameter('rp_from');
 		

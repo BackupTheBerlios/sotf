@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Repository.class.php,v 1.24 2003/03/05 14:14:30 th Exp $
+ * $Id: sotf_Repository.class.php,v 1.25 2003/04/04 11:18:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -258,6 +258,12 @@ class sotf_Repository {
     }
     debug("unkwon role id", $id);
     return "UNKNOWN_ROLE";
+  }
+
+  function getRoleId($name, $language) {
+    $name = sotf_Utils::magicQuotes($name);
+    $language = sotf_Utils::magicQuotes($language);
+    return $this->db->getOne("SELECT role_id FROM sotf_role_names WHERE name='$name' AND language='$language'");
   }
 
   function getRoles() {
