@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.14 2003/01/30 15:30:34 andras Exp $
+// $Id: sotf_Station.class.php,v 1.15 2003/02/21 18:13:25 andras Exp $
 
 class sotf_Station extends sotf_ComplexNodeObject {		
 
@@ -27,6 +27,20 @@ class sotf_Station extends sotf_ComplexNodeObject {
       raiseError($res);
     return $res;
   }
+
+	/** static: finds a station by its name
+	 */
+	function getByName($stationName) {
+		global $db;
+    $stationName = sotf_Utils::magicQuotes($stationName);
+		$id = $db->getOne("SELECT id FROM sotf_stations WHERE name = '$stationName'");
+		if(DB::isError($id))
+			raiseError($id);
+    if($id)
+      return new sotf_Station($id);
+    else
+      return NULL;
+	}
 
 	function create($stationName, $desc) {
 		global $nodeId;
