@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showSeries.php,v 1.10 2004/02/27 17:53:15 micsik Exp $
+ * $Id: showSeries.php,v 1.11 2005/02/01 10:06:31 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -36,6 +36,7 @@ $page->setTitle($series->get('name'));
 $smarty->assign('SERIES_ID',$seriesid);
 $smarty->assign('SERIES_DATA',$series->getAllWithIcon());
 $smarty->assign('STATION_DATA',$station->getAllWithIcon());
+$smarty->assign('HOME_URL', sotf_Node::getHomeNodeRootUrl($series));
 $smarty->assign('ROLES', $series->getRoles());
 if($series->getJingle())
 	  $smarty->assign('JINGLE', 1);

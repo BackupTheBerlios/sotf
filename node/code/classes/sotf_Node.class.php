@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.18 2005/01/18 16:43:01 micsik Exp $
+ * $Id: sotf_Node.class.php,v 1.19 2005/02/01 10:06:18 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -42,15 +42,25 @@ class sotf_Node extends sotf_NodeObject {
 	function redirectToHomeNode($obj, $script) {
 	  global $page;
 
-	  // have to send user to home node of this programme
-	  $node = sotf_Node::getNodeById($obj->getNodeId());
-	  if(!$node) {
-		 raiseError("Could not find home node for programme: " . $prg->id);
-	  }
+	  $url = sotf_Node::getHomeNodeRootUrl($obj);
 	  $oldParams = substr(strstr(myGetenv("REQUEST_URI"), '.php'), 4);
-	  $url = $node->get('url') . "/$script" . $oldParams;
+	  $url = $url . "/$script" . $oldParams;
 	  $page->redirect($url);
 	  exit;
+	}
+
+	/** static */
+	function getHomeNodeRootUrl($obj) {
+	  if($obj->isLocal()) {
+		 global $config;
+		 return $config['rootUrl'];
+	  } else {
+		 $node = sotf_Node::getNodeById($obj->getNodeId());
+		 if(!$node) {
+			raiseError("Could not find home node for programme: " . $obj->id);
+		 }
+		 return $node->get('url');
+	  }
 	}
 
 	/** returns a list of all such objects: can be slow!!

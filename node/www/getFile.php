@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getFile.php,v 1.14 2004/08/19 08:53:00 micsik Exp $
+ * $Id: getFile.php,v 1.15 2005/02/01 10:06:31 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -47,9 +47,13 @@ $file = & new sotf_File($filename);
 if ($file->type != "none")
 {
 	header("Content-type: " . $file->mimetype . "\n");
-	header("Content-transfer-encoding: binary\n"); 
 	header("Content-length: " . filesize($filename) . "\n");   
-
+	//if($mainAudio) {  //this is somehow needed for iPodder
+	//  header("Accept-Ranges: bytes");
+	//  header('ETag: "' . md5(file_get_contents($filename)) . '"');
+	//} else {
+	  header("Content-transfer-encoding: binary\n"); 
+	  //}
 	// send file
 	readfile($filename);
 }

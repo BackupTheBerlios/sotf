@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showStation.php,v 1.13 2004/02/27 17:53:15 micsik Exp $
+ * $Id: showStation.php,v 1.14 2005/02/01 10:06:32 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -50,6 +50,7 @@ if($delprog) {
 $smarty->assign('STATION_ID',$stationid);
 $smarty->assign('STATION',$st->get('name'));
 $smarty->assign('STATION_DATA',$st->getAllWithIcon());
+$smarty->assign('HOME_URL', sotf_Node::getHomeNodeRootUrl($st));
 if($st->isLocal()) {
   $smarty->assign('IS_LOCAL',1);
 }

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.36 2005/01/18 16:43:02 micsik Exp $
+ * $Id: xmlrpcServer.php,v 1.37 2005/02/01 10:06:32 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -21,9 +21,12 @@ set_time_limit(18000);
 ini_set("display_errors", 0);
 
 debug("--------------- XML-RPC SERVER STARTED -----------------------------------");
+if(preg_match('!methodName>(\S+)</methodName!',$HTTP_RAW_POST_DATA, $mm)) {
+  $methodName = $mm[1];
+}
 $headers = getallheaders();
 if($headers['Content-Length'])
-  debug("XML-RPC REQUEST SIZE: ", $headers['Content-Length']);
+  debug("XML-RPC REQUEST $methodName", $headers['Content-Length']);
 
 $map['sotf.sync'] = array('function' => 'syncResp');
 $map['sotf.forward'] = array('function' => 'forwardResp');

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.83 2004/06/23 14:05:20 micsik Exp $
+ * $Id: sotf_Programme.class.php,v 1.84 2005/02/01 10:06:19 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -445,10 +445,10 @@ class sotf_Programme extends sotf_ComplexNodeObject {
    ************************************************/
 
   /** Returns an array containing info about the available audio files. */
-  function listAudioFiles($mainContent = 'true') {
+  function listAudioFiles($mainContent = 'true', $orderBy = 'filename') {
 	 global $db;
 
-	 $objects = $db->getAll("SELECT * FROM sotf_media_files WHERE prog_id='$this->id' AND main_content='$mainContent' ORDER BY filename");
+	 $objects = $db->getAll("SELECT * FROM sotf_media_files WHERE prog_id='$this->id' AND main_content='$mainContent' ORDER BY $orderBy");
 	 return $objects;
   }
 
