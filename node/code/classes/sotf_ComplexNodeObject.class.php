@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.20 2003/06/04 13:30:16 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.21 2003/06/04 13:33:08 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -41,12 +41,12 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	}
 	
 	function delete() {
-	  if(!$this->isLocal())
-		 raiseError("operation_for_local_objects_only");
-	  // delete files from the repository
-	  debug("deleting: ", $this->getDir());
-	  sotf_Utils::erase($this->getDir());
-	  // delete from sql db
+	  if($this->isLocal()) {
+		 // delete files from the repository
+		 debug("deleting: ", $this->getDir());
+		 sotf_Utils::erase($this->getDir());
+		 // delete from sql db
+	  }
 	  return parent::delete();
 	}
 
