@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.16 2003/07/29 08:27:16 andras Exp $
+ * $Id: index.php,v 1.17 2003/11/27 10:11:32 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -50,7 +50,8 @@ $smarty->assign('searchLangs', $searchLangs);
 $smarty->assign('langNames', $langNames);
 
 $now = getDate();
-$dayInThePast = mktime(0,0,0, $now['mon'], $now['mday']-10, $now['year']);
+//$dayInThePast = mktime(0,0,0, $now['mon'], $now['mday']-10, $now['year']);
+$dayInThePast = time() - (60*60*24*30); // 30 days back
 $fromDay = date('Y-m-d', $dayInThePast);
 
 

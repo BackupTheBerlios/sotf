@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.47 2003/10/16 07:51:12 andras Exp $
+ * $Id: init.inc.php,v 1.48 2003/11/27 10:11:32 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -142,6 +142,7 @@ if($config['debug'])
   error_log("REFERER: " . myGetenv('HTTP_REFERER'),0);
   error_log("HTTP_HOST: " . myGetenv('HTTP_HOST'),0);
   error_log("SERVER_NAME: " . myGetenv('SERVER_NAME'),0);
+  error_log("HTTP_ACCEPT_LANGUAGE: " . myGetenv('HTTP_ACCEPT_LANGUAGE'),0);
   foreach($_GET as $key => $value) {
     error_log("GET: $key = $value",0);
   }
