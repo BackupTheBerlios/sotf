@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editStation.php,v 1.17 2003/05/30 16:31:58 andras Exp $
+ * $Id: editStation.php,v 1.18 2003/06/04 13:20:00 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -32,7 +32,7 @@ if($save) {
   checkPerm($st->id, "change");
   $desc = sotf_Utils::getParameter('desc');
   $st->set('description', $desc);
-  $st->setWithParam('url');
+  $st->setWithUrlParam('url');
   // language hack
   $st->setLanguageWithParams();
   $st->update();

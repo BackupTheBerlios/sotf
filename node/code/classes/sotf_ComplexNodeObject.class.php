@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.18 2003/06/03 13:14:44 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.19 2003/06/04 13:19:59 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -52,8 +52,10 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 
 	function update() {
 	  parent::update();
-	  if($this->isLocal())
+	  if(parent::isLocal()) {
+		 $this->checkDirs();
 		 $this->saveMetadataFile();
+	  }
 	}
 
 	/** caches icon for object, and adds indicator flag for Smarty templates whether there is an icon */

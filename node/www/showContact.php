@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContact.php,v 1.7 2003/05/30 16:31:58 andras Exp $
+ * $Id: showContact.php,v 1.8 2003/06/04 13:20:00 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -29,6 +29,10 @@ while(list(,$row)=each($refs)) {
   $role = $row['role_id'];
   if($repository->getTable($id) != 'sotf_programmes') {
     $obj = $repository->getObject($id);
+	 if(!$obj) {
+		logError("DB integrity error: role $role for $id which does not exist");
+		continue;
+	 }
     $class = get_class($obj);
     $data = array();
     $data['role'] = $repository->getRoleName($role);

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editSeries.php,v 1.12 2003/06/03 08:35:43 andras Exp $
+ * $Id: editSeries.php,v 1.13 2003/06/04 13:20:00 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -32,13 +32,16 @@ if($save || $finish) {
   checkPerm($series->id, "change");
   $series->setWithParam('name');
   $series->setWithParam('description');
+  $succ = $series->setWithUrlParam('url');
+  // language hack
+  $series->setLanguageWithParams();
   $series->update();
+  if($save || !$succ) {
+	 $page->redirect("editSeries.php?seriesid=$seriesid");
+  }
 }
 if($finish || $finish2) {
   $page->redirect("closeAndRefresh.php?anchor=series");
-}
-if($save) {
-  $page->redirect("editSeries.php?seriesid=$seriesid");
 }
 
 // manage roles
@@ -142,6 +145,9 @@ $smarty->assign('SERIES',$series->get('name'));
 $smarty->assign('SERIES_DATA',$series->getAll());
 $smarty->assign('SERIES_MANAGER',true);
 $smarty->assign('ROLES', $series->getRoles());
+
+// languages
+$series->getLanguageSelectBoxes();
 
 // user permissions: editors and managers
 $smarty->assign('PERMISSIONS', $permissions->listUsersAndPermissionsLocalized($series->id));

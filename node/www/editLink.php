@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editLink.php,v 1.4 2003/05/12 15:59:17 andras Exp $
+ * $Id: editLink.php,v 1.5 2003/06/04 13:20:00 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -49,7 +49,7 @@ if($save) {
     $page->redirect("closeAndRefresh.php?anchor=links");
     exit;
   } else {
-	 $page->addStatusMsg("invalid-url");
+	 $page->addStatusMsg("invalid_url");
   }
 }
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.27 2003/06/02 12:25:49 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.28 2003/06/04 13:19:59 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -282,6 +282,23 @@ class sotf_Object {
 	 if(!$param_name)
 		$param_name = $prop_name;
 	 $this->set($prop_name, sotf_Utils::getParameter($param_name));
+  }
+
+  function setWithUrlParam($prop_name, $param_name='') {
+		global $page;
+		if(!$param_name)
+			$param_name = $prop_name;
+		$url =  sotf_Utils::getParameter($param_name);
+		if($url != 'http://') {
+			if(sotf_Utils::is_valid_URL($url)) {
+				$this->set($prop_name, $url);
+				return true;
+			} else {
+				$page->addStatusMsg("invalid_url");
+				return false;
+			}
+		}
+		return true;
   }
 	
   /**

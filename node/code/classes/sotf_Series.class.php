@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Series.class.php,v 1.11 2003/06/03 09:50:28 andras Exp $
+ * $Id: sotf_Series.class.php,v 1.12 2003/06/04 13:19:59 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -22,6 +22,7 @@ class sotf_Series extends sotf_ComplexNodeObject {
      * @param string node node id
      * @param string id id within node
    */
+
   function sotf_Series($id='', $data='') {
 	global $db;
 
@@ -51,9 +52,6 @@ class sotf_Series extends sotf_ComplexNodeObject {
 
   function getDir() {
 	 global $repository;
-	 // temporary workaround
-	 return $this->checkDirs();
-
 	 $station = $this->getObject($this->get('station_id'));
 	 $dir = $station->getDir() . '/series_' . $this->id;
 	 return $dir;

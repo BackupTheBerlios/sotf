@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Contact.class.php,v 1.7 2003/05/30 16:31:58 andras Exp $
+ * $Id: sotf_Contact.class.php,v 1.8 2003/06/04 13:19:59 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *					at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -61,9 +61,6 @@ class sotf_Contact extends sotf_ComplexNodeObject {
 
   function getDir() {
 	 global $repository;
-	 // temporary workaround
-	 return $this->checkDirs();
-	 
 	 $dir = $repository->rootdir . '/__contacts/' . $this->id;
 	 return $dir;
   }
