@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Station.class.php,v 1.23 2003/06/17 08:15:18 andras Exp $
+ * $Id: sotf_Station.class.php,v 1.24 2003/07/22 12:51:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -234,9 +234,11 @@ class sotf_Station extends sotf_ComplexNodeObject {
 			}
 		 }
 	  }
-	  reset($langs);
-	  while(list($k,)=each($langs)) {
-		 $langs[$k] = $page->getlocalized($k);
+	  if(is_array($langs)) {
+		 reset($langs);
+		 while(list($k,)=each($langs)) {
+			$langs[$k] = $page->getlocalized($k);
+		 }
 	  }
 	  return $langs;
 	}
