@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.26 2003/02/24 15:45:35 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.27 2003/02/26 10:58:55 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -504,7 +504,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   }
 
   /** static: import a programme from the given XBMF archive */
-  function importXBMF($fileName) {
+  function importXBMF($fileName, $publish=false) {
     global $db, $xbmfInDir, $permissions, $repository;
     
     
@@ -547,20 +547,21 @@ class sotf_Programme extends sotf_ComplexNodeObject {
      */
     
     // insert audio
-    $dirPath = $pathToFile . $folderName . "/audio";
+    $dirPath = $pathToFile . $folderName . "/XBMF/audio";
     $dir = dir($dirPath);
     while($entry = $dir->read()) {
       if ($entry != "." && $entry != "..") {
         $currentFile = $dirPath . "/" .$entry;
         if (!is_dir($currentFile)) {
-          $newPrg->setAudio($currentFile, true);
+          $newPrg->setAudio($currentFile);
+					//break;
         }
       }
     }
     $dir->close();
 
     // insert other files
-    $dirPath = $pathToFile . $folderName . "/files";
+    $dirPath = $pathToFile . $folderName . "/XBMF/files";
     $dir = dir($dirPath);
     while($entry = $dir->read()) {
       if ($entry != "." && $entry != "..") {
@@ -612,7 +613,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 
     // contacts
     //$role = 21; // Other
-
+		
     foreach($metadata['publisher'] as $contact) {
       $role = 23; // Publisher
       $id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
@@ -621,16 +622,25 @@ class sotf_Programme extends sotf_ComplexNodeObject {
       $role = 22; // Creator
       $id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
     }
-    foreach($metadata['contributor'] as $contact) {
-      $role = 24; // Contributor
-      $id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
-    }
+		
+		if(is_array($metadata['contributor'])){
+    	foreach($metadata['contributor'] as $contact) {
+    		$role = 24; // Contributor
+     		$id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
+    	}
+		}
     
     /*
      * PART 2.3 - Remove (unlink) the xbmf file and the temp dir
      */
     
     sotf_Utils::delete($pathToFile . $folderName);
+		unlink($fileName);
+		
+		//publish if needed
+		if($publish){
+			$newPrg->publish();
+		}
     
     return $newPrg->id;
   }
