@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.33 2003/05/29 08:20:38 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.34 2003/07/29 12:01:57 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -129,10 +129,17 @@ class sotf_Neighbour extends sotf_Object {
 	 while($more) {
 		$db->begin(true);
 		$modifiedObjects = sotf_NodeObject::getModifiedObjects($remoteId, $this->objectsPerRPCRequest);
-		$more = sotf_NodeObject::countModifiedObjects($remoteId);
+		$remaining = sotf_NodeObject::countModifiedObjects($remoteId);
+		if(count($modifiedObjects)==0 && $remaining > 0) {
+		  logError("DATA integrity problem", "$remaining objects remained in sotf_object_status after sync");
+		}
+		if($remaining==0 || count($modifiedObjects)==0)
+		  $more = false;
+		else
+		  $more = true;
 		$chunkInfo = array('this_chunk' => $thisChunk,
 								 'node' => $localNodeData,
-								 'objects_remaining' => $more
+								 'objects_remaining' => $remaining
 								 );
 		debug("chunk info", $chunkInfo);
 		debug("number of sent objects", count($modifiedObjects));

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.18 2003/06/12 16:46:58 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.19 2003/07/29 12:01:57 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -37,8 +37,8 @@ class db_Wrap extends DB_pgsql {
 
 	function errorNative() {
 	  $err = parent::errorNative();
-	  error_log("PGSQL error: $err",0);
-	  error_log("in query: " . substr($this->last_query,0,254) ,0);
+	  //error_log("PGSQL error: $err",0);
+	  //error_log("in query: " . substr($this->last_query,0,254) ,0);
     if($this->debug)
       raiseError("SQL error: $err in \n " . $this->last_query);
     else
