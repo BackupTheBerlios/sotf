@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.33 2004/06/23 11:37:06 micsik Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.34 2004/06/23 14:05:20 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -361,15 +361,12 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 
 		exec($cmd, $exec_output, $exec_retval);
 
-		/* 
-		print($cmd);
-		if($exec_retval > 0)
-			print "ERROR: exec() error: $exec_output[0]";
-		else
-			print "Image was resized from ".$image_width."x".$image_height." to $newsize :)";
-		*/
-
-	return true;
+		if($exec_retval > 0) {
+		  logError("img resize error", join("\n",$exec_output));
+		  return false;
+		}
+		debug("Image was resized from ".$image_width."x".$image_height." to", $newsize);
+		return true;
 	}
 
 	//********************** JINGLE management ***********************************
