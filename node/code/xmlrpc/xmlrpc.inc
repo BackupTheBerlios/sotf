@@ -1,7 +1,7 @@
 <?php					// -*-c++-*-
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpc.inc,v 1.5 2003/04/29 09:03:13 andras Exp $
+// $Id: xmlrpc.inc,v 1.6 2003/05/27 14:22:25 andras Exp $
 
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
@@ -1217,7 +1217,7 @@
 							$rs.="<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
 							break;
 						case $xmlrpcString:
-              $rs.="<${typ}>" . rawurlencode(rawurldecode($val)). "</${typ}>";  // micsik
+              $rs.="<${typ}>" . rawurlencode($val). "</${typ}>";  // micsik
 							//$rs.="<${typ}>" . htmlspecialchars($val). "</${typ}>";
 							break;
 						default:
@@ -1443,7 +1443,6 @@
 		global $xmlrpcInt;
 		global $xmlrpcDouble;
 		global $xmlrpcString;
-    global $xmlrpcBase64;  // micsik added
 		global $xmlrpcArray;
 		global $xmlrpcStruct;
 		global $xmlrpcBoolean;
@@ -1470,7 +1469,6 @@
 				break;
 			case 'string':
 				$xmlrpc_val->addScalar($php_val, $xmlrpcString);
-        //$xmlrpc_val->addScalar($php_val, $xmlrpcBase64); // micsik changed here
 				break;
 				// <G_Giunta_2001-02-29>
 				// Add support for encoding/decoding of booleans, since they are supported in PHP
