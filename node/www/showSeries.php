@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showSeries.php,v 1.6 2003/05/30 08:23:41 andras Exp $
+ * $Id: showSeries.php,v 1.7 2003/06/20 16:34:32 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -20,14 +20,14 @@ $prgid = sotf_Utils::getParameter('prgid');
 if($delprog) {
   $prg = & $repository->getObject($prgid);
   $prg->delete();
-  $page->redirect("showSeries.php/$seriesid#progs");
+  $page->redirect(mygetenv('PHP_SELF') . "#progs");
   exit;
 }
 
 $series = & $repository->getObject($seriesid);
 $station = $series->getStation();
 
-$page->errorURL = "showSeries.php/$seriesid";
+$page->errorURL = $scriptUrl . '/' . $seriesid;
 $page->setTitle($series->get('name'));
 
 $smarty->assign('SERIES_ID',$seriesid);
