@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.23 2003/02/23 17:48:13 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.24 2003/02/24 10:17:02 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -609,16 +609,18 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     $rights->create();
 
     // contacts
-    //creator, publisher, contributor
-    $role = 21; // TODO: this is just Other
+    //$role = 21; // Other
 
     foreach($metadata['publisher'] as $contact) {
+      $role = 23; // Publisher
       $id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
     }
     foreach($metadata['creator'] as $contact) {
+      $role = 22; // Creator
       $id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
     }
     foreach($metadata['contributor'] as $contact) {
+      $role = 24; // Contributor
       $id = sotf_Programme::importContact($contact, $role, $newPrg->id, $station);
     }
     
