@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.6 2002/11/21 17:45:00 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.7 2002/11/28 18:31:07 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_ComplexNodeObject.class.php');
@@ -90,6 +90,19 @@ class sotf_Repository {
   //TODO
   function getTopicTree($language) {
 
+  }
+
+  function getTopicName($topicId) {
+    global $lang;
+    $db = $this->db;
+    $name = $db->getOne("SELECT topic_name FROM sotf_topics WHERE topic_id='$topicId' AND language='$lang'");
+    $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$topicId'");
+    while($tid != 0) {
+      $n1 = $db->getOne("SELECT topic_name FROM sotf_topics WHERE topic_id='$tid' AND language='$lang'");
+      $name = $n1 . ' / ' . $name;
+      $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$tid'");
+    }
+    return $name;
   }
 
   function getRoleName($id) {

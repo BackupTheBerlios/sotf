@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.8 2002/11/26 18:27:00 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.9 2002/11/28 18:31:07 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -96,6 +96,19 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 $this->saveMetadataFile();
   }
 
+  function getStation() {
+    return new sotf_Station($this->get('station_id'));
+  }
+
+  function getSeries() {
+    $sid = $this->get('series_id');
+    debug('soid',$sid);
+    if(!empty($sid))
+      return new sotf_Series($sid);
+    else 
+      return NULL;
+  }
+
 	function isLocal() {
 		return is_dir($this->getDir()); 
 	}
@@ -140,14 +153,6 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   /** returns directory where other files are stored for the programme */
   function getOtherFilesDir() {
     return $this->getDir() . '/files';
-  }
-
-  function getStation() {
-    return new sotf_Station($this->data['station_id']);
-  }
-
-  function getSeries() {
-    return $this->data['series'];
   }
 
   function isLocal() {
@@ -442,7 +447,6 @@ class sotf_Programme extends sotf_ComplexNodeObject {
       $fileInfo->set('main_content', 'false');
     } else {
       $fileInfo = new sotf_NodeObject('sotf_other_files');
-
     }
     $fileInfo->set('prog_id', $this->id);
     $fileInfo->set('filename', $file->name);

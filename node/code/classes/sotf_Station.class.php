@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.9 2002/11/26 18:27:00 andras Exp $
+// $Id: sotf_Station.class.php,v 1.10 2002/11/28 18:31:07 andras Exp $
 
 class sotf_Station extends sotf_ComplexNodeObject {		
 
@@ -178,24 +178,38 @@ class sotf_Station extends sotf_ComplexNodeObject {
 	}
 
 	/** list programmes */
-	function listProgrammes($start, $num, $onlyPublished = true) {
+	function listProgrammes($start, $hitsPerPage, $onlyPublished = true) {
 		$id = $this->id;
 		$sql = "SELECT * FROM sotf_programmes WHERE station_id = '$id' ";
 		if($onlyPublished)
 			$sql .= " AND published='t' ";
 		$sql .= " ORDER BY entry_date DESC,track ASC";
-		if ($num) {
-			if ($num < 0)
-				$num = 0;
-			$sql .= " LIMIT $num OFFSET $start";
-		}
-		$res = $this->db->getAll($sql);
+    if(!$start) $start = 0;
+		$res = $this->db->limitQuery($sql, $start, $hitsPerPage);
 		if(DB::isError($res))
 			raiseError($res);
-		foreach($res as $item) {
+    while (DB_OK === $res->fetchInto($item)) {
 			$list[] = new sotf_Programme($item['id'], $item);
 		}
 		return $list;
+	}
+
+	/**
+	 * @method listSeries
+	 * @return array of sotf_Series objects
+	*/
+	function listSeriesData() {
+		$id = $this->id;
+		$slist = $this->db->getAll("SELECT * FROM sotf_series WHERE station_id='$id' ");
+		if(DB::isError($slist))
+			raiseError($slist);
+    return $slist;
+    /*
+		while (list (, $val) = each ($slist)) {
+			//$retval[] = new sotf_Series($val['id'], $val);
+		}
+		return $retval;
+    */
 	}
 
 	/**
@@ -212,6 +226,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
 		}
 		return $retval;
 	}
+
 
 	/**
 	 * @method static listStations

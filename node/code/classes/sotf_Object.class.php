@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Object.class.php,v 1.3 2002/11/21 17:45:00 andras Exp $
+// $Id: sotf_Object.class.php,v 1.4 2002/11/28 18:31:07 andras Exp $
 
 /**
 * Basic class for SQL stored data
@@ -179,6 +179,20 @@ class sotf_Object {
 		if($id){
 			$this->id = $prop_value;
 		}
+	}
+
+	/**
+	 * sotf :: set()
+	 * 
+	 * purpose: to set a property. If you want this property to
+	 *					be the object ID, pass TRUE as a third parameter
+	 * 
+	 * @return (void)
+	 */
+	function setWithParam($prop_name, $param_name='', $id=false) {
+    if(!$param_name)
+      $param_name = $prop_name;
+    $this->set($prop_name, sotf_Utils::getParameter($param_name), $id);
 	}
 	
 	/**

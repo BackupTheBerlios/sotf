@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: db_Wrap.class.php,v 1.3 2002/11/21 17:45:00 andras Exp $
+// $Id: db_Wrap.class.php,v 1.4 2002/11/28 18:31:07 andras Exp $
 
 include_once($peardir . '/DB/pgsql.php');
 
@@ -18,9 +18,12 @@ class db_Wrap extends DB_pgsql {
 	  $err = parent::errorNative();
 	  error_log("PGSQL error: $err",0);
 	  error_log("in query: " . $this->last_query,0);
+    raiseError("SQL error: $err in \n " . $this->last_query);
+    /*
 		echo "<p><b>SQL error: $err</b> in <br>";
 		echo $this->last_query . "</p>";
     exit;
+    */
     /*
 	  global $sqlDebug;
 	  if($sqlDebug) {
@@ -28,7 +31,7 @@ class db_Wrap extends DB_pgsql {
 		echo $this->last_query . "</p>";
 	  }
     */
-	  return $err;
+	  //return $err;
 	}
 
 	function getSQLDate($timestamp='')
