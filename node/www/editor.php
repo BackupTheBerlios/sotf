@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editor.php,v 1.12 2003/05/14 15:30:39 andras Exp $
+ * $Id: editor.php,v 1.13 2003/05/30 08:23:41 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -96,7 +96,7 @@ $myProgs = sotf_Programme::myProgrammes($series, $filter, $sort1.", ".$sort2.$li
 $mySeriesData = array();
 $mySeriesData[allseries] = $page->getlocalized("allseries");
 foreach(sotf_Permission::mySeriesData($stationId) as $s)
-	$mySeriesData[$s["id"]] = $s["title"];
+	$mySeriesData[$s["id"]] = $s["name"];
 
 $sortby[title] = $page->getlocalized("title");
 $sortby[series] = $page->getlocalized("series");

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editSeries.php,v 1.10 2003/03/05 09:11:39 andras Exp $
+ * $Id: editSeries.php,v 1.11 2003/05/30 08:23:41 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -30,7 +30,7 @@ $finish = sotf_Utils::getParameter('finish');
 $finish2 = sotf_Utils::getParameter('finish2');
 if($save || $finish) {
   checkPerm($series->id, "change");
-  $series->setWithParam('title');
+  $series->setWithParam('name');
   $series->setWithParam('description');
   $series->update();
 }
@@ -106,7 +106,7 @@ if($seticon) {
 
 // general data
 $smarty->assign('SERIES_ID',$seriesid);
-$smarty->assign('SERIES',$series->get('title'));
+$smarty->assign('SERIES',$series->get('name'));
 
 $smarty->assign('SERIES_DATA',$series->getAll());
 $smarty->assign('SERIES_MANAGER',true);

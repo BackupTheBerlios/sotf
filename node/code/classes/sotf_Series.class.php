@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Series.class.php,v 1.8 2003/05/26 13:11:09 andras Exp $
+ * $Id: sotf_Series.class.php,v 1.9 2003/05/30 08:23:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -30,6 +30,20 @@ class sotf_Series extends sotf_ComplexNodeObject {
       //$this->stationName = $db->getOne("SELECT name FROM sotf_stations WHERE id='" . $this->get('station_id') . "'");
     }
   }
+
+  function getDir() {
+	 global $repository;
+	 $station = $this->getObject($this->get('station_id'));
+	 $name = $this->get("id");
+	 if(empty($name))
+		raiseError("this station has no name!");
+	 return $station->getDir() . '/series_' . $this->get('id');
+  }
+
+	function getJingleDir() {
+		return $this->getDir() . '/station';
+	}
+
 
   function getStation() {
     return new sotf_Station($this->get('station_id'));

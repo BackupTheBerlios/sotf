@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editStation.php,v 1.15 2003/05/14 15:30:39 andras Exp $
+ * $Id: editStation.php,v 1.16 2003/05/30 08:23:41 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -32,6 +32,9 @@ if($save) {
   checkPerm($st->id, "change");
   $desc = sotf_Utils::getParameter('desc');
   $st->set('description', $desc);
+  $st->setWithParam('url');
+  // language hack
+  $st->setLanguageWithParams();
   $st->update();
   $page->redirect("editStation.php?stationid=$stationid");
   exit;
@@ -144,6 +147,9 @@ $smarty->assign('STATION_MANAGER',true);
 $smarty->assign('ROLES', $st->getRoles());
 $smarty->assign('SERIES', $st->listSeriesData());
 
+// languages
+$st->getLanguageSelectBoxes();
+
 // user permissions: editors and managers
 $smarty->assign('PERMISSIONS', $permissions->listUsersAndPermissionsLocalized($st->id));
 
@@ -155,7 +161,7 @@ if ($st->getIcon()) {
 }
 
 $jinglelist = & new sotf_FileList();
-$jinglelist->getAudioFromDir($st->getStationDir(), 'jingle_');
+$jinglelist->getAudioFromDir($st->getJingleDir(), 'jingle_');
 
 // now $jinglelist contains the jingles
 $checker = & new sotf_AudioCheck($jinglelist);		// check $jinglelist

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getJingle.php,v 1.3 2003/03/05 09:11:40 andras Exp $
+ * $Id: getJingle.php,v 1.4 2003/05/30 08:23:41 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -10,11 +10,12 @@
 require("init.inc.php");
 
 $id = sotf_Utils::getParameter('id');
-$index = sotf_Utils::getParameter('index');
+$file = sotf_Utils::getParameter('file');
 
 $obj = $repository->getObject($id);
 
-$jingleFile = $obj->getJingle($index);
+$jingleFile = sotf_Utils::getFileInDir($obj->getJingleDir(), $file);
+debug("jingleFile", $jingleFile);
 
 if($jingleFile)
 {

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.22 2003/05/29 07:00:16 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.23 2003/05/30 08:23:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -144,7 +144,7 @@ function getProgrammes($params)
 	$prglist = xmlrpc_decode($params->getParam(0));
 
 	$query="SELECT programmes.* FROM (";
-	$query.=" SELECT sotf_programmes.*, sotf_stations.name as station, sotf_series.title as seriestitle, sotf_series.description as seriesdescription, sotf_prog_rating.rating_value as rating FROM sotf_programmes";
+	$query.=" SELECT sotf_programmes.*, sotf_stations.name as station, sotf_series.name as seriestitle, sotf_series.description as seriesdescription, sotf_prog_rating.rating_value as rating FROM sotf_programmes";
 	$query.=" LEFT JOIN sotf_stations ON sotf_programmes.station_id = sotf_stations.id";
 	$query.=" LEFT JOIN sotf_series ON sotf_programmes.series_id = sotf_series.id";
 	$query.=" LEFT JOIN sotf_prog_rating ON sotf_programmes.id = sotf_prog_rating.id";

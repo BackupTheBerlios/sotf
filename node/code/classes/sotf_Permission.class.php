@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.19 2003/05/29 06:54:41 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.20 2003/05/30 08:23:40 andras Exp $
 
 /**
  * This is a class for handling permossions.
@@ -192,16 +192,16 @@ class sotf_Permission {
     return $retval;
   }
 
-  /** returns series (id,title) within given station owned/edited by current user */
+  /** returns series (id,namex) within given station owned/edited by current user */
   function mySeriesData($stationId) {
     global $page, $db, $user;
 		if(!$page->loggedIn())
       return NULL;  // not logged in yet
     $stationId = sotf_Utils::magicQuotes($stationId);
-    $sql = "SELECT s.id AS id, s.title AS title FROM sotf_series s, sotf_user_permissions u".
+    $sql = "SELECT s.id AS id, s.name AS name FROM sotf_series s, sotf_user_permissions u".
       " WHERE u.user_id = '$user->id' AND u.object_id=s.id";
     if ($stationId) $sql .= " AND s.station_id='$stationId'";
-    $sql .= " ORDER BY s.title";
+    $sql .= " ORDER BY s.name";
     $sdata = $db->getAll($sql);
     return $sdata;
   }
