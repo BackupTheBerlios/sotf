@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContact.php,v 1.5 2003/03/05 09:11:40 andras Exp $
+ * $Id: showContact.php,v 1.6 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -12,7 +12,7 @@ require("init.inc.php");
 
 $contactId = sotf_Utils::getParameter('id');
 
-$contact = & new sotf_Contact($contactId);
+$contact = & $repository->getObject($contactId);
 $smarty->assign('PAGETITLE', $contact->get('name'));
 $smarty->assign('CONTACT_ID',$contactId);
 $smarty->assign('CONTACT_NAME',$contact->get('name'));
@@ -33,12 +33,12 @@ while(list(,$row)=each($refs)) {
     $data = array();
     $data['role'] = $repository->getRoleName($role);
     if($class == 'sotf_station') {
-      $data['url'] = "showStation.php?stationid=$id";
+      $data['url'] = "showStation.php/$id";
       $data['name'] = $obj->get('name');
       $data['mid'] = $page->getlocalized('of_station');
       //$locMsg = 'in_station';
     } elseif($class == 'sotf_series') {
-      $data['url'] = "showSeries.php?seriesid=$id";
+      $data['url'] = "showSeries.php/$id";
       $data['name'] = $obj->get('title');
       $data['mid'] = $page->getlocalized('of_series');
       //$locMsg = 'in_series';

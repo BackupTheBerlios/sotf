@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showStation.php,v 1.9 2003/03/05 09:11:40 andras Exp $
+ * $Id: showStation.php,v 1.10 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -11,24 +11,25 @@ require("init.inc.php");
 
 $hitsPerPage = $sotfVars->get("hitsPerPage", 30);
 
-$stationid = sotf_Utils::getParameter('stationid');
+$stationid = sotf_Utils::getParameter('id');
+	 
 $start = sotf_Utils::getParameter('start');
 
 if(!$stationid)
      raiseError("No station selected!");
 
-$st = & new sotf_Station($stationid);
+$st = & $repository->getObject($stationid);
 
-$page->errorURL = "showStation.php?stationid=$stationid";
+$page->errorURL = $scriptUrl . '/' . $stationid;
 $page->setTitle($st->get('name'));
 
 // delete series
 $delseries = sotf_Utils::getParameter('delseries');
 if($delseries) {
   $seriesid = sotf_Utils::getParameter('seriesid');
-  $series = new sotf_Series($seriesid);
+  $series = & $repository->getObject($seriesid);
   $series->delete();
-  $page->redirect("showStation.php?stationid=$stationid#series");
+  $page->redirect(mygetenv('PHP_SELF') . "#series");
   exit;
 }
 
@@ -36,9 +37,9 @@ if($delseries) {
 $delprog = sotf_Utils::getParameter('delprog');
 $prgid = sotf_Utils::getParameter('prgid');
 if($delprog) {
-  $prg = new sotf_Programme($prgid);
+  $prg = & $repository->getObject($prgid);
   $prg->delete();
-  $page->redirect("showStation.php?stationid=$stationid#progs");
+  $page->redirect(mygetenv('PHP_SELF') . "#progs");
   exit;
 }
 
@@ -69,7 +70,7 @@ if(!empty($seriesList)) {
 }
 
 $numProgs = $st->numProgrammes();
-$limit = $page->splitList($numProgs, myGetenv('REQUEST_URI'), "progs");
+$limit = $page->splitList($numProgs, "$scriptUrl/$stationid", "progs");
 $progs = $st->listProgrammes($limit["from"] , $limit["maxresults"]);
 
 if($progs) {

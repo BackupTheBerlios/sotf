@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: rss.php,v 1.2 2003/05/14 15:30:40 andras Exp $
+ * $Id: rss.php,v 1.3 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Kézdi 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -48,7 +48,7 @@ if($stationName) {
   // define channel
   $properties=array();
   $properties["description"]="New programmes at $stationName";
-  $properties["link"]=$config['rootUrl'] . "/showStation.php?stationid=" . $station->id;
+  $properties["link"]=$config['rootUrl'] . "/showStation.php/" . $station->id;
   $properties["title"]="$stationName";
   //$properties["language"]="en";
   $properties["dc:date"]= date("Y-m-d H:i:s");// "2002-05-06T00:00:00Z";
@@ -60,7 +60,7 @@ if($stationName) {
 	 // define icon for station
 	 $properties=array();
 	 $properties["url"]=$config['cacheUrl'] . "/$station->id.png";
-	 $properties["link"]=$config['rootUrl'] . "/showStation.php?stationid=" . $station->id;
+	 $properties["link"]=$config['rootUrl'] . "/showStation.php/" . $station->id;
 	 $properties["title"]="$stationName logo";
 	 //$properties["description"]="";
 	 $rss_writer_object->addimage($properties);

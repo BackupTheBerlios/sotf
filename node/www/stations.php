@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: stations.php,v 1.11 2003/03/05 09:11:40 andras Exp $
+ * $Id: stations.php,v 1.12 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -19,13 +19,13 @@ $delete = sotf_Utils::getParameter('delete');
 
 if ($delete) {
   checkPerm('node','delete');
-  $st = & new sotf_Station($station);
+  $st = & $repository->getObject($station);
   $st->delete();
   $page->addStatusMsg('delete_ok');
   $page->redirect($_SERVER["PHP_SELF"]);
 }
 
-$limit = $page->splitList(sotf_Station::countAll(), "$php_self");
+$limit = $page->splitList(sotf_Station::countAll(), $scriptUrl);
 
 //$result = $db->limitQuery($query, $limit["from"], $limit["maxresults"]);				//get results with limit
 

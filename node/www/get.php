@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.13 2003/05/13 11:03:15 andras Exp $
+ * $Id: get.php,v 1.14 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -15,7 +15,7 @@ if($id) {
 
   $smarty->assign('ID', $id);
 
-  $prg = & new sotf_Programme($id);
+  $prg = & $repository->getObject($id);
 
   $page->setTitle($prg->get('title'));
 

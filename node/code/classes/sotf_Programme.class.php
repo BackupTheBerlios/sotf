@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.43 2003/05/14 15:30:39 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.44 2003/05/16 16:12:54 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -34,8 +34,9 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   function sotf_Programme($id='', $data='') {
 	 $this->sotf_ComplexNodeObject('sotf_programmes', $id, $data);
 	 if($id) {
-		$this->getStation();
+		$station = $this->getStation();
 		$this->stationName = $this->station->get('name');
+		//debug("stationName", $this->stationName);
 	 }
   }
   
@@ -103,7 +104,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 
   function getStation() {
     if(!$this->station)
-      $this->station = new sotf_Station($this->get('station_id'));
+      $this->station = $this->getObject($this->get('station_id'));
     return $this->station;
   }
 
@@ -111,7 +112,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     $sid = $this->get('series_id');
     debug('soid',$sid);
     if(!empty($sid))
-      return new sotf_Series($sid);
+      return $this->getObject($sid);
     else 
       return NULL;
   }
@@ -555,7 +556,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     // TODO: by default I put the programme into the first station
     $stId = $db->getOne("SELECT id FROM sotf_stations ORDER BY id");
 
-    $station = new sotf_Station($stId);
+    $station = $repository->getObject($stId);
     $track = $metadata['title']['basetitle'];
     $newPrg = new sotf_Programme();
     debug("create with track", $track);
@@ -713,7 +714,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
         $permissions->addPermission($contact->id, $admin['id'], 'admin');
       }
     } else {
-      $contact = new sotf_Contact($id);
+      $contact = $repository->getObject($id);
     }
 
     // set/update contact data

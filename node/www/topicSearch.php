@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: topicSearch.php,v 1.5 2003/03/05 09:11:40 andras Exp $
+ * $Id: topicSearch.php,v 1.6 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -28,7 +28,7 @@ $query="SELECT * FROM (".
 
 $max = $db->getOne("SELECT count(*) FROM (".$query.") as count");	//get the number of results
 
-$limit = $page->splitList($max, "$php_self?ID=$ID");
+$limit = $page->splitList($max, "?ID=$ID");
 //$result = $db->limitQuery($query, $limit["from"], $limit["maxresults"]);				//get results with limit
 $result = $db->getAll($query.$limit["limit"]);
 

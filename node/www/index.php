@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.12 2003/05/14 15:30:39 andras Exp $
+ * $Id: index.php,v 1.13 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -11,7 +11,7 @@ require("init.inc.php");
 require($config['classdir'] . "/sotf_AdvSearch.class.php");
 
 if($_REQUEST['select_station']) {
-  $page->redirect("showStation.php?stationid=" . $_POST['station']);
+  $page->redirect($config['localPrefix'] . "/showStation.php/" . $_POST['station']);
 }
 
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showSeries.php,v 1.4 2003/03/05 09:11:40 andras Exp $
+ * $Id: showSeries.php,v 1.5 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -9,7 +9,7 @@
 
 require("init.inc.php");
 
-$seriesid = sotf_Utils::getParameter('seriesid');
+$seriesid = sotf_Utils::getParameter('id');
 
 if(!$seriesid)
      raiseError("No series selected!");
@@ -18,16 +18,16 @@ if(!$seriesid)
 $delprog = sotf_Utils::getParameter('delprog');
 $prgid = sotf_Utils::getParameter('prgid');
 if($delprog) {
-  $prg = new sotf_Programme($prgid);
+  $prg = & $repository->getObject($prgid);
   $prg->delete();
-  $page->redirect("showSeries.php?seriesid=$seriesid#progs");
+  $page->redirect("showSeries.php/$seriesid#progs");
   exit;
 }
 
-$series = & new sotf_Series($seriesid);
+$series = & $repository->getObject($seriesid);
 $station = $series->getStation();
 
-$page->errorURL = "showSeries.php?seriesid=$seriesid";
+$page->errorURL = "showSeries.php/$seriesid";
 $page->setTitle($series->get('title'));
 
 $smarty->assign('SERIES_ID',$seriesid);
@@ -36,7 +36,7 @@ $smarty->assign('STATION_DATA',$station->getAllWithIcon());
 $smarty->assign('ROLES', $series->getRoles());
 
 $numProgs = $series->numProgrammes();
-$limit = $page->splitList($numProgs, $_SERVER["REQUEST_URI"], "progs");
+$limit = $page->splitList($numProgs, "$scriptUrl/$seriesid", "progs");
 $progs = $series->listProgrammes($limit["from"] , $limit["maxresults"]);
 
 if($progs) {

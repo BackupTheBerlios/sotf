@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: search.php,v 1.7 2003/05/14 15:30:40 andras Exp $
+ * $Id: search.php,v 1.8 2003/05/16 16:12:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -23,7 +23,7 @@ if($pattern) {
   $advsearch = new sotf_AdvSearch();						//create new search object object with this array
 
   $total = $advsearch->simpleSearch($pattern, $language, $station);
-  $limit = $page->splitList($total, $_SERVER["REQUEST_URI"]);
+  $limit = $page->splitList($total, "?pattern=" . urlencode($pattern) . "&language=$language");
   $result = $advsearch->getSimpleSearchResults($limit["from"] , $limit["to"]);
 
   // cache icons for results

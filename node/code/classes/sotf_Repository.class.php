@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.28 2003/05/14 15:30:39 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.29 2003/05/16 16:12:54 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -94,6 +94,11 @@ class sotf_Repository {
   }
 
   function getObject($objectId, $data='') {
+	 // get from cache if possible
+	 $object = $this->getFromCache($objectId);
+	 if(is_object($object))
+		return $object;
+	 // load it from db
     $tc = substr($objectId, 3,2);
     $class = $this->codeToClass[$tc];
     if($class) {
@@ -104,8 +109,8 @@ class sotf_Repository {
     }
     if( count($obj->getAll())==0 )
       return NULL;
-    else
-      return $obj;
+    $this->putInCache($obj);
+	 return $obj;
   }
 
   /** Tells if the given object id is for one of the global controlled vocabularies (roles, genres, topics). */
