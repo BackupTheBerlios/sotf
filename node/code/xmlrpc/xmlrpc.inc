@@ -1,7 +1,7 @@
 <?php					// -*-c++-*-
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpc.inc,v 1.4 2002/12/20 18:50:26 andras Exp $
+// $Id: xmlrpc.inc,v 1.5 2003/04/29 09:03:13 andras Exp $
 
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
@@ -541,8 +541,10 @@
 				$credentials='Authorization: Basic ' . base64_encode($username . ':' . $password) . "\r\n";
 			}
 
+      //				"Host: ". $this->server . ":" . $this->port  . "\r\n" .
+
 			$op= "POST " . $this->path. " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n" .
-				"Host: ". $this->server  . "\r\n" .
+        "Host: ". $this->server  . "\r\n" .
 				$credentials . 
 				"Content-Type: text/xml\r\nContent-Length: " .
 				strlen($msg->payload) . "\r\n\r\n" .
