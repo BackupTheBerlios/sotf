@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.39 2003/03/06 10:01:18 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.40 2003/03/06 10:02:38 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -626,7 +626,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		foreach($topicz as $topic){
 			$topic_id = $db->getOne("SELECT topic_id FROM sotf_topics WHERE topic_name = '" . trim($topic) . "'");
 			if(!empty($topic_id)){
-				$db->query("INSERT INTO sotf_prog_topics(id, prog_id, topic_id) VALUES('" . $this->getID() . "','" . $newPrg->id . "','$topic_id')");
+				$db->query("INSERT INTO sotf_prog_topics(id, prog_id, topic_id) VALUES('" . $newPrg->getID() . "','" . $newPrg->id . "','$topic_id')");
 			}
 		}
 
