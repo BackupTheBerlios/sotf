@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: updatedb.php,v 1.11 2003/07/29 08:27:16 andras Exp $
+ * $Id: updatedb.php,v 1.12 2003/09/29 15:43:24 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -110,6 +110,7 @@ elseif ($name == "caption")		//editFiles
 elseif ($name == "addtree")		//topic_tree
 {
 	$vocabularies->addToTopic($id, $value);
+	// doesnt work: print("<script type=\"text/javascript\">window.opener.opener.reload();</script>");
 	print("success");
 }
 elseif ($name == "editorpub")		//editor bublished checkboxes

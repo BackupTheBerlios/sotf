@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.34 2003/09/25 10:55:29 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.35 2003/09/29 15:43:23 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -399,6 +399,7 @@ class sotf_Object {
 
 	/** decides if there's a need to update metadata description for parent object, and schedules it */
 	function markParentToUpdate() {
+		global $repository;
 		$mainObjId = $this->getMainObjectId();
 		debug("parentUpdate", $mainObjId);
 		if($mainObjId) {
