@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.8 2002/12/02 19:17:49 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.9 2002/12/03 17:13:24 andras Exp $
 
 /**
 * This is a class for handling permossions.
@@ -40,12 +40,14 @@ class sotf_Permission
     global $repository;
 		if(!isset($this->currentPermissions))
       return false;
+    reset($this->currentPermissions);
     while(list($key,$value) = each($this->currentPermissions)) {
       $table = $repository->getTable($key);
       if( $table == 'sotf_stations' ) { 
         if( in_array('admin', $value) || in_array('add_prog', $value) ) {
           return true;
-        } else debug("nem jo: $key == $table,  $value");
+        } else 
+          debug("nem jo: $key == $table,  $value");
       }
     }
     return false;

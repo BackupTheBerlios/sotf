@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.11 2002/12/03 14:43:51 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.12 2002/12/03 17:13:24 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -304,7 +304,6 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   function setAudio($filename, $copy=false) {
     global $user, $page;
     $source = $filename;
-    $filename = sotf_Utils::getFileFromPath($filename);
     if(!is_file($source))
       raiseError("no such file: $source");
     $srcFile = new sotf_AudioFile($source);
@@ -338,8 +337,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 
   function setOtherFile($filename, $copy=false) {
     global $user;
-    $filename = sotf_Utils::getFileFromPath($filename);
-    $source = $user->getUserDir().'/'. $filename;
+    $source =  sotf_Utils::getFileInDir($user->getUserDir(), $filename);
     $target = $this->getOtherFilesDir() . '/' . $filename;
     while (file_exists($target)) {
       $target .= "_1";

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_ComplexNodeObject.class.php,v 1.3 2002/12/03 14:43:51 andras Exp $
+// $Id: sotf_ComplexNodeObject.class.php,v 1.4 2002/12/03 17:13:24 andras Exp $
 
 /**
 * 
@@ -115,6 +115,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		//$info = GetAllMP3info($file->getPath());
 		//if (($info['png']['width'] == $iconWidth) && ($info['png']['height'] == $iconHeight))
 
+    debug("imgfile", $imgfile);
 		$currentimagesize = getimagesize($imgfile);
     if(!$currentimagesize || ($currentimagesize[0]==0 && $currentimagesize[1]==0)) {
       addError("not_an_image");
@@ -124,6 +125,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		$image_height= $currentimagesize[1];
 		$sizefactor = 1;
 
+    // TODO: convert to PNG!!
 		if(($image_height == $iconHeight) && ($image_width == $iconWidth)) {
       if(!copy($imgfile, $newfile))
         raiseError("Could not copy image file");
@@ -142,6 +144,8 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
     debug("resizing image", $newsize);
 
 		$cmd = "\"$magickDir/convert\" $imgfile -resize $newsize $newfile 2>&1";     
+
+    debug("resize command", $cmd);
 
 		exec($cmd, $exec_output, $exec_retval);
 

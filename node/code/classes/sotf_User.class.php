@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.8 2002/12/03 14:43:51 andras Exp $
+// $Id: sotf_User.class.php,v 1.9 2002/12/03 17:13:24 andras Exp $
 
 /**
 * This is a class for handling users
@@ -107,12 +107,11 @@ class sotf_User
 
 	function deleteFile($filename)
 	{
-		$filename = sotf_Utils::getFileFromPath($filename);
-			$targetFile = $this->getUserDir() . '/'. $filename;
-			if (unlink($targetFile))
-				return 0;
-			else
-				raiseError("Could not remove file $targetFile");
+    $targetFile =  sotf_Utils::getFileInDir($this->getUserDir(), $filename);
+    if (unlink($targetFile))
+      return 0;
+    else
+      raiseError("Could not remove file $targetFile");
 	}
 
 	function userNameCheck($username) {
