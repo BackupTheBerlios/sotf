@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.52 2003/06/16 16:13:40 andras Exp $
+--  $Id: db.sql,v 1.53 2003/06/18 15:41:10 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -554,6 +554,7 @@ CREATE TABLE "sotf_streams" (
 	"prog_id" varchar(12),			-- id of programme
 	"file_id" varchar(12),			-- id of file being played (null if playlist)
 	"playlist" varchar(40),			-- name of playlist file
+	"url" varchar(200),	-- mount point
 	"started" timestamp,				-- 
 	"length" int,						-- estimated length of playlist in seconds
 	"will_end_at" timestamp,		-- 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.12 2003/06/03 13:14:44 andras Exp $
+ * $Id: listen.php,v 1.13 2003/06/18 15:41:12 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -25,6 +25,8 @@ if(!$prg->isLocal()) {
 }
 
 $playlist = new sotf_Playlist();
+
+$playlist->stopMyStream();
 
 $playlist->addProg($prg, $fileid);
 

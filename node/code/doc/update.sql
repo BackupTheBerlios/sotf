@@ -1,5 +1,5 @@
 
---  $Id: update.sql,v 1.5 2003/06/17 08:15:18 andras Exp $
+--  $Id: update.sql,v 1.6 2003/06/18 15:41:12 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -61,3 +61,6 @@ DELETE FROM "sotf_permissions" WHERE permission='add_prog';
 SELECT * FROM "sotf_user_permissions" where permission_id=3; -- if any exists, you may change these permissions to 4 (create)
 -- DELETE FROM "sotf_user_permissions" where permission_id=3; 
 
+-- 2003-06-18
+
+ALTER TABLE sotf_streams ADD COLUMN "url" varchar(200);

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: config.inc.php.template,v 1.17 2003/06/02 12:25:49 andras Exp $
+ * $Id: config.inc.php.template,v 1.18 2003/06/18 15:43:28 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -108,6 +108,11 @@ $config['localPrefix'] = '/node/www';
 // remaining set of parameters in this section.
 // Example: http://your.host.name:8080/RPC2
 $config['tamburineURL'] = '';
+
+// this is an alternative way for streaming with tamburine
+// works only on Unix
+// Example: /usr/local/bin/tbrcmd
+$config['tamburineCMD'] = ''; 
 
 // Parameters for connection to icecast streaming server
 $config['iceServer'] = "your.host.name";
