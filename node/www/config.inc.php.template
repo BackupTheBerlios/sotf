@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: config.inc.php.template,v 1.23 2003/11/28 16:51:52 andras Exp $
+ * $Id: config.inc.php.template,v 1.24 2003/12/01 12:44:50 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -26,8 +26,10 @@ $config['selfUserDb'] = true;
 
 // by default we don't use external database for user management
 $config['userDbClass'] = 'userdb_node';
-// uncomment this if you using the Self Admin Toolkit (SADM) for user management
+// uncomment this if you use the Self Admin Toolkit (SADM) for user management
 //$config['userDbClass'] = 'userdb_sadm';
+// uncomment this if you use Typo3 for user management
+//$config['userDbClass'] = 'userdb_typo3';
 
 // the sql connection parameters for the user database
 // only fill in if you specified selfUserDb = false!!

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.49 2003/11/28 16:51:52 andras Exp $
+ * $Id: init.inc.php,v 1.50 2003/12/01 12:44:51 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -76,8 +76,10 @@ if(!ini_set("include_path", $newPath))
 require($config['peardir'] . '/DB.php');
 // change this if you want to use other DBMS not Postgres
 require_once($config['peardir'] . '/DB/pgsql.php');
-if($config['userDbType'] == 'mysql')
+if($config['userDbType'] == 'mysql') {
 	require_once($config['peardir'] . '/DB/mysql.php');
+	require($config['classdir'] . '/db_Wrap_mysql.class.php');
+}
 require($config['smartydir'] . '/Smarty.class.php');
 require($config['smartydir'] . '/Config_File.class.php');
 require($config['classdir'] . '/db_Wrap.class.php');
@@ -117,7 +119,10 @@ if($config['selfUserDb']) {
 	$config['sqlUserDSN'] = $config['userDbType'] . '://' . $config['userDbUser'] .':'. $config['userDbPasswd'] .'@'. $config['userDbHost'] .':'. $config['userDbPort'] .'/'. $config['userDbName'];
 	debug("sqlUserDSN", $config['sqlUserDSN']);
 
-	$userdb = new db_Wrap;
+	if($config['userDbType'] == 'mysql') 
+		$userdb = new db_Wrap_mysql;
+	else
+		$userdb = new db_Wrap;
 	$userdb->debug = $config['debug'];
 	$success = $userdb->makeConnection($config['sqlUserDSN'], false, 'user');
 	if (DB::isError($success))

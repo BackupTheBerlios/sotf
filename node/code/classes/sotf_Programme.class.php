@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.72 2003/11/28 16:51:52 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.73 2003/12/01 12:44:49 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -13,6 +13,7 @@ define("TRACKNAME_LENGTH", 32);
 
 require_once($config['classdir'] . '/Tar.php');
 require_once($config['classdir'] . '/unpackXML.class.php');
+//require_once($config['classdir'] . '/packXML.class.php');
 require_once($config['classdir'] . '/sotf_Statistics.class.php');
 require_once($config['getid3dir'] . "/getid3.putid3.php");
 
@@ -248,6 +249,16 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 $fp = fopen("$file", "w");
 	 fwrite($fp, $xml);
 	 fclose($fp);
+
+	 // now save in the XBMF format
+	 /*
+	 $myPack = new packXML('sotfPublish');
+	 $myPack->addData(array('series' => $this->getSeries->getAll(),
+									'prog' => $this->getAll(),
+									$myUser,$pubUser));
+	 $myPack->toFile($this->getMetaDir() . '/metadata.xml');
+	 */
+
 	 return true;
   }
 
