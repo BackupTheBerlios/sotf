@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Object.class.php,v 1.11 2002/12/19 17:36:55 andras Exp $
+// $Id: sotf_Object.class.php,v 1.12 2002/12/19 18:27:52 andras Exp $
 
 /**
 * Basic class for SQL stored data
@@ -92,7 +92,14 @@ class sotf_Object {
 	 }
 	}
 
-	/** creates db record with all fields from 'data' except binary fields */
+  function updateBinaryFields() {
+    reset($this->binaryFields);
+    while(list(,$field)=each($this->binaryFields)) {
+      $this->setBlob($field, $this->data[$field]);
+    }
+  }
+
+	/** creates db record with all fields from 'data' */
 	function create() {
 		reset($this->data);
 		while(list($key,$val)=each($this->data)){
@@ -117,6 +124,8 @@ class sotf_Object {
 		//execute query
 		$res = $this->db->query("INSERT INTO " . $this->tablename . "(" . $keys . ") VALUES(" . $values . ")");
 		
+    $this->updateBinaryFields();
+
 		//if the query is dead, stop executio, output error
 		if(DB::isError($res)){
 			addError($res);
