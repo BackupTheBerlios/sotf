@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.44 2003/05/30 08:23:40 andras Exp $
+--  $Id: db.sql,v 1.45 2003/05/30 16:31:58 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -195,6 +195,7 @@ CREATE TABLE "sotf_programmes" (
 	FOREIGN KEY("station_id") REFERENCES sotf_stations("id") ON DELETE CASCADE,
 	FOREIGN KEY("series_id") REFERENCES sotf_series("id") ON DELETE CASCADE --??
 );
+-- TODO UNIQUE station_id+entry_date+track
 
 CREATE INDEX prg_lang_idx ON sotf_programmes (language);  -- 
 -- TODO more indexes
@@ -552,8 +553,9 @@ CREATE TABLE "sotf_streams" (
 	"prog_id" varchar(12),			-- id of programme
 	"file_id" varchar(12),			-- id of file being played (null if playlist)
 	"playlist" varchar(40),			-- name of playlist file
-	"started" timestamptz,			-- 
+	"started" timestamp,				-- XXX
 	"length" int,						-- estimated length of playlist in seconds
+	"will_end_at" timestamp,			-- XXX
 	"host" varchar(50),				-- host receiving the stream
 	"flags" varchar(20)				-- various flags
 );

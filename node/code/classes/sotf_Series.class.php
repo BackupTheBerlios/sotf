@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Series.class.php,v 1.9 2003/05/30 08:23:40 andras Exp $
+ * $Id: sotf_Series.class.php,v 1.10 2003/05/30 16:31:58 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -31,19 +31,38 @@ class sotf_Series extends sotf_ComplexNodeObject {
     }
   }
 
-  function getDir() {
-	 global $repository;
-	 $station = $this->getObject($this->get('station_id'));
-	 $name = $this->get("id");
-	 if(empty($name))
-		raiseError("this station has no name!");
-	 return $station->getDir() . '/series_' . $this->get('id');
+  /** private: Checks and creates subdirs if necessary. */
+  function checkDirs() {
+	global $repository;
+
+	$station = $this->getObject($this->get('station_id'));
+	$stationName = $station->get('name');
+	$dir = $repository->rootdir . '/' . $stationName;
+	if(!is_dir($dir))
+	  raiseError("Station $station does not exist!");
+	$dir = $station->getDir() . '/series_' . $this->id;
+	//$dir = $this->getDir();
+	if(!is_dir($dir)) {
+	  debug("created series dir", $dir);
+	  mkdir($dir, 0770);
+	}
+	return $dir;
   }
 
-	function getJingleDir() {
-		return $this->getDir() . '/station';
-	}
+  function getDir() {
+	 global $repository;
+	 // temporary workaround
+	 return $this->checkDirs();
 
+	 $station = $this->getObject($this->get('station_id'));
+	 $dir = $station->getDir() . '/series_' . $this->id;
+	 return $dir;
+  }
+
+  /** returns the directory where metadata/jingles/icons are stored */
+  function getMetaDir() {
+	 return $this->getDir();
+  }
 
   function getStation() {
     return new sotf_Station($this->get('station_id'));

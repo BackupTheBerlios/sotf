@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContact.php,v 1.6 2003/05/16 16:12:54 andras Exp $
+ * $Id: showContact.php,v 1.7 2003/05/30 16:31:58 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -32,14 +32,13 @@ while(list(,$row)=each($refs)) {
     $class = get_class($obj);
     $data = array();
     $data['role'] = $repository->getRoleName($role);
+	 $data['name'] = $obj->get('name');
     if($class == 'sotf_station') {
-      $data['url'] = "showStation.php/$id";
-      $data['name'] = $obj->get('name');
+      $data['url'] = $config['rootUrl'] . "/showStation.php/$id";
       $data['mid'] = $page->getlocalized('of_station');
       //$locMsg = 'in_station';
     } elseif($class == 'sotf_series') {
-      $data['url'] = "showSeries.php/$id";
-      $data['name'] = $obj->get('title');
+      $data['url'] = $config['rootUrl'] . "/showSeries.php/$id";
       $data['mid'] = $page->getlocalized('of_series');
       //$locMsg = 'in_series';
     }

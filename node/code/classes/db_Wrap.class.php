@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.16 2003/05/29 06:54:41 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.17 2003/05/30 16:31:57 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -91,6 +91,13 @@ class db_Wrap extends DB_pgsql {
 	  else
 	    return date('Y-m-d H:i:s');
 	}
+
+  function diffTimestamp($t1, $t2) {
+    $tt1 = strtotime($t1);
+    $tt2 = strtotime($t2);
+    $diff = $tt1 - $tt2;
+    return $diff;
+  }
 
 	function epoch() {
 	  return "epoch";

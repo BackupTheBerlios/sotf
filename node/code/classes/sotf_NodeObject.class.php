@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.45 2003/05/29 08:20:39 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.46 2003/05/30 16:31:58 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -35,7 +35,7 @@ class sotf_NodeObject extends sotf_Object {
 
 	 if(empty($this->id)) {
 		$this->id = $repository->generateID($this);
-		$this->adminObject->id = $this->id;
+		//$this->internalData['id'] = $this->id;
 	 }
 	 if($repository->isVocabularyTable($this->tablename))
 		$this->internalData['node_id'] = '0';

@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.20 2003/05/30 08:23:40 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.21 2003/05/30 16:31:58 andras Exp $
 
 /**
  * This is a class for handling permossions.
@@ -137,19 +137,31 @@ class sotf_Permission {
     return $retval;
   }
 
-	function listUsersAndPermissionsLocalized($objectId) {
-    global $db, $page;
-		$plist = $db->getAll("SELECT u.user_id AS id, p.permission AS perm FROM sotf_user_permissions u, sotf_permissions p WHERE p.id = u.permission_id AND u.object_id = '$objectId'");
-    if(DB::isError($retval))
-      raiseError($retval);
-    $retval = array();
-    while(list(,$perm) = each($plist)) {
-      $name = sotf_User::getUserName($perm['id']);
-      $retval[$name][] = $page->getlocalized('perm_' . $perm['perm']);
-    }
-    ksort($retval);
-    return $retval;
+	function listUsersAndPermissions($objectId) {
+	  global $db;
+	  $retval = $db->getAll("SELECT u.user_id AS id, p.permission AS perm FROM sotf_user_permissions u, sotf_permissions p WHERE p.id = u.permission_id AND u.object_id = '$objectId'");
+	  if(DB::isError($retval))
+		 raiseError($retval);
+	  for($i=0; $i<count($retval); $i++) {
+		 $retval[$i]['name'] =  sotf_User::getUserName($retval[$i]['id']);
+	  }
+	  return $retval;
 	}
+
+	function listUsersAndPermissionsLocalized($objectId) {
+	  global $db, $page;
+	  $plist = $db->getAll("SELECT u.user_id AS id, p.permission AS perm FROM sotf_user_permissions u, sotf_permissions p WHERE p.id = u.permission_id AND u.object_id = '$objectId'");
+	  if(DB::isError($plist))
+		 raiseError($plist);
+	  $retval = array();
+	  while(list(,$perm) = each($plist)) {
+		 $name = sotf_User::getUserName($perm['id']);
+		 $retval[$name][] = $page->getlocalized('perm_' . $perm['perm']);
+	  }
+	  ksort($retval);
+	  return $retval;
+	}
+
 
   /*
 	function hasNodePermission($perm) {

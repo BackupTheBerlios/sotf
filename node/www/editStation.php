@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editStation.php,v 1.16 2003/05/30 08:23:41 andras Exp $
+ * $Id: editStation.php,v 1.17 2003/05/30 16:31:58 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -161,7 +161,7 @@ if ($st->getIcon()) {
 }
 
 $jinglelist = & new sotf_FileList();
-$jinglelist->getAudioFromDir($st->getJingleDir(), 'jingle_');
+$jinglelist->getAudioFromDir($st->getMetaDir(), 'jingle_');
 
 // now $jinglelist contains the jingles
 $checker = & new sotf_AudioCheck($jinglelist);		// check $jinglelist
