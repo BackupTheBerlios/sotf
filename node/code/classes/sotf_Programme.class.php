@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.38 2003/03/06 09:57:52 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.39 2003/03/06 10:01:18 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -614,7 +614,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     $newPrg->set("production_date", date('Y-m-d', strtotime($metadata['created'])));
     $newPrg->set("broadcast_date", date('Y-m-d', strtotime($metadata['issued'])));
     $newPrg->set("modify_date", date('Y-m-d', strtotime($metadata['modified'])));
-		$newPrg->set("genre_id", $db->getOne("SELECT id FROM sotf_genres WHERE name = '$metadata[subject]'"));
+		$newPrg->set("genre_id", $db->getOne("SELECT genre_id FROM sotf_genres WHERE name = '$metadata[subject]'"));
 
     // type...
     $newPrg->set('language', $metadata['language']);
