@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.10 2002/12/12 18:18:26 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.11 2002/12/13 15:05:17 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_ComplexNodeObject.class.php');
@@ -11,7 +11,7 @@ require_once($classdir . '/sotf_Series.class.php');
 require_once($classdir . '/sotf_Programme.class.php');
 require_once($classdir . '/sotf_Contact.class.php');
 require_once($classdir . '/sotf_Rating.class.php');
-//require_once($classdir . '/sotf_PList.class.php');
+require_once($classdir . '/sotf_Playlist.class.php');
 //require_once($classdir . '/sotf_Metadata.class.php');
 
 class sotf_Repository {
