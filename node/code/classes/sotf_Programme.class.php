@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.84 2005/02/01 10:06:19 micsik Exp $
+ * $Id: sotf_Programme.class.php,v 1.85 2005/04/06 14:55:12 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -131,7 +131,8 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   function getStation() {
 	 if(!$this->station) {
 		$this->station = $this->getObject($this->get('station_id'));
-		$this->stationName = $this->station->get('name');
+		if(is_object($this->station))
+		  $this->stationName = $this->station->get('name');
 	 }
 	 return $this->station;
   }
