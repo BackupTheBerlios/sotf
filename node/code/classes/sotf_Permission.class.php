@@ -1,4 +1,6 @@
 <?php
+// -*- tab-width: 3; indent-tabs-mode: 1; -*-
+// $Id: sotf_Permission.class.php,v 1.3 2002/11/08 16:42:56 andras Exp $
 
 require_once("sotf_User.class.php");
 require_once("sotf_Utils.class.php");
@@ -22,6 +24,7 @@ class sotf_Permission
 	*/
 	function get($permission, $station = NULL)
 	{
+    /*
 		global $user;
 
 		if ($user)
@@ -36,6 +39,8 @@ class sotf_Permission
 					if (in_array($permission, $user->permissions[$station]))
 						return true;
 		return false;
+    */
+    return true;
 	}
 
 	/**
