@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Statistics.class.php,v 1.4 2003/05/29 08:20:39 andras Exp $
+ * $Id: sotf_Statistics.class.php,v 1.5 2003/05/29 11:15:56 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -102,7 +102,14 @@ class sotf_Statistics extends sotf_Object {
     // would be too often: 
 	 if($update)
 		$obj->updateStats(false);
-    $obj->save();
+	 if($obj->exists()) {
+		$obj->update();
+	 } else {
+		$obj->create();
+		debug("obj1", $obj);
+		$obj->find(); // to get the id
+		debug("obj2", $obj);
+	 }
 	 if(!$update)
 		sotf_Object::addToUpdate('sotf_stats', $obj->id);
 	 return $obj;

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.31 2003/05/29 06:35:52 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.32 2003/05/29 11:15:56 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -83,10 +83,10 @@ class sotf_Page
 	* @return	string	The authorization key
 	*/
 	function getAuthKey() {
-	  if($this->loggedIn()) {
-		 $this->errors[] = "logged in user needs no authKey";
-		 return false;
-	  }
+	  //if($this->loggedIn()) {
+		// $this->errors[] = "logged in user needs no authKey";
+		// return false;
+	  //}
 	  if($this->authKey)
 		 return $this->authKey;
 	  $c = base64_decode($_COOKIE[$this->authKeyName]);
