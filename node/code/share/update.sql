@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---  $Id: update.sql,v 1.1 2003/07/29 08:25:59 andras Exp $
+--  $Id: update.sql,v 1.2 2003/07/29 13:40:53 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -109,3 +109,8 @@ ALTER TABLE sotf_user_prefs ALTER feedback SET DEFAULT 't'::bool;
 ALTER TABLE sotf_contacts ADD COLUMN "feedback" bool;
 ALTER TABLE sotf_contacts ALTER feedback SET DEFAULT 'f'::bool;
 
+-- 2003-07-29
+
+-- it's better to allow stations with the same name
+DROP INDEX sotf_stations_name_key;
+CREATE INDEX sotf_stations_name_index ON sotf_stations (name);

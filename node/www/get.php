@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.20 2003/07/29 08:27:16 andras Exp $
+ * $Id: get.php,v 1.21 2003/07/29 13:40:53 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -18,6 +18,8 @@ if($id) {
   $smarty->assign('ID', $id);
 
   $prg = &$repository->getObject($id);
+  if(!$prg)
+	 raiseError("no_such_object");
 
   if(!$prg->getBool('published')) {
 	 if(!hasPerm($prg->id, 'change')) {

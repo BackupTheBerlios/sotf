@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.49 2003/07/29 08:27:15 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.50 2003/07/29 13:40:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -60,7 +60,7 @@ class sotf_Repository {
 									);
 
   /** The order in which to send table data to neighbour nodes. */
-  var $tableOrder = "no,st,co,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,bl,de,ra,re,sx,po";
+  var $tableOrder = "de,no,st,co,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,bl,ra,re,sx,po";
 
   var $rootdir;
   var $db;

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContact.php,v 1.9 2003/07/29 08:27:16 andras Exp $
+ * $Id: showContact.php,v 1.10 2003/07/29 13:40:53 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -13,6 +13,9 @@ require("init.inc.php");
 $contactId = sotf_Utils::getParameter('id');
 
 $contact = & $repository->getObject($contactId);
+if(!$contact)
+	  raiseError("no_such_object");
+
 $smarty->assign('PAGETITLE', $contact->get('name'));
 $smarty->assign('CONTACT_ID',$contactId);
 $smarty->assign('CONTACT_NAME',$contact->get('name'));

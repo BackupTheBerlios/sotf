@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.19 2003/07/29 12:01:57 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.20 2003/07/29 13:40:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -11,6 +11,9 @@ class db_Wrap extends DB_pgsql {
 
   /** When true, all executed SQL statements are logged. */
   var $debug = false;
+
+  /** When false, all SQL errors immediately stop execution and create an error page. */
+  var $silent = false;
 
   /** When debug is on, logged query texts will be truncated to this length. */
   var $traceLength = 700;
@@ -39,23 +42,13 @@ class db_Wrap extends DB_pgsql {
 	  $err = parent::errorNative();
 	  //error_log("PGSQL error: $err",0);
 	  //error_log("in query: " . substr($this->last_query,0,254) ,0);
-    if($this->debug)
-      raiseError("SQL error: $err in \n " . $this->last_query);
-    else
-      raiseError("SQL error!");
-    /*
-		echo "<p><b>SQL error: $err</b> in <br>";
-		echo $this->last_query . "</p>";
-    exit;
-    */
-    /*
-	  global $sqlDebug;
-	  if($sqlDebug) {
-		echo "<p><b>SQL error: $err</b> in <br>";
-		echo $this->last_query . "</p>";
-	  }
-    */
-	  //return $err;
+    if(!$this->silent) {
+      if($this->debug)
+        raiseError("SQL error: $err in \n " . $this->last_query);
+      else
+        raiseError("SQL error!");
+    }
+	  return $err;
 	}
 
 	function getSQLDate($timestamp='')

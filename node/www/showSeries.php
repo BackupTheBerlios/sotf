@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showSeries.php,v 1.7 2003/06/20 16:34:32 andras Exp $
+ * $Id: showSeries.php,v 1.8 2003/07/29 13:40:53 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -25,6 +25,9 @@ if($delprog) {
 }
 
 $series = & $repository->getObject($seriesid);
+if(!$series)
+	  raiseError("no_such_object");
+
 $station = $series->getStation();
 
 $page->errorURL = $scriptUrl . '/' . $seriesid;

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.31 2003/07/29 08:27:15 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.32 2003/07/29 13:40:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -27,6 +27,8 @@ class sotf_Object {
   var $changed;
   /** if the record exists in db */
   var $exists = NULL;
+
+	var $error = NULL;
 
   /** list of fields which are treated as binary (image, sound) */
   var $binaryFields = array();
@@ -142,8 +144,9 @@ class sotf_Object {
 		
 	 //if the query is dead, stop executio, output error
 	 if(DB::isError($res)){
-		addError($res);
-		return false;
+		 addError($res);
+		 $this->error = $res->message . '(' . $res->code . ')';
+		 return false;
 	 }
 
 	 $this->exists = true;
