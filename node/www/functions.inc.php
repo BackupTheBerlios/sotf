@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.8 2003/05/14 15:30:39 andras Exp $
+ * $Id: functions.inc.php,v 1.9 2003/05/27 12:02:09 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -56,8 +56,8 @@ function logger($name, $msg='', $type='default') {
   }
   if(is_array($msg)) {
     ob_start();
-    //var_dump($msg);
-    print_r($msg);
+    var_dump($msg);
+    //print_r($msg);
     $msg = "\n" . ob_get_contents();
     ob_end_clean();
   }

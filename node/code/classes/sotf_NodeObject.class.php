@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.36 2003/05/27 10:38:23 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.37 2003/05/27 12:02:09 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -229,6 +229,8 @@ class sotf_NodeObject extends sotf_Object {
 			 $obj['data'] = $data;
 			 $objects[] = $obj;
 			 debug("sending modified object", $obj['id']);
+			 debug("", $obj);
+			 //if(is_array($data)) foreach($data as $k => $v) {if(is_null($v)) debug($k, "is_null"); if($v === NULL) debug($k, "is null"); }
 			 if($tablename == 'sotf_blobs') 
 				$countBlobs++;
 		  }
@@ -253,16 +255,19 @@ class sotf_NodeObject extends sotf_Object {
 		reset($objects);
 		while(list(,$objData) = each($objects)) {
 		  debug("arrived object", $objData['id']);
+		  debug("", $objData);
+		  $data = $objData['data'];
+		  //if(is_array($data)) foreach($data as $k => $v) {if(is_null($v)) debug($k, "is_null"); if($v === NULL) debug($k, "is null"); }
 		  $obj = $repository->getObjectNoCache($objData['id'], $objData['data']);
 		  unset($objData['data']);
 		  $obj->internalData = $objData;
-		  /*
+		  // handle NULL problems
 		  reset($obj->data);
-			// url decoding and else
 		  while(list($k,$v) = each($obj->data)) {
-			 $obj->data[$k] = urldecode($v);
+			 if(is_null($v))
+				$obj->data[$k] = NULL;
 		  }
-		  */
+		  // save object
 		  if($objData['node_id'] == $config['nodeId']) {
 			 logError("Received my own object back via replication: ". $objData['id']);
 		  } elseif($obj->saveReplica()) {

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.30 2003/05/23 11:03:27 andras Exp $
+ * $Id: init.inc.php,v 1.31 2003/05/27 12:02:09 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -159,7 +159,7 @@ $smarty = new Smarty;
 $smarty->template_dir = $config['basedir'] . "/code/templates";
 $smarty->compile_dir = $config['basedir'] . "/code/templates_c";
 $smarty->config_dir = $config['basedir'] . "/code/configs";
-$smarty->compile_check = $sotfVars->get('smarty_compile_check', 0);
+$smarty->compile_check = $sotfVars->get('smarty_compile_check', 1);
 $smarty->debugging = $sotfVars->get('debug_smarty', 0);
 $smarty->show_info_include = $sotfVars->get('debug_smarty', 0);
 

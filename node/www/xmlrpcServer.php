@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.18 2003/05/27 09:29:04 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.19 2003/05/27 12:02:09 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -149,6 +149,7 @@ function getProgrammes($params)
 		// audio files for programme
 		$audioFiles = $prg->listAudioFiles('true');
 		$results[$key]['audioFiles'] = array();
+			$results[$key]['downloadFiles'] = array();
 		foreach($audioFiles as $fileList)
 		{
 			if ($fileList['stream_access'] == "t") $results[$key]['audioFiles'][] = $fileList;
