@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.52 2003/07/29 09:13:43 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.53 2003/07/29 11:01:46 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -35,7 +35,7 @@ class sotf_NodeObject extends sotf_Object {
     $tc = $repository->getTableCode($tablename);
     //debug('tc', $tc);
     if($tc == 'tt' || $tc == 'td' || $tc == 'to' || $tc == 'ge' || $tc == 'ro' || $tc == 'rn') {
-      debug("vocabulary entry");
+      //debug("vocabulary entry");
       return true;
     } else {
       return false;
