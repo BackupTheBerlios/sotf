@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.26 2003/07/29 08:27:15 andras Exp $
+ * $Id: admin.php,v 1.27 2003/12/04 16:17:31 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -101,7 +101,10 @@ if(sotf_Utils::getParameter('sync')) {
 	 sotf_NodeObject::newNodeInNetwork($nid);
   // sync
   $neighbour->sync(true);
-  $page->redirect("admin.php#network");
+  if($config['debug'])
+	 echo "<h3>Sync completed.</h3>";
+  else
+	 $page->redirect("admin.php#network");
   $page->logRequest();
 }
 
