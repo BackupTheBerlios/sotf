@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.36 2003/03/05 09:44:45 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.37 2003/03/05 16:44:49 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -614,10 +614,21 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     $newPrg->set("production_date", date('Y-m-d', strtotime($metadata['created'])));
     $newPrg->set("broadcast_date", date('Y-m-d', strtotime($metadata['issued'])));
     $newPrg->set("modify_date", date('Y-m-d', strtotime($metadata['modified'])));
+		$newPrg->set("genre_id", $db->getOne("SELECT id FROM sotf_genres WHERE name = '$metadata[subject]'"));
 
     // type...
     $newPrg->set('language', $metadata['language']);
-
+		
+		// topic
+		$topicz = explode(",",$metadata['type']);
+		foreach($topicz as $topic){
+			$topic_id = $db->getOne("SELECT topic_id FROM sotf_topics WHERE topic_name = '" . trim($topic) . "'");
+			if(!empty($topic_id)){
+				$db->query("INSERT INTO sotf_prog_topics(prog_id, topic_id) VALUES('" . $newPrg->id . "','$topic_id')");
+			}
+		}
+		
+		
     $newPrg->update();
 
     // rights
