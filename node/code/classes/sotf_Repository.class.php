@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.41 2003/06/12 16:46:58 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.42 2003/06/18 14:12:06 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -134,18 +134,21 @@ class sotf_Repository {
     }
   }
 
+  function makeId($nodeId, $tablename, $serial) {
+    $tableCode = $this->getTableCode($tablename);
+    if($this->isVocabularyTable($tablename)) 
+      $nodeId = 0;
+	 return sprintf("%03d%2s%d", $nodeId, $tableCode, $serial);
+  }
+
+
   /** Generates the ID for a new persistent object. */
   function generateID($object) {
     global $config;
     if($config['nodeId'] == 0)
       raiseError('Please set config[nodeId] to a positive integer in config.inc.php');
-    $tableCode = $this->getTableCode($object->tablename);
-    if($this->isVocabularyTable($object->tablename)) 
-      $nid = 0;
-    else
-      $nid = $config['nodeId'];
     $localId = $this->db->nextId($object->tablename);
-    $id = sprintf("%03d%2s%d", $nid, $tableCode, $localId);
+	 $id = $this->makeId($config['nodeId'], $object->tablename, $localId);
     debug("generated ID", $id);
     return $id;
   }

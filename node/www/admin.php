@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.24 2003/06/16 16:13:40 andras Exp $
+ * $Id: admin.php,v 1.25 2003/06/18 14:12:06 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -24,14 +24,11 @@ checkPerm('node', 'change', 'authorize');
 $xbmfFile = sotf_Utils::getParameter('import_xbmf');
 if($xbmfFile) {
   $file = $config['xbmfInDir'] . "/$xbmfFile";
-  $db->begin();
   $id = sotf_Programme::importXBMF($file, $config['publishXbmf'], true);
   if($id) {
-	 $db->commit();
 	 echo "Import succesful: <a target=\"_opener\" href=\"editMeta.php?id=$id\">click here</a>";
 	 unlink($file);
   } else {
-	 $db->rollback();
 	 echo "Import failed";
   }
   $page->logRequest();
