@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.27 2003/05/16 16:12:54 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.28 2003/05/25 14:26:46 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -120,6 +120,10 @@ class sotf_NodeObject extends sotf_Object {
 		  */
 		  debug("updated ", $this->id);
 		  return true;
+		} elseif($this->internalData['change_stamp'] && 
+			$this->internalData['change_stamp'] == $oldData['change_stamp']) {
+		  debug("arrived same version of", $this->id);
+		  return true;
 		} else {
 		  debug("arrived older version of", $this->id);
 		  return false;
@@ -184,12 +188,12 @@ class sotf_NodeObject extends sotf_Object {
 	 if(count($objects) > 0) {
 		reset($objects);
 		while(list(,$objData) = each($objects)) {
-		  debug("saving modified object", $objData['id']);
-		  $obj = $repository->getObject($objData['id'], $objData['data']);
+		  debug("arrived object", $objData['id']);
+		  $obj = $repository->getObjectNoCache($objData['id'], $objData['data']);
 		  unset($objData['data']);
 		  $obj->internalData = $objData;
-		  reset($obj->data);
 		  /*
+		  reset($obj->data);
 			// url decoding and else
 		  while(list($k,$v) = each($obj->data)) {
 			 $obj->data[$k] = urldecode($v);
@@ -201,13 +205,14 @@ class sotf_NodeObject extends sotf_Object {
 			 if($obj->tablename == 'sotf_deletions') {
 				$delId = $obj->get('del_id');
 				debug("deleting object", $delId);
-				$obj = $repository->getObject($delId);
+				$obj = $repository->getObjectNoCache($delId);
 				if($obj)
 				  $obj->delete();
 			 }
 		  }
 		}
 	 }
+	 debug("objects updated are", $updatedObjects);
 	 return $updatedObjects;
   }
   

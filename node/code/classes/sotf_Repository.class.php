@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.32 2003/05/22 11:14:17 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.33 2003/05/25 14:26:46 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -93,11 +93,7 @@ class sotf_Repository {
     return array_search($tc, $this->tableCodes);
   }
 
-  function getObject($objectId, $data='') {
-	 // get from cache if possible
-	 $object = $this->getFromCache($objectId);
-	 if(is_object($object))
-		return $object;
+  function getObjectNoCache($objectId, $data='') {
 	 // load it from db
     $tc = substr($objectId, 3,2);
     $class = $this->codeToClass[$tc];
@@ -109,7 +105,17 @@ class sotf_Repository {
     }
     if( count($obj->getAll())==0 )
       return NULL;
-    $this->putInCache($obj);
+	 return $obj;
+  }
+  
+  function getObject($objectId, $data='') {
+	 // get from cache if possible
+	 $object = $this->getFromCache($objectId);
+	 if(is_object($object))
+		return $object;
+	 $obj = $this->getObjectNoCache($objectId, $data);
+    if($obj)
+		$this->putInCache($obj);
 	 return $obj;
   }
 
@@ -159,7 +165,7 @@ class sotf_Repository {
 		$object->debug();
 		raiseError("Can't cache objects without id");
 	 }
-	 //debug("CACHED: $id");
+	 debug("CACHED: $id");
 	 $this->objectCache[$id] = &$object;
   }
 
