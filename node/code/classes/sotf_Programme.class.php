@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.79 2004/03/05 15:35:09 micsik Exp $
+ * $Id: sotf_Programme.class.php,v 1.80 2004/04/29 12:45:59 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -351,7 +351,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		raiseError($res);
 	 $results = null;
 	 while (DB_OK === $res->fetchInto($row)) {
-		$row['icon'] = sotf_Blob::cacheIcon($row['id']);
+		$row['icon'] = sotf_Blob::cacheIcon2($row);
 		$results[] = $row;
 	 }
 	 return $results;

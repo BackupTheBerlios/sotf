@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: playlist.php,v 1.8 2003/06/19 10:07:55 andras Exp $
+ * $Id: playlist.php,v 1.9 2004/04/29 12:46:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -43,7 +43,7 @@ $result = $playlist->load();
 $programmes = array();
 for($i=0; $i<count($result); $i++)
 {
-  $result[$i]['icon'] = sotf_Blob::cacheIcon($result[$i]['id']);
+  $result[$i]['icon'] = sotf_Blob::cacheIcon2($result[$i]);
 	$programmes["0:".$i] = $result[$i]["title"];
 }
 

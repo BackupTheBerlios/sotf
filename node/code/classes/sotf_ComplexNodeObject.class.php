@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.31 2004/03/05 15:35:09 micsik Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.32 2004/04/29 12:45:59 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -63,7 +63,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	/** caches icon for object, and adds indicator flag for Smarty templates whether there is an icon */
 	function getAllWithIcon() {
 		$retval = $this->getAll();
-		$retval['icon'] = sotf_Blob::cacheIcon($this->id);
+		$retval['icon'] = sotf_Blob::cacheIcon($retval['id']);
 		return $retval;
 	}
 

@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Vocabularies.class.php,v 1.7 2004/03/05 15:35:09 micsik Exp $
+/* $Id: sotf_Vocabularies.class.php,v 1.8 2004/04/29 12:46:00 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -437,9 +437,12 @@ class sotf_Vocabularies {
     return $this->db->getOne("SELECT role_id FROM sotf_role_names WHERE name='$name' AND language='$language'");
   }
 
-  function getRoles() {
-		$this->loadRoles();
-		return $this->roles;
+  function getRoles($language='') {
+		global $lang;
+		if(empty($language))
+			$language = $lang;
+		$this->loadRoles($language);
+		return $this->roles[$language];
   }
 
   /************************************************
@@ -484,9 +487,12 @@ class sotf_Vocabularies {
 		}
 	}
 
-  function getGenres() {
-		$this->loadGenres();
-		return $this->genres;
+  function getGenres($language='') {
+		global $lang;
+		if(empty($language))
+			$language = $lang;
+		$this->loadGenres($language);
+		return $this->genres[$language];
   }
 	
   function getGenreName($id, $language='') {

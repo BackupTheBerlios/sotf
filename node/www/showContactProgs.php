@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContactProgs.php,v 1.4 2003/05/16 16:12:54 andras Exp $
+ * $Id: showContactProgs.php,v 1.5 2004/04/29 12:46:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -22,7 +22,7 @@ $limit = $page->splitList($contact->countProgrammes(), "$scriptUrl/$contactId");
 $progs = $contact->listProgrammes($limit["from"] , $limit["maxresults"]);
 
 for($i=0; $i<count($progs); $i++) {
-  $progs[$i]['icon'] = sotf_Blob::cacheIcon($progs[$i]['id']);
+  $progs[$i]['icon'] = sotf_Blob::cacheIcon2($progs[$i]);
 }
 
 $smarty->assign('PROGS',$progs);

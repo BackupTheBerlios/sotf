@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.17 2003/11/27 10:11:32 andras Exp $
+ * $Id: index.php,v 1.18 2004/04/29 12:46:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -86,7 +86,7 @@ if($defQuery) {
 
     $hits = '';
     while (DB_OK === $res->fetchInto($row)) {
-      $row['icon'] = sotf_Blob::cacheIcon($row['id']);
+      $row['icon'] = sotf_Blob::cacheIcon2($row);
       $hits[] = $row;
     }
     $smarty->assign("NEWS", $hits);

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.24 2004/02/27 17:53:15 micsik Exp $
+ * $Id: get.php,v 1.25 2004/04/29 12:46:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -32,7 +32,9 @@ if($id) {
   $page->setTitle($prg->get('title'));
 
   // general data
-  $smarty->assign('PRG_DATA', $prg->getAllWithIcon());
+  $prgData = $prg->getAll();
+  $prgData['icon'] = sotf_Blob::cacheIcon($id);
+  $smarty->assign('PRG_DATA', $prgData);
   // station data
   $station = $prg->getStation();
   $smarty->assign('STATION_DATA', $station->getAllWithIcon());

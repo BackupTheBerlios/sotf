@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearchresults.php,v 1.12 2003/05/27 16:44:20 andras Exp $
+ * $Id: advsearchresults.php,v 1.13 2004/04/29 12:46:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -92,7 +92,7 @@ for($i =0; $i<$max; $i++)	//$selected will contain all the information about the
 
 	$item['title'] = $result[$i][title];
 	$item['id'] = $result[$i][id];
-	$item['icon'] = sotf_Blob::cacheIcon($item['id']);
+	$item['icon'] = sotf_Blob::cacheIcon2($result[$i]);
 	$item['values'] = $values;
 	$selected[] = $item;
 	$item = "";

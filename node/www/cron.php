@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.26 2004/02/27 17:53:15 micsik Exp $
+ * $Id: cron.php,v 1.27 2004/04/29 12:46:01 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -89,6 +89,7 @@ if(!empty($XBMF)) {
 
 //******** Expire old programmes
 
+  /*
 $prgIds = sotf_Programme::getExpiredProgrammes();
 if(!empty($prgIds)) {
   debug("deleting expired", $prgIds);
@@ -99,6 +100,7 @@ if(!empty($prgIds)) {
   }
   $db->commit();
 }
+  */
 
 //******** Update topic counts
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: search.php,v 1.9 2004/02/27 17:53:15 micsik Exp $
+ * $Id: search.php,v 1.10 2004/04/29 12:46:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -32,7 +32,7 @@ if($pattern) {
 
   // cache icons for results
   for($i=0; $i<count($result); $i++) {
-    $result[$i]['icon'] = sotf_Blob::cacheIcon($result[$i]['id']);
+    $result[$i]['icon'] = sotf_Blob::cacheIcon2($result[$i]);
   }
 
   $smarty->assign('RESULTS', $result);
