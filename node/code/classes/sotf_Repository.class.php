@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.15 2003/01/16 13:14:42 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.16 2003/01/31 12:49:42 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_ComplexNodeObject.class.php');
@@ -16,6 +16,7 @@ require_once($classdir . '/sotf_Blob.class.php');
 
 class sotf_Repository {
 
+  /** SQL table codes. */
   var $tableCodes = array( 
 									"sotf_nodes" => "no",
 									"sotf_contacts" => "co",
@@ -42,12 +43,17 @@ class sotf_Repository {
                   "sotf_blobs" => "bl"
 									);
 
+  /** Mapping of table codes into class names. */
   var $codeToClass = array( 
 									"co" => "sotf_Contact",
 									"st" => "sotf_Station",
 									"se" => "sotf_Series",
 									"pr" => "sotf_Programme",
+                  "bl" => "sotf_Blob"
 									);
+
+  /** The order in which to send table data to neighbour nodes. */
+  var $tableOrder = "no,bl,co,st,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,de,ra,re,sx";
 
   var $rootdir;
   var $db;
