@@ -1,6 +1,5 @@
-<?php 
-// -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.41 2003/04/04 11:18:40 andras Exp $
+<?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
+// $Id: sotf_Programme.class.php,v 1.42 2003/04/08 14:21:58 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);

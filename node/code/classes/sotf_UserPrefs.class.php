@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_UserPrefs.class.php,v 1.4 2002/12/17 15:13:50 andras Exp $
+// $Id: sotf_UserPrefs.class.php,v 1.5 2003/04/08 14:21:58 andras Exp $
 
 /**
 * This is a class for storing and handling user preferences
@@ -41,6 +41,16 @@ class sotf_UserPrefs
     }
     return '';
   }
+
+  function getQuery($name) {
+    reset($this->savedQueries);
+    while(list(,$query)=each($this->savedQueries)) {
+      if($query['name']==$name)
+        return $query['query'];
+    }
+    return '';
+  }
+  
 
   function save() {
     global $db, $user;
