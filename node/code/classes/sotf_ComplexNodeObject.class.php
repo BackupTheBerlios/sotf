@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.21 2003/06/04 13:33:08 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.22 2003/06/05 14:49:06 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -211,7 +211,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		$tmpfile = $config['tmpDir'].'/'.time().".png";
 		$succ = $this->prepareIcon($file, $tmpfile, $config['iconWidth'], $config['iconHeight']);
 		if (!$succ) {
-			raiseError("Could not resize image");
+			addError("Could not resize image");
 			//return false;
 		} else {
 		  if ($fp = fopen($tmpfile,'rb')) {
@@ -223,7 +223,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 			 $iconFile = $this->getMetaDir() . '/icon.png';
 			 sotf_Utils::save($iconFile, $data);
 		  } else
-			 raiseError("could not open icon file!");
+			 addError("could not open icon file!");
 		}
 		if(is_file($tmpfile)) {
 		  debug("remove tmpfile", $tmpfile);

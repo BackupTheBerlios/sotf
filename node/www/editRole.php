@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editRole.php,v 1.4 2003/03/05 09:11:39 andras Exp $
+ * $Id: editRole.php,v 1.5 2003/06/05 14:49:07 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -20,12 +20,25 @@ $contactId = sotf_Utils::getParameter('contact');
 $objectId = sotf_Utils::getParameter('objectid');
 $save = sotf_Utils::getParameter('save');
 $roleSelected = sotf_Utils::getParameter('role');
+$scopeChange = sotf_Utils::getParameter('scope_change');
+$scope = sotf_Utils::getParameter('scope');
 
 if(empty($objectId)) {
      raiseError("Object id is missing!");
 }
 
 checkPerm($objectId, "change");
+
+if($scopeChange) {
+  if(sotf_Utils::getParameter('change')) {
+	 $scope = sotf_Utils::getParameter('newscope');
+  }
+  if(sotf_Utils::getParameter('search')) {
+	 $pattern = sotf_Utils::getParameter('pattern');
+	 $scope = 6;
+  }
+  $page->redirect("editRole.php?roleid=$roleId&objectid=$objectId&pattern=" . urlencode($pattern) . "&scope=$scope");
+}
 
 if($roleId) {
   $role = & new sotf_NodeObject('sotf_object_roles', $roleId);
@@ -71,7 +84,37 @@ if($save) {
 // general data
 $smarty->assign("OBJECT_ID", $objectId);
 $smarty->assign('ROLE_LIST', $repository->getRoles());
-$smarty->assign('CONTACTS', sotf_Contact::listLocalContactNames());
+
+if(!$scope) {
+	  $scope = 1;
+}
+switch($scope) {
+ case 1: 
+	$contacts = sotf_Contact::listMyContactNames();
+	break;
+ case 2:
+	$contacts = array();
+	break;
+ case 3:
+	$contacts = sotf_Contact::listObjectContactNames($repository->getObject($objectId));
+	break;
+ case 4:
+	$contacts = sotf_Contact::listLocalContactNames();
+	break;
+ case 5:
+	$contacts = sotf_Contact::listAllContactNames();
+	break;
+ case 6:
+	$contacts = sotf_Contact::searchContactNames(sotf_Utils::getParameter('pattern'));
+	break;
+ default:
+	raiseError("unknown scope: $scope");
+}
+			  
+
+$smarty->assign('SCOPE', $scope);
+$smarty->assign('PATTERN', $pattern);
+$smarty->assign('CONTACTS', $contacts);
 
 $page->sendPopup();
 

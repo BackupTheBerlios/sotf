@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.17 2003/05/30 16:31:58 andras Exp $
+ * $Id: cron.php,v 1.18 2003/06/05 14:49:07 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -74,11 +74,14 @@ while($entry = $dir->read()) {
 $dir->close();
 if(!empty($XBMF)) {
   foreach($XBMF as $xbmfFile) {
+    $db->begin();
     $id = sotf_Programme::importXBMF($config['xbmfInDir'] . "/$xbmfFile", $config['publishXbmf']);
     if($id) {
+      $db->commit();
       debug("CRON","Imported new XBMF: $xbmfFile");
       unlink($config['xbmfInDir'] . "/$xbmfFile");
     } else {
+      $db->rollback();
       logger("CRON","Import FAILED for XBMF: $xbmfFile");
     }
   }

@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.38 2003/05/30 16:31:58 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.39 2003/06/05 14:49:07 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -212,7 +212,10 @@ class sotf_Repository {
 
   function addToTopic($progId, $topicId) {
     global $db;
-    // TODO: ha mar van, akkor ne adja hozza
+	 if(!$topicId || $this->getTable($topicId) != 'sotf_topic_tree_defs') {
+		logError("invalid topic: $topicId");
+		return;
+	 }
     $query="SELECT id  FROM sotf_prog_topics WHERE  prog_id = '".$progId."' AND topic_id  = '".$topicId."'";
     $result = $db->getAll($query);
     if (count($result) == 0)		//if not already in the DB

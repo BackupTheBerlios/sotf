@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.47 2003/06/02 12:25:49 andras Exp $
+--  $Id: db.sql,v 1.48 2003/06/05 14:49:07 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -563,7 +563,7 @@ CREATE TABLE "sotf_streams" (
 CREATE TABLE "sotf_station_mappings" (
 -- provides mapping between ids on station server and ids on node XXX
 	"id" serial PRIMARY KEY,		-- just an id
-	"id_at_node" varchar(12) UNIQUE REFERENCES sotf_programmes(id) ON DELETE CASCADE,		-- id of thing at node
+	"id_at_node" varchar(12) UNIQUE REFERENCES sotf_node_objects(id) ON DELETE CASCADE,		-- id of thing at node
 	"id_at_station" varchar(20) UNIQUE  -- id of thing on station server
 )
 
