@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Vocabularies.class.php,v 1.4 2003/09/29 09:30:37 andras Exp $
+/* $Id: sotf_Vocabularies.class.php,v 1.5 2003/10/03 09:03:27 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -111,9 +111,9 @@ class sotf_Vocabularies {
 		foreach($disappeared as $did) {
 			$this->db->query("DELETE FROM sotf_prog_topics WHERE id='$did'");
 		}
-    $this->db->query("DROP TABLE sotf_topics_counter");
+    $this->db->query("DELETE FROM sotf_topics_counter");
     $this->db->query("SELECT setval('sotf_topics_counter_id_seq', 1, false)");
-    $this->db->query("SELECT nextval('sotf_topics_counter_id_seq') AS id, t.id AS topic_id, count(p.id) AS number, NULL::int AS total INTO sotf_topics_counter FROM sotf_topic_tree_defs t LEFT JOIN sotf_prog_topics p ON t.id = p.topic_id GROUP BY t.id");
+    $this->db->query("INSERT INTO sotf_topics_counter (id, topic_id, number, total) SELECT nextval('sotf_topics_counter_id_seq'), t.id, count(p.id), NULL::int FROM sotf_topic_tree_defs t LEFT JOIN sotf_prog_topics p ON t.id = p.topic_id GROUP BY t.id");
     // calculate totals including subtopic counts
     $topics = $this->db->getAll("SELECT t.id, supertopic, number FROM sotf_topic_tree_defs t, sotf_topics_counter c WHERE t.id = c.topic_id ");
     for($i=0; $i<count($topics); $i++) {

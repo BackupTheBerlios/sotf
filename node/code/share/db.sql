@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.3 2003/09/16 12:00:05 andras Exp $
+--	 $Id: db.sql,v 1.4 2003/10/03 09:03:27 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -345,7 +345,7 @@ CREATE TABLE "sotf_prog_topics" (
 "prog_id" varchar(12) NOT NULL,
 "topic_id" varchar(12) NOT NULL,
 CONSTRAINT "sotf_prog_topics_u" UNIQUE ("topic_id", "prog_id"),
-FOREIGN KEY("topic_id") REFERENCES sotf_topic_tree_defs("id") ON DELETE CASCADE,
+-- this might cause loss of valuable data: FOREIGN KEY("topic_id") REFERENCES sotf_topic_tree_defs("id") ON DELETE CASCADE,
 FOREIGN KEY("prog_id") REFERENCES sotf_programmes("id") ON DELETE CASCADE
 );
 

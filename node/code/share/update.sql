@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---  $Id: update.sql,v 1.3 2003/09/16 12:00:05 andras Exp $
+--  $Id: update.sql,v 1.4 2003/10/03 09:03:27 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -158,3 +158,8 @@ CREATE INDEX "prg_lang_idx" ON "sotf_programmes" ("language");
 
 INSERT INTO "sotf_programmes" SELECT * FROM "sotf_programmes_1063641060";
 DROP TABLE "sotf_programmes_1063641060";
+
+-- 2003-10-03
+
+-- drop a trigger: can't be automatized, please do the following:
+-- select the trigger which is for table sotf_prog_topics and references table sotf_topic_tree_defs and drop it

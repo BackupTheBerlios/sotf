@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: install.php,v 1.24 2003/07/29 08:27:16 andras Exp $
+ * $Id: install.php,v 1.25 2003/10/03 09:03:27 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -662,9 +662,9 @@ if (($install_color[$id] = $install_green) AND ($nodeDbHost == NULL))			//if tes
 			$vocabularies->importTopicTree(file($config['basedir']."/code/share/topictree_soma_eng.txt"), 'eng');
 
 			// not really  needed any more, just here for safety
-			$result = $db->query("SELECT setval('sotf_topics_seq', ". $config['nodeId'] . "000, false)");
-			$result = $db->query("SELECT setval('sotf_topic_trees_seq', ". $config['nodeId'] . "000, false)");
-			$result = $db->query("SELECT setval('sotf_topic_tree_defs_seq', ". $config['nodeId'] . "000, false)");
+			//$result = $db->query("SELECT setval('sotf_topics_seq', ". $config['nodeId'] . "000, false)");
+			//$result = $db->query("SELECT setval('sotf_topic_trees_seq', ". $config['nodeId'] . "000, false)");
+			//$result = $db->query("SELECT setval('sotf_topic_tree_defs_seq', ". $config['nodeId'] . "000, false)");
 
 			$db->commit();
 
