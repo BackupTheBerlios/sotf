@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_NodeObject.class.php,v 1.14 2002/12/19 18:27:52 andras Exp $
+// $Id: sotf_NodeObject.class.php,v 1.15 2002/12/20 18:00:15 andras Exp $
 
 /**
 * Objects that are replicated in the network
@@ -37,7 +37,7 @@ class sotf_NodeObject extends sotf_Object {
           $this->update();
           reset($this->binaryFields);
           while(list(,$field)=each($this->binaryFields)) {
-            sotf_Object::setBlob($field, $this->data[$field]);
+            sotf_Object::setBlob($field, $this->db->unescape_bytea($this->data[$field]));
           }
           debug("updated ", $this->id);
           return true;
@@ -61,7 +61,7 @@ class sotf_NodeObject extends sotf_Object {
    if(empty($this->id)) {
      $this->id = $this->generateID();
    }
-	 $this->db->query("INSERT INTO sotf_node_objects (id, node_id, last_change) VALUES('$this->id','$this->nodeId', '$this->lastChange')");
+	 $this->db->query("INSERT INTO sotf_node_objects (id, node_id, last_change, arrived) VALUES('$this->id','$this->nodeId', '$this->lastChange', CURRENT_TIMESTAMP)");
 	 $success = parent::create();
    if(!$success) {
      $this->db->query("DELETE FROM sotf_node_objects WHERE id='$this->id'");
