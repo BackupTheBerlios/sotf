@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.23 2003/05/26 13:56:42 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.24 2003/05/26 14:12:13 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -21,7 +21,7 @@ class sotf_Neighbour extends sotf_Object {
   function delete() {
 	 global $db;
 	 $db->begin();
-	 sotf_NodeObject::removeFromRefreshTable($this->get('node_id'));
+	 sotf_NodeObject::nodeLeavingNetwork($this->get('node_id'));
 	 parent::delete();
 	 $db->commit();
   }

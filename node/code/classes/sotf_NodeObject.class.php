@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.32 2003/05/26 14:07:16 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.33 2003/05/26 14:12:13 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -130,7 +130,13 @@ class sotf_NodeObject extends sotf_Object {
 	 $db->query("INSERT INTO sotf_object_status SELECT id, '$newId' AS node_id FROM sotf_node_objects WHERE node_id != '$newId' OR node_id IS NULL");
 	 $db->commit();
   }
-  
+ 
+  /** can be static */
+  function nodeLeavingNetwork($nodeId) {
+	 global $db;
+	 $db->query("DELETE FROM sotf_object_status WHERE node_id='$nodeId'");
+  }
+ 
   /** can be static */
   function removeFromRefreshTable($id, $nodeId = 0) {
 	 global $db;
