@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Object.class.php,v 1.10 2002/12/18 16:49:28 andras Exp $
+// $Id: sotf_Object.class.php,v 1.11 2002/12/19 17:36:55 andras Exp $
 
 /**
 * Basic class for SQL stored data
@@ -74,7 +74,7 @@ class sotf_Object {
 		reset($this->data);
 		while(list($key,$val)=each($this->data)){
 			if($key != $this->idKey && !in_array($key, $this->binaryFields)) {
-				if($val === NULL){
+				if($val === NULL || $val == ''){
 					$my_sql[] = $key . " = NULL";
 				}else{
 					$my_sql[] = $key . " = '" . sotf_Utils::magicQuotes($val) . "'";
