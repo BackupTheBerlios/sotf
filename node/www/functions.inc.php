@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.10 2003/05/27 15:52:23 andras Exp $
+ * $Id: functions.inc.php,v 1.11 2003/05/28 11:30:13 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -86,7 +86,9 @@ function addError($msg) {
   if(DB::isError($msg)) 
     $msg = "SQL error: " . $msg->getMessage();
   logError($msg);
-  $page->errors[] = $page->getlocalized($msg);
+	if(!strstr($msg, ' '))
+		 $msg = $page->getlocalized($msg);
+  $page->errors[] = $msg;
 }
 
 function raiseError($msg) {
@@ -94,7 +96,9 @@ function raiseError($msg) {
   if(DB::isError($msg)) 
     $msg = "SQL error: " . $msg->getMessage();
   logError($msg);
-  $page->errors[] = $page->getlocalized($msg);
+	if(!strstr($msg, ' '))
+		 $msg = $page->getlocalized($msg);
+  $page->errors[] = $msg;
   $page->halt();
   exit;
 }

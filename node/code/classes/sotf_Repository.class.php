@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.35 2003/05/27 10:38:23 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.36 2003/05/28 11:30:12 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -44,8 +44,8 @@ class sotf_Repository {
 									"sotf_role_names" => "rn",
 									"sotf_deletions" => "de",
 									"sotf_prog_rating" => "ra",
-									"sotf_refs" => "re",
-									"sotf_stats" => "sx",
+									"sotf_prog_refs" => "re",
+									"sotf_prog_stats" => "sx",
 									"sotf_blobs" => "bl"
 									);
 

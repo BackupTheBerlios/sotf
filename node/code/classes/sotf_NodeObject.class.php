@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.39 2003/05/27 16:44:20 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.40 2003/05/28 11:30:12 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -100,6 +100,17 @@ class sotf_NodeObject extends sotf_Object {
   function hasObjects($nodeId) {
 	 global $db;
 	 return $db->getOne("SELECT count(*) FROM sotf_node_objects WHERE node_id = '$nodeId'");
+  }
+
+  function loadInternalData() {
+	 global $db;
+	 $this->internalData = $db->getRow("SELECT * FROM sotf_node_objects WHERE id='$this->id' ");
+  }
+
+  function getNodeId() {
+	 if(count($this->internalData)==0)
+		$this->loadInternalData();
+	 return  $this->internalData['node_id'];
   }
 
   /************************************************

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.13 2003/05/16 16:12:54 andras Exp $
+ * $Id: index.php,v 1.14 2003/05/28 11:30:13 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -23,7 +23,7 @@ $data['numStations'] = sotf_Station::countAll();
 $data['numProgs'] = sotf_Programme::countAll();
 $data['numProgs'] = sotf_Programme::countAll();
 
-$allStats = sotf_Programme::getAllStats();
+$allStats = sotf_Statistics::networkStats();
 $allStats['l_and_d'] = $allStats['listens'] + $allStats['downloads'];
 $data['access'] = $allStats;
 

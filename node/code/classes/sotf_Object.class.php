@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.20 2003/05/27 09:29:03 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.21 2003/05/28 11:30:12 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -56,16 +56,15 @@ class sotf_Object {
   }
 
   function save() {
-	 global $db;
-	 if($this->id) {
-		$exists = $db->getOne("SELECT count(*) FROM " . $this->tablename . " WHERE " . $this->idKey . "='" . $this->id . "' ");
-		if($exists) {
+		//global $db;
+		//if($this->id) {
+		//$exists = $db->getOne("SELECT count(*) FROM " . $this->tablename . " WHERE " . $this->idKey . "='" . $this->id . "' ");
+		if($this->exists()) {
 		  $this->update();
-		  return;
+		} else {
+			$this->create();
 		}
-	 }
-	 $this->create();
-  }
+	}
 
   /** updates fields in 'data' except binary fields */
   function update() {

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: updatedb.php,v 1.8 2003/03/05 09:11:40 andras Exp $
+ * $Id: updatedb.php,v 1.9 2003/05/28 11:30:13 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -44,6 +44,12 @@ $id = $_GET["id"];
 $value = $_GET["value"];
 
 if ($name == 'rating') {
+  $obj = $repository->getObject($id);
+  if(!$obj->isLocal()) {
+	 sotf_Node::redirectToHomeNode($obj);
+	 exit;
+  }
+
   $rating = new sotf_Rating();
   $rating->setRating($id, $value);
   $page->alertWithErrors();

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.11 2003/05/26 13:11:09 andras Exp $
+ * $Id: sotf_Node.class.php,v 1.12 2003/05/28 11:30:12 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -36,6 +36,18 @@ class sotf_Node extends sotf_NodeObject {
 	function getLocalNode() {
 		global $db, $config;
 		return sotf_Node::getNodeById($config['nodeId']);
+	}
+
+	/** static */
+	function redirectToHomeNode($obj) {
+	  // have to send user to home node of this programme
+	  $node = sotf_Node::getNodeById($obj->getNodeId());
+	  if(!$node) {
+		 raiseError("Could not find home node for programme: " . $prg->id);
+	  }
+	  $url = $node->get('url') . getenv('QUERY_STRING');
+	  $page->redirect($url);
+	  exit;
 	}
 
 	/** returns a list of all such objects: can be slow!!
