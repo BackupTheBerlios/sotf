@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.80 2004/04/29 12:45:59 micsik Exp $
+ * $Id: sotf_Programme.class.php,v 1.81 2004/05/24 11:36:42 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -265,6 +265,11 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 
   function saveMetadataFile() {
 	 global $permissions;
+
+	 if(!is_dir($this->getMetaDir())) {
+		addError("Programme dir not found", $this->getMetaDir());
+		return false;
+	 }
 
 	 $name = get_class($this);
 	 $name = str_replace("sotf_", "", $name);

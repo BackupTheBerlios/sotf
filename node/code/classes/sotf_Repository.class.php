@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.53 2004/03/05 14:38:07 micsik Exp $
+/* $Id: sotf_Repository.class.php,v 1.54 2004/05/24 11:36:42 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -101,22 +101,30 @@ class sotf_Repository {
 			}
     }
     if(!$obj->exists()) {
-		debug("Object does not exist",$objectId);
+			debug("Object does not exist",$objectId);
       return NULL;
 	 }
 	 return $obj;
   }
   
   function &getObject($objectId, $data='') {
-	 // get from cache if possible
-	 $object = & $this->getFromCache($objectId);
-	 if(is_object($object))
-		return $object;
-	 $obj = & $this->getObjectNoCache($objectId, $data);
-	 //debug("OBJ", $obj);
-    if($obj)
-		$this->putInCache($obj);
-	 return $obj;
+		if(empty($objectId)) {
+			debug("Invalid object id (empty)");
+			return NULL;
+		}
+		if(!$this->looksLikeId($objectId)) {
+			debug("Invalid object id", $objectId);
+			return NULL;
+		}
+		// get from cache if possible
+		$object = & $this->getFromCache($objectId);
+		if(is_object($object))
+			return $object;
+		$obj = & $this->getObjectNoCache($objectId, $data);
+		//debug("OBJ", $obj);
+		if($obj)
+			$this->putInCache($obj);
+		return $obj;
   }
 
 	function looksLikeId($id) {
@@ -138,6 +146,7 @@ class sotf_Repository {
 		debug("CACHE HIT for: $id");
 		return $this->objectCache[$id];
 	 }
+	 return NULL;
   }
 
   function putInCache(&$object) {
@@ -181,8 +190,8 @@ class sotf_Repository {
       if(!$obj->exists()) {
         debug("unknown prog ref arrives: "  . $event['value'] . ' - ' . $event['url']);
         $prg = &$this->getObject($obj->get('prog_id'));
-		  if(!$prg)
-			 break;
+				if(!$prg)
+					break;
         $obj->set('station_id', $prg->get('station_id'));
         $obj->set('portal_name', $event['portal_name']);
       }

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.18 2004/02/27 17:53:15 micsik Exp $
+ * $Id: listen.php,v 1.19 2004/05/24 11:36:43 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -34,6 +34,7 @@ if(empty($id)) {
 $playlist = new sotf_Playlist();
 
 if($jingle) {
+  // play the jingle of station/series
   $obj = $repository->getObject($id);
   if(!$obj)
 	 raiseError("no_such_object", $id);
@@ -45,8 +46,10 @@ if($jingle) {
   $playlist->addJingle($obj);
 } else {
   // add normal programme 
-  $prg = new sotf_Programme($id);
-  
+  $prg = $repository->getObject($id);
+  if(!$prg)
+	 raiseError("no_such_object", $id);
+
   if(!$prg->isLocal()) {
 	 // have to send user to home node of this programme
 	 sotf_Node::redirectToHomeNode($prg, 'listen.php');

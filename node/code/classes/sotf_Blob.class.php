@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Blob.class.php,v 1.6 2004/04/29 12:45:59 micsik Exp $
+// $Id: sotf_Blob.class.php,v 1.7 2004/05/24 11:36:42 micsik Exp $
 
 /**
 * @author Andras Micsik - micsik@sztaki.hu
@@ -61,7 +61,7 @@ class sotf_Blob extends sotf_NodeObject {
 
   function cacheIcon2($data) {
     global $repository;
-    debug('cacheIcon2', $data);
+    //debug('cacheIcon2', $data);
     $found = sotf_Blob::cacheIcon($data['id']);
     if($found)
       return $data['id'] . '.png';
@@ -89,6 +89,7 @@ class sotf_Blob extends sotf_NodeObject {
       if(time() - $stat['mtime'] <= $cacheTimeout)
         return true;
       else {
+	debug("cached icon of $id expired");
 	if(!unlink($fname))
 	  logError("Could not delete $fname");
       }
