@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.33 2003/09/24 14:17:01 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.34 2003/09/25 10:55:29 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -150,6 +150,8 @@ class sotf_Object {
 
 	 // mark if this change requires a refresh in the metadata.xml file
 	 $this->markParentToUpdate();
+
+	 return true;
   }
 
   /**
@@ -398,7 +400,7 @@ class sotf_Object {
 	/** decides if there's a need to update metadata description for parent object, and schedules it */
 	function markParentToUpdate() {
 		$mainObjId = $this->getMainObjectId();
-		//debug("MainObjectId", $mainObjId);
+		debug("parentUpdate", $mainObjId);
 		if($mainObjId) {
 			$mainObj = $repository->getObject($mainObjId);
 			if(is_a($mainObj, 'sotf_nodeobject') && $mainObj->isLocal()) {
