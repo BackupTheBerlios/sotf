@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.37 2003/05/27 15:52:23 andras Exp $
+--  $Id: db.sql,v 1.38 2003/05/27 15:54:31 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -170,6 +170,7 @@ CREATE TABLE "sotf_programmes" (
 	"station_id" varchar(12) NOT NULL,										-- dc.publisher ??
 	"series_id" varchar(12),													-- this prog is part of series
 	"track" varchar(32) NOT NULL,									-- part of id: unique within station and entry_date
+	"foreign_id" varchar(120),										-- if the publisher has some id schema...
 	"title" varchar(255) DEFAULT 'untitled',					-- dc.title
 	"alternative_title" varchar(255), 							-- may be known under a different title
 	"episode_title" varchar(255),									-- may be used if the show is part of a series
