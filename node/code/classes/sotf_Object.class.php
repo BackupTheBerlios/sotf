@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Object.class.php,v 1.4 2002/11/28 18:31:07 andras Exp $
+// $Id: sotf_Object.class.php,v 1.5 2002/12/10 17:36:13 andras Exp $
 
 /**
 * Basic class for SQL stored data
@@ -203,8 +203,11 @@ class sotf_Object {
 	 * @return (void)
 	 */
 	function setBlob($prop_name, $prop_value){
-    $v = $this->db->escape_bytea($prop_value);
-    $res = $this->db->query("UPDATE " . $this->tablename . " SET $prop_name = '" . sotf_Utils::magicQuotes($v) . "' WHERE " . $this->idKey . "='" . $this->id . "' ");
+    if(empty($prop_value))
+      $v = 'NULL';
+    else
+      $v = "'" . sotf_Utils::magicQuotes($this->db->escape_bytea($prop_value)) . "'";
+    $res = $this->db->query("UPDATE " . $this->tablename . " SET $prop_name = $v WHERE " . $this->idKey . "='" . $this->id . "' ");
     if(DB::isError($res))
       raiseError("Error in setBlob: $res");
 		$this->data[$prop_name] = $v;

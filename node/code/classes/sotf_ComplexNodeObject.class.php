@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_ComplexNodeObject.class.php,v 1.5 2002/12/10 17:36:13 andras Exp $
+// $Id: sotf_ComplexNodeObject.class.php,v 1.6 2002/12/10 17:39:34 andras Exp $
 
 /**
 * 
@@ -72,7 +72,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
     }
     $fname = "$cachedir/" . $id . '.png';
     // TODO: cache cleanup!
-    debug("cache: ". filesize($fname) ."==" . strlen($icon));
+    ////debug("cache: ". filesize($fname) ."==" . strlen($icon));
     if(is_readable($fname) && filesize($fname)==strlen($icon)) {
       return;
     }

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.12 2002/12/03 17:13:24 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.13 2002/12/10 17:36:13 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -302,7 +302,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   }
 
   function setAudio($filename, $copy=false) {
-    global $user, $page;
+    global $page;
     $source = $filename;
     if(!is_file($source))
       raiseError("no such file: $source");

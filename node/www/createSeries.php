@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: createSeries.php,v 1.1 2002/11/28 18:31:07 andras Exp $
+// $Id: createSeries.php,v 1.2 2002/12/10 17:36:13 andras Exp $
 
 require("init.inc.php");
 
@@ -25,7 +25,7 @@ if($seriesTitle) {
     $page->addStatusMsg('series_create_failed');
   } else {
     $permissions->addPermission($series->id, $user->id, 'admin');
-    $page->redirect("editSeries.php?id=" . $series->id);
+    $page->redirect("editSeries.php?seriesid=" . $series->id);
     exit;
   }
 }

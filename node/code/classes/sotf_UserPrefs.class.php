@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_UserPrefs.class.php,v 1.1 2002/12/09 17:45:56 andras Exp $
+// $Id: sotf_UserPrefs.class.php,v 1.2 2002/12/10 17:36:13 andras Exp $
 
 /**
 * This is a class for storing and handling user preferences
@@ -19,7 +19,7 @@ class sotf_UserPrefs
 	/**
 	* Saved queries of the user (array of array).
 	*/
-	var $savedQueries;
+	var $savedQueries = array();
 
   /** this will clear default query or queries, so the user will have normal home page with list of new programmes */
   function clearDefaultQuery() {
