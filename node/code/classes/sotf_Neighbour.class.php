@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.31 2003/05/27 16:47:21 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.30 2003/05/27 16:46:36 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -204,7 +204,7 @@ class sotf_Neighbour extends sotf_Object {
 	 return array($replyInfo);
   }
 
-  function getNeighbourString() {
+  function getNeighbours() {
 	 $neis = sotf_Neighbour::listAll();
 	 $first = 1;
 	 while(list(,$nei) = each($neis)) {
