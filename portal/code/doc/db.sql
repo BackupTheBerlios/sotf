@@ -1,5 +1,5 @@
 
---  $Id: db.sql,v 1.3 2003/04/29 09:09:33 andras Exp $
+--  $Id: db.sql,v 1.4 2003/05/30 15:34:52 andras Exp $
 --
 -- Database definition for portal engine
 --
@@ -83,6 +83,62 @@ CREATE TABLE "portal_vars" (
    CONSTRAINT "portal_vars_pkey" PRIMARY KEY ("id")
 );
 CREATE  UNIQUE INDEX "portal_vars_name_key" ON "portal_vars" ("name");
+
+CREATE TABLE "portal_ratings" (						-- individual ratings made by registered persons or anonym users
+	"id" serial PRIMARY KEY, 					-- just an id
+	"prog_id" varchar(12) NOT NULL,					-- sotf programme id
+	"user_id" int,							-- user who rated or NULL if anonymous
+	"rate" SMALLINT NOT NULL DEFAULT '0',
+	"host" varchar(100) NOT NULL,					-- host from where the rating arrived
+	"entered" timestamptz NOT NULL DEFAULT '-infinity',		-- date when rating arrived
+	"auth_key" varchar(50),						-- anti-abuse thingie
+	"problem" varchar(50) default NULL				-- if any suspicious thing occurred during rating
+);
+
+CREATE TABLE "portal_prog_rating" (					-- calculated overall rating for a programme is stored here XXX
+	"id" SERIAL PRIMARY KEY,
+	"prog_id" varchar(12) NOT NULL,						-- id of programme rated
+	"rating_value" float,							-- value of rating
+	"alt_value" float,							-- rating calculated in an alternative way XXX
+	"rating_count" int DEFAULT 0,						-- total number of raters	
+	"rating_count_reg" int DEFAULT 0,					-- number of registered raters	
+	"rating_count_anon" int DEFAULT 0,					-- number of anonymous raters
+	"rating_sum_reg" int DEFAULT 0,						-- sum of ratings by registered raters	
+	"rating_sum_anon" int DEFAULT 0,					-- sum of ratings by anonymous raters
+	"detail" text								-- may contain more detailed structured data on rating XXX
+);
+
+CREATE TABLE "portal_statistics" (					--statistics on portals, programmes
+	"id" SERIAL PRIMARY KEY,
+	"name" varchar NOT NULL,					--name of the data (page_impression, events_sent, last_connection, last_connection_try, query, programme)
+	"value" varchar,						--value if needed (by query the query string and by programme tge ID)
+	"timestamp" datetime DEFAULT date('now'::datetime) NOT NULL,	--timestamp
+	"timestamp2" datetime,						--timestamp2 (stop time (last used) for query and programme)
+	"portal_id" int4 REFERENCES portal_settings(id),		--portal_id for page_impression, query and programme
+	"number" int4							--counter for page_impression
+);
+INSERT INTO portal_statistics(name, number) VALUES('page_impression', 0);		--page impression for unknow portals and main page
+
+INSERT INTO portal_statistics(name) VALUES('events_sent');			--last time events table has been sent to the node
+INSERT INTO portal_statistics(name) VALUES('last_connection');			--last time connected to node
+INSERT INTO portal_statistics(name) VALUES('last_connection_try');		--last time tried to connect to the node
+
+
+CREATE TABLE "portal_events" (						--events that must be sent to the node
+	"id" SERIAL PRIMARY KEY,
+	"name" varchar NOT NULL,					--name of the event (portal_created, portal_updated, portal_deleted, users, rating, comment, visit)
+	"portal_name" varchar,						--portal_name
+	"timestamp" datetime DEFAULT date('now'::datetime) NOT NULL,	--timestamp
+	"value" varchar							--value of the event
+);
+
+CREATE TABLE "portal_cache" (						--cache for queries and programmes (reduces XMLRPC calls)
+	"id" SERIAL PRIMARY KEY,
+	"type" int4 NOT NULL,						--type of the cache element (1=query, 2=programme)
+	"name" varchar NOT NULL,					--the query or the id of the programme
+	"value" varchar NOT NULL,					--value of the cached element
+	"timestamp" datetime DEFAULT date('now'::datetime) NOT NULL	--timestamp last updated
+);
 
 INSERT INTO "portal_vars" ("id", "name", "value") VALUES(1, 'smarty_compile_check', '1');
 

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.1 2003/02/26 17:03:26 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.2 2003/05/30 15:34:51 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -13,13 +13,13 @@ class db_Wrap extends DB_pgsql {
   var $debug = false;
 
   /** When debug is on, logged query texts will be truncated to this length. */
-  var $traceLength = 350;
+  var $traceLength = 500;
 
   /*
 	function getDBConn($dsn, $persistent) {
 	  @$obj = & new db_Wrap;
-    global $debug;
-    $obj->debug = $debug;
+    global $config;
+    $obj->debug = $config['debug'];
 	  debug("DB","connecting to: $dsn");
 	  $dsninfo = DB::parseDSN($dsn);
 	  $obj->connect($dsninfo, $persistent);
@@ -92,6 +92,13 @@ class db_Wrap extends DB_pgsql {
 	    return date('Y-m-d H:i:s');
 	}
 
+  function diffTimestamp($t1, $t2) {
+    $tt1 = strtotime($t1);
+    $tt2 = strtotime($t2);
+    $diff = $tt1 - $tt2;
+    return $diff;
+  }
+
 	function epoch() {
 	  return "epoch";
 	}
@@ -123,6 +130,21 @@ class db_Wrap extends DB_pgsql {
 		// MySQL:
 		//return " date_format($fieldName, '%e') ";
 	}
+
+  function begin($serializable = false) {
+    $succ = $this->query("BEGIN TRANSACTION");
+    if($serializable)
+      $succ = $this->query("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+    return $succ;
+  }
+
+  function commit() {
+    return $this->query("COMMIT");
+  }
+
+  function rollback() {
+    return $this->query("ROLLBACK");
+  }
 
 	// just don't forget this...
 	function limitQuery($query, $from, $count) {
