@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.9 2002/12/03 17:13:24 andras Exp $
+// $Id: sotf_User.class.php,v 1.10 2002/12/09 17:45:21 andras Exp $
 
 /**
 * This is a class for handling users
@@ -46,6 +46,12 @@ class sotf_User
 	var $exist;
 
 	/**
+	* User preferences
+	* @var	$preferences	Object
+	*/
+	var $preferences;
+
+	/**
 	* Constructor
 	*
 	* @constructor	sotf_User
@@ -79,7 +85,6 @@ class sotf_User
 
       // user permissions are stored in $permission
 		}
-		// TODO: load user profile
 	}
 
 	
@@ -199,6 +204,17 @@ class sotf_User
 		global $userdb;
 		return $userdb->getOne("SELECT auth_id FROM authenticate WHERE username = '$username'");
 	}
+  
+  /** Get user preferences */
+  function getPreferences() {
+    global $db;
+    if(isset($this->preferences))
+      return $this->preferences;
+    $this->preferences = sotf_UserPrefs::load($this->id);
+    return $this->preferences;
+	}
+  
+
 
 }
 ?>
