@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.33 2003/03/04 17:05:51 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.34 2003/03/04 17:10:52 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -533,6 +533,8 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 			trigger_error("The import did not succeed!");
 			return false;	//did not succeed
 		}else{
+			echo "Came In: " . $metadata->encoding . "<br>";
+			echo "Went Out: " . $metadata->outencoding . "<br>";
 			echo "<pre>";
 			print_r($metadata);
 			echo "</pre>";
