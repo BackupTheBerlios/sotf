@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_NodeObject.class.php,v 1.21 2003/01/31 12:49:42 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.22 2003/01/31 13:10:18 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -152,16 +152,19 @@ class sotf_NodeObject extends sotf_Object {
     //debug("OBJECTS1", $objects1);
     // collect object data for selected objects
     $objects = array();
-    while(list(,$obj) = each($objects1)) {
-      // don't send back the same object
-      if(!in_array($obj['id'], $updatedObjects)) {   
-        $tablename = $repository->getTable($obj['id']);
-        $data = $db->getRow("SELECT * FROM $tablename WHERE id = '" . $obj['id'] . "'");
-        // don't send occasional empty records
-        if(count($data) > 1) {         
-          $obj['data'] = $data;
-          $objects[] = $obj;
-          debug("sending modified object", $obj['id']);
+    if(count($objects1) > 0) {
+      reset($objects1);
+      while(list(,$obj) = each($objects1)) {
+        // don't send back the same object
+        if(!in_array($obj['id'], $updatedObjects)) {   
+          $tablename = $repository->getTable($obj['id']);
+          $data = $db->getRow("SELECT * FROM $tablename WHERE id = '" . $obj['id'] . "'");
+          // don't send occasional empty records
+          if(count($data) > 1) {         
+            $obj['data'] = $data;
+            $objects[] = $obj;
+            debug("sending modified object", $obj['id']);
+          }
         }
       }
     }
