@@ -1,4 +1,4 @@
-/* $Id: tree.js,v 1.1 2002/10/30 14:42:20 andras Exp $ */
+/* $Id: tree.js,v 1.2 2002/12/11 17:40:53 andras Exp $ */
 
 
 // These scripts were originally found on cooltype.com.

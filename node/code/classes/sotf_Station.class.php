@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.11 2002/12/10 17:36:13 andras Exp $
+// $Id: sotf_Station.class.php,v 1.12 2002/12/11 17:40:52 andras Exp $
 
 class sotf_Station extends sotf_ComplexNodeObject {		
 
@@ -20,6 +20,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
 		$this->sotf_ComplexNodeObject('sotf_stations', $id, $data);
 	}
 
+  /** static */
   function isNameInUse($stationName) {
     global $db;
     $res = $db->getOne("SELECT count(*) FROM sotf_stations WHERE name='". sotf_Utils::clean($stationName) . "'");
@@ -197,7 +198,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
 	*/
 	function listSeriesData() {
 		$id = $this->id;
-		$slist = $this->db->getAll("SELECT * FROM sotf_series WHERE station_id='$id' ");
+		$slist = $this->db->getAll("SELECT * FROM sotf_series WHERE station_id='$id' ORDER BY title");
 		if(DB::isError($slist))
 			raiseError($slist);
     return $slist;
@@ -215,7 +216,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
 	*/
 	function listSeries() {
 		$id = $this->id;
-		$slist = $this->db->getAll("SELECT * FROM sotf_series WHERE station_id='$id' ");
+		$slist = $this->db->getAll("SELECT * FROM sotf_series WHERE station_id='$id' ORDER BY title ");
 		if(DB::isError($slist))
 			raiseError($slist);
 		while (list (, $val) = each ($slist)) {

@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: stations.php,v 1.8 2002/12/03 14:43:51 andras Exp $
+// $Id: stations.php,v 1.9 2002/12/11 17:40:53 andras Exp $
 
 require("init.inc.php");
 $hitsPerPage = $sotfVars->get("hitsPerPage", 15);
@@ -28,9 +28,12 @@ $stations = sotf_Station::listStations($limit["from"] , $limit["maxresults"]);
 for($i=0; $i<count($stations); $i++)
 {
 	
-	if ($stations[$i]->getIcon())
+	if ($stations[$i]->getIcon()) {
     $hasIcon = true;
-  
+    $stations[$i]->cacheIcon();
+  } else
+    $hasIcon = false;
+
 	 $sprops = array('id'		=> $stations[$i]->id,
                    'name'	=> $stations[$i]->get('name'),
                    'description'	=> $stations[$i]->get('description'),

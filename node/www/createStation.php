@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: createStation.php,v 1.1 2002/11/21 17:45:01 andras Exp $
+// $Id: createStation.php,v 1.2 2002/12/11 17:40:52 andras Exp $
 
 require("init.inc.php");
 
@@ -29,6 +29,11 @@ if ($new) {
   if ($station != $station_old) {
 			$page->addStatusMsg('illegal_name');
       $problem = 1;
+  }
+
+  if(sotf_Station::isNameInUse($station)) {
+    $page->addStatusMsg('name_in_use');
+    $problem = 1;
   }
   
 	if(!$problem)	{
