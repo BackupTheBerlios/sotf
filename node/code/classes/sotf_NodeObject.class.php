@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_NodeObject.class.php,v 1.15 2002/12/20 18:00:15 andras Exp $
+// $Id: sotf_NodeObject.class.php,v 1.16 2002/12/20 18:45:05 andras Exp $
 
 /**
 * Objects that are replicated in the network
@@ -69,11 +69,16 @@ class sotf_NodeObject extends sotf_Object {
    return $success;
   }
 
+  /** private */
+  function updateInternalData() {
+    if(!$this->lastChange)
+      $this->lastChange = $this->db->getTimestampTz();
+    $this->db->query("UPDATE sotf_node_objects SET last_change='$this->lastChange', arrived=CURRENT_TIMESTAMP WHERE id='" . $this->id . "'");
+  }
+
   function update() {
 	 parent::update();
-   if(!$this->lastChange)
-     $this->lastChange = $this->db->getTimestampTz();
-	 $this->db->query("UPDATE sotf_node_objects SET last_change='$this->lastChange', arrived=CURRENT_TIMESTAMP WHERE id='" . $this->id . "'");
+   $this->updateInternalData();
   }
 
   function delete() {
@@ -87,7 +92,7 @@ class sotf_NodeObject extends sotf_Object {
 
 	function setBlob($prop_name, $prop_value) {
     parent::setBlob($prop_name, $prop_value);
-    $this->db->query("UPDATE sotf_node_objects SET last_change='" . $this->db->getTimestampTz() . "' WHERE id='" . $this->id . "'");
+    $this->updateInternalData();
   }
 
   function createDeletionRecord() {
