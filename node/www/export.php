@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: export.php,v 1.1 2003/12/03 15:19:59 andras Exp $
+ * $Id: export.php,v 1.2 2003/12/04 08:27:50 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -34,14 +34,26 @@ if ($type == 1) {
   echo $md;
 
 } elseif($type == 2) {
+  // actualize metadata
+  $prg->saveMetadataFile();
   // send XBMF
   $file =  tempnam($config['tmpDir'],'export');
   $dir = $prg->getDir();
   $dir1 = basename($dir);
-  system("cd $dir; cd ..; tar cf $file $dir1");
-  header("Content-type: application/tar\n");
+  $dir2 = dirname($dir);
+  $xdir = "XBMF_$dir1";
+  // TODO: this only works on Unix/Linux
+  chdir($dir2);
+  debug("chdir", $dir2);
+  if(!symlink($dir1, $xdir)) {
+	 raiseError("could not create hard link");
+  }
+  system("tar cfh $file $xdir");
+  unlink($xdir);
+  header("Content-type: application/x-tar\n");
   header("Content-transfer-encoding: binary\n"); 
   header("Content-length: " . filesize($file) . "\n");
+  header("Content-Disposition: attachment; filename=$xdir.tar");
   readfile($file);
   unlink($file);
 }
