@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Statistics.class.php,v 1.5 2003/05/29 11:15:56 andras Exp $
+ * $Id: sotf_Statistics.class.php,v 1.6 2003/09/24 12:42:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -135,7 +135,11 @@ class sotf_Statistics extends sotf_Object {
     global $db;
     $convert = array('visits'=>'100',
                      'listens'=>'010',
-                     'listens'=>'001');
+                     'downloads'=>'001');
+	 if(empty($type)) {
+		logError("addUniqueAccess: no type defined!!");
+		return;
+	 }
     $subIdValue = empty($fileId) ? 'IS NULL' : "='$fileId'" ;
     $db->query("UPDATE sotf_unique_access SET action = action | B'" . $convert[$type] . "' WHERE prog_id='$prgId' AND sub_id $subIdValue AND ip='$ip'");
     if($db->affectedRows()==0) {
