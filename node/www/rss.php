@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: rss.php,v 1.15 2003/09/24 10:48:09 andras Exp $
+ * $Id: rss.php,v 1.16 2003/09/24 11:55:42 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Kézdi 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -52,7 +52,7 @@ $rss_writer_object->inputencoding="utf-8";
 $rss_writer_object->outputencoding="utf-8";
 $rss_writer_object->about=$config['rootUrl'] . "/rss.php";
 // Specify the URL of an optional XSL stylesheet. This lets the document be rendered automatically in XML capable browsers.
-$rss_writer_object->stylesheet=$config['rootUrl'] . "/static/rss2html.xsl";
+// $rss_writer_object->stylesheet=$config['rootUrl'] . "/static/rss2html.xsl";
 // When generating RSS version 1.0, you may declare additional namespaces that enable the use of 
 // more property tags defined by extension modules of the RSS specification.
 $rss_writer_object->rssnamespaces["dc"]="http://purl.org/dc/elements/1.1/";
