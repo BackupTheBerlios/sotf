@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.23 2003/02/26 13:32:56 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.24 2003/02/26 14:57:10 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -220,12 +220,14 @@ class sotf_Page
 		}
 
 		unset($_SESSION['halted']);
+		session_unregister('halted');
 		// handle status messages
 		$smarty->assign('STATUS_MESSAGES', $_SESSION['statusMsgs']);
 		unset($_SESSION['statusMsgs']);
+		session_unregister('statusMsgs');
 		$smarty->assign('ERROR_MESSAGES', $_SESSION['errorMsgs']);
 		unset($_SESSION['errorMsgs']);
-		
+		session_unregister('errorMsgs');
 		stopTiming();
 		$smarty->assign("totalTime", $totalTime);
 		$smarty->display($template);
