@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearchresults.php,v 1.9 2003/03/05 09:11:39 andras Exp $
+ * $Id: advsearchresults.php,v 1.10 2003/04/29 09:06:53 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -96,7 +96,7 @@ for($i =0; $i<$max; $i++)	//$selected will contain all the information about the
 //print("<BR />".count($result));
 
 $smarty->assign("SQLquery", $SQLquery);					//the query
-$smarty->assign("SQLquerySerial", "&SQLquerySerial=$SQLquerySerial");		//the serialized query
+$smarty->assign("SQLquerySerial", $SQLquerySerial);			//the serialized query
 //$smarty->assign("SQLqueryfields", $advsearch->GetSQLqueryfields());	//translated name for all fieldnames of the query
 //$smarty->assign("SQLqueryEQs", $advsearch->GetSQLqueryEQs());		//translated name for all EQs (<, >, = ...) of the query
 $smarty->assign("HumanReadable", $advsearch->GetHumanReadable());	//human readable format for the query fileds
