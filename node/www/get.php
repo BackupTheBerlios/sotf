@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.12 2003/03/05 09:11:40 andras Exp $
+ * $Id: get.php,v 1.13 2003/05/13 11:03:15 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -47,6 +47,7 @@ if($id) {
   $audioFiles = $prg->getAssociatedObjects('sotf_media_files', 'main_content DESC, filename');
   for($i=0; $i<count($audioFiles); $i++) {
     $audioFiles[$i] =  array_merge($audioFiles[$i], sotf_AudioFile::decodeFormatFilename($audioFiles[$i]['format']));
+	 $audioFiles[$i]['playtime_string'] = strftime('%M:%S', $audioFiles[$i]['play_length']);
   }
   $smarty->assign('AUDIO_FILES', $audioFiles);
 
