@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: install.php,v 1.12 2003/05/22 11:14:17 andras Exp $
+ * $Id: install.php,v 1.13 2003/05/25 10:15:45 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -522,10 +522,10 @@ if (($install_color[$id] = $install_green) AND ($nodeDbHost == NULL))			//if tes
 				else
 				{
 					//Read SQL commands from db.sql and execute them
-					$fd = fopen ($basedir."/code/doc/db.sql", "r");
+					$fd = fopen ($config['basedir'] ."/code/doc/db.sql", "r");
 					if (!$fd)
 					{
-						$install_test_result[$id] = "Sql file ($basedir/code/doc/db.sql) not found.";
+						$install_test_result[$id] = "Sql file (". $config['basedir'] ."/code/doc/db.sql) not found.";
 						$install_color[$id] = $install_red;
 					}
 					else
