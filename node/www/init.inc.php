@@ -1,11 +1,13 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.32 2003/05/29 06:35:52 andras Exp $
+ * $Id: init.inc.php,v 1.33 2003/05/29 09:40:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
+
+echo "<h3>Sorry, the server is currently under maintenance. Please try again later.</h3>"; exit;
 
 //////////////////////////////////////////////////////////////////////////
 require_once('functions.inc.php');
