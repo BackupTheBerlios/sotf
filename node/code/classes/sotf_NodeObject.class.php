@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_NodeObject.class.php,v 1.9 2002/12/18 15:04:31 andras Exp $
+// $Id: sotf_NodeObject.class.php,v 1.10 2002/12/18 16:01:49 andras Exp $
 
 /**
 * Objects that are replicated in the network
@@ -103,6 +103,7 @@ class sotf_NodeObject extends sotf_Object {
         if(count($data) > 1) {         // don't send occasional empty records
           $obj['data'] = $data;
           $objects[] = $obj;
+          debug("sending modified object", $obj['id']);
         }
       }
     }
