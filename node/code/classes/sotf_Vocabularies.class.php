@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Vocabularies.class.php,v 1.1 2003/07/29 08:27:31 andras Exp $
+/* $Id: sotf_Vocabularies.class.php,v 1.2 2003/09/26 15:21:41 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -450,6 +450,7 @@ class sotf_Vocabularies {
 		if(empty($this->genres)) {
 			global $lang, $db;
 			$this->genres = $db->getAll("SELECT genre_id AS id, name FROM sotf_genres WHERE language='$lang'");
+			debug("genres", $this->genres);
 		}
 	}
 
@@ -460,7 +461,14 @@ class sotf_Vocabularies {
 	
   function getGenreName($id) {
 		$this->loadGenres();
-		return $this->genres[$id-1];
+    while(list(,$r) = each($this->genres)) {
+      if($r['id']==$id) {
+				debug("XXX", $r);
+        return $r['name'];
+			}
+    }
+    debug("unknown genre id", $id);
+    return "UNKNOWN_GENRE";
   }
 	
   /************************************************
