@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.13 2003/05/28 14:49:54 andras Exp $
+ * $Id: sotf_Node.class.php,v 1.14 2003/05/29 06:35:48 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -153,6 +153,7 @@ class sotf_Node extends sotf_NodeObject {
 
 	 if($chunkInfo['objects_remaining'] == 0) {
 		// last chunk, do something useful!!
+		sotf_Object::doUpdates();
 	 }
 	 return array($replyInfo);
   }

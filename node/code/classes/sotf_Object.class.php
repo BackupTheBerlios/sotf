@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.22 2003/05/28 14:49:54 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.23 2003/05/29 06:35:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -344,11 +344,27 @@ class sotf_Object {
 	}
 
 	/** static */
-	function getToUpdate($table, $id) {
+	function doUpdates() {
 		global $db;
-		return $db->getAll("SELECT * FROM sotf_to_update");
+		$db->begin(true);
+		$list = $db->getAll("SELECT * FROM sotf_to_update");
+		while(list(,$item) = each($list)) {
+			debug("to_update", $item['tablename'] . ", " . $item['row_id']);
+			switch($item['tablename']) {
+			case 'ratingUpdate':
+				$rating = new sotf_Rating();
+				$rating->updateInstant($item['row_id']);
+				break;
+			case 'sotf_stats':
+				$obj = new sotf_Object('sotf_stats', $item['row_id']);
+				$obj->updateStats();
+				break;
+			default:
+				logError("Unknown to_update type: " . $item['tablename']);
+			}
+		}
+		$db->commit();
 	}
-	
 
   /**
 	* sotf::debug()

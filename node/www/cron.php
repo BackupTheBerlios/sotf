@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.12 2003/05/28 14:49:54 andras Exp $
+ * $Id: cron.php,v 1.13 2003/05/29 06:35:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -30,6 +30,10 @@ debug("--------------- CRON STARTED -----------------------------------");
 set_time_limit(18000);
 // don't garble reply message with warnings in HTML
 //ini_set("display_errors", 0);
+
+//******** Perform expensive updates on objects
+
+sotf_Object::doUpdates();
 
 //******** Synchronize with network: send new local data and forward new remote data
 

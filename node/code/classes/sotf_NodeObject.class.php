@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.41 2003/05/28 14:49:54 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.42 2003/05/29 06:35:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -323,8 +323,8 @@ class sotf_NodeObject extends sotf_Object {
 	 $obj->setAll(array('prog_id' => $this->id,
 							  'node_id' => $this->getNodeId(),
 							  'type' => $type,
-							  'data' => serialize($data),
-							  'when' => $db->getTimestampTz()
+							  'entered' => $db->getTimestampTz(),
+							  'data' => serialize($data)
 					  ));
 	 $obj->create();
   }
@@ -366,7 +366,7 @@ class sotf_NodeObject extends sotf_Object {
 		  $data = $obj['data'];
 		  switch($obj['type']) {
 		  case 'stat':
-			 $statObjs[] = sotf_Statistics::addRemoteStat($data);
+			 sotf_Statistics::addRemoteStat($data);
 			 $count++;
 			 break;
 		  case 'rating':
@@ -377,13 +377,6 @@ class sotf_NodeObject extends sotf_Object {
 		  default:
 			 logError("Unknown forward object type: " . $obj['type']);
 		  }
-		}
-	 }
-	 // updating global statistics
-	 if(count($statObjs) > 0) {
-		reset($statObjs);
-		while(list(,$obj) = each($statObjs)) {
-		  $obj->updateStats();
 		}
 	 }
 	 return $count;

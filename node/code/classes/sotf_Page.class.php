@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.30 2003/05/20 16:08:15 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.31 2003/05/29 06:35:52 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -207,7 +207,7 @@ class sotf_Page
 		$host = getHostName();
 		error_log("$host: $totalTime ms, " . myGetenv("REQUEST_URI"),0);
 		if($config['debug'])
-		  error_log("--------------------------------------------------------------------\n",0);
+		  error_log("--------------------------------------------------------------------",0);
 	}
 
 	function send($template = 'main.htm'){
