@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Series.class.php,v 1.10 2003/05/30 16:31:58 andras Exp $
+ * $Id: sotf_Series.class.php,v 1.11 2003/06/03 09:50:28 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -65,7 +65,8 @@ class sotf_Series extends sotf_ComplexNodeObject {
   }
 
   function getStation() {
-    return new sotf_Station($this->get('station_id'));
+	 global $repository;
+    return $repository->getObject($this->get('station_id'));
   }
 
   /** get number of published programmes */
