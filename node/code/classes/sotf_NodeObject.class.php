@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_NodeObject.class.php,v 1.22 2003/01/31 13:10:18 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.23 2003/01/31 13:16:37 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -119,7 +119,6 @@ class sotf_NodeObject extends sotf_Object {
         return false;
       }
     } else {
-      $this->internalData['node_id'] = $nodeId;
       $this->internalData['arrived_stamp'] = $sotfVars->get('sync_stamp', 0);
       $this->internalData['arrived'] = $this->db->getTimestampTz();
       $internalObj = new sotf_Object('sotf_node_objects', $this->id, $this->internalData);
