@@ -1,12 +1,21 @@
 <?php
-// -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: db_Wrap.class.php,v 1.9 2003/01/30 15:30:34 andras Exp $
+/*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
+ * $Id: db_Wrap.class.php,v 1.10 2003/01/31 17:07:05 andras Exp $
+ *
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
 
 include_once($peardir . '/DB/pgsql.php');
 
 class db_Wrap extends DB_pgsql {
 
+  /** When true, all executed SQL statements are logged. */
   var $debug = false;
+
+  /** When debug is on, logged query texts will be truncated to this length. */
+  var $traceLength = 350;
 
 	function getDBConn($dsn, $persistent) {
 	  @$obj = & new db_Wrap;
@@ -110,13 +119,13 @@ class db_Wrap extends DB_pgsql {
 	// just don't forget this...
 	function limitQuery($query, $from, $count) {
 	  if($this->debug)
-	    logger("DB","LimitQuery: $from, $count, " . substr($query,0,250));
+	    logger("DB","LimitQuery: $from, $count, " . substr($query,0, $this->traceLength));
 	  return parent::limitQuery($query, $from, $count);
 	}
 	
 	function query($query) {
 	  if($this->debug) {
-	    logger("DB","Query: " . substr($query, 0, 250));
+	    logger("DB","Query: " . substr($query, 0, $this->traceLength));
     }
 	  return parent::query($query);
 	}
