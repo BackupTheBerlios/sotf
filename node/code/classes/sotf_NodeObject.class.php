@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.47 2003/06/02 12:25:49 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.48 2003/06/04 12:01:08 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -80,7 +80,8 @@ class sotf_NodeObject extends sotf_Object {
 	 // delete administrative data about object
 	 $db->query("DELETE FROM sotf_node_objects WHERE id='" . $this->id . "'");
 	 // propagate deletion to other nodes
-	 $this->createDeletionRecord();
+	 if($this->isLocal())
+		$this->createDeletionRecord();
 	 // delete data itself: not really needed because of cascading delete
 	 parent::delete();  
 	 // delete user permissions
@@ -113,6 +114,11 @@ class sotf_NodeObject extends sotf_Object {
 	 if(count($this->internalData)==0)
 		$this->loadInternalData();
 	 return  $this->internalData['node_id'];
+  }
+
+  function isLocal() {
+	 global $config;
+	 return ($this->getNodeId()==$config['nodeId']);
   }
 
   /************************************************

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.34 2003/05/29 11:10:24 andras Exp $
+ * $Id: init.inc.php,v 1.35 2003/06/04 12:01:08 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -197,6 +197,7 @@ $repository = new sotf_Repository($config['repositoryDir'], $db);
 // $smarty->assign("CONFIG", $config);
 // add basic variables to Smarty
 $smarty->assign("NODEID", $config['nodeId']);
+$smarty->assign("NODE_NAME", $config['nodeName']);
 //$smarty->assign("ROOT_URL", $config['rootUrl']);
 $smarty->assign("ROOT_URL", $config['localPrefix']);
 $smarty->assign("IMAGE_URL", $config['imageUrl']);

@@ -1,13 +1,16 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.20 2003/05/30 16:31:58 andras Exp $
+ * $Id: admin.php,v 1.21 2003/06/04 12:01:08 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
 require("init.inc.php");
+
+// may contain long jobs
+set_time_limit(300);
 
 $smarty->assign('PAGETITLE',$page->getlocalized('AdminPage'));
 
