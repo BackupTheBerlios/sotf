@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.49 2003/06/04 13:30:16 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.50 2003/06/20 16:24:33 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -326,12 +326,16 @@ class sotf_NodeObject extends sotf_Object {
 	*
 	**************************************************/
 
-	/** When you have to send forward stats data to the home node */
-  function createForwardObject($type, $data) {
+	/** may be static, if all paramters filled -- When you have to send forward stats data to the home node */
+  function createForwardObject($type, $data, $objId=0, $nodeId=0) {
 	 global $db;
+	 if(!$objId)
+		$objId = $this->id; // the id of the target object
+	 if(!$nodeId)
+		$nodeId = $this->getNodeId(); // the id of the node to send this to
 	 $obj = new sotf_Object("sotf_to_forward");
-	 $obj->setAll(array('prog_id' => $this->id,
-							  'node_id' => $this->getNodeId(),
+	 $obj->setAll(array('prog_id' => $objId,
+							  'node_id' => $nodeId,
 							  'type' => $type,
 							  'entered' => $db->getTimestampTz(),
 							  'data' => serialize($data)
@@ -368,7 +372,9 @@ class sotf_NodeObject extends sotf_Object {
 	 return $objects;
   }
 
+  /** static: applies changes suggested by objects forwarded from other nodes. */
   function saveForwardObjects($objects) {
+	 global $repository;
 	 if(count($objects) > 0) {
 		reset($objects);
 		while(list(,$obj) = each($objects)) {
@@ -383,6 +389,9 @@ class sotf_NodeObject extends sotf_Object {
 			 $rating = new sotf_Rating();
 			 $rating->setRemoteRating($data);
 			 $count++;
+			 break;
+		  case 'event':
+			 $repository->processPortalEvent($data);
 			 break;
 		  default:
 			 logError("Unknown forward object type: " . $obj['type']);

@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.53 2003/06/18 15:41:10 andras Exp $
+--  $Id: db.sql,v 1.54 2003/06/20 16:24:33 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -445,6 +445,7 @@ CREATE TABLE "sotf_prog_refs" (
 	"prog_id" varchar(12) NOT NULL,							-- programme being referenced
 	"station_id" varchar(12) NOT NULL,
 	"url" varchar(255) NOT NULL,					-- URL of portal referencing to the program
+	"portal_name" varchar(200),					-- name of portal
 	"start_date" timestamptz,						-- date when prog appeared on portal  
 	"end_date" timestamptz, 						-- date when prog disappeared from portal
 	"visits" int,										-- number of visits
@@ -504,6 +505,7 @@ CREATE TABLE "sotf_comments" (
 	"from_name" varchar(60),		-- user name-like thing
 	"entered" timestamptz,			-- when user entered the comment
 	"portal" varchar(255),			-- the portal URL where the comment was made
+	"comment_title" text,			-- subject of the comment
 	"comment_text" text				-- full text of the comment
 );
 
@@ -561,6 +563,18 @@ CREATE TABLE "sotf_streams" (
 	"host" varchar(50),				-- host receiving the stream
 	"flags" varchar(20)				-- various flags
 );
+
+CREATE TABLE "sotf_portals" (
+-- list of portals connected to this node 
+	"id" serial PRIMARY KEY, 					-- just an id
+	"name" varchar(50) NOT NULL,				-- name of portal
+	"url" varchar(255) UNIQUE NOT NULL,		-- url of portal (identifies portal)
+	"page_impression" int,						-- number of downloads of starting page 
+	"reg_users" int2,								-- number of registered users
+	"last_access" timestamptz,
+	"last_update" timestamptz
+);
+
 
 CREATE TABLE "sotf_station_mappings" (
 -- provides mapping between ids on station server and ids on node

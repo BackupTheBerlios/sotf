@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.27 2003/06/19 10:25:37 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.28 2003/06/20 16:24:34 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -200,17 +200,22 @@ function getProgrammes($params)
 	return new xmlrpcresp($retval);
 }
 
-function putEvents($params)
-{
-	global $config, $db;
+function putEvents($params) {
+	global $config, $db, $repository;
 	$events = xmlrpc_decode($params->getParam(0));
-	debug("events", $events);
-  switch($events['name']) {
-  case 'programme_added':
-    
-  default:
+  foreach($events as $event) {
+    $progId = $event['prog_id'];
+    if($progId) {
+      $nodeId = $repository->getNodeId($progId);
+      if($nodeId != $config['nodeId']) {
+        // event for remote object
+        sotf_NodeObject::createForwardObject('event', $event, $progId , $nodeId);
+        continue;
+      }
+    } 
+    $repository->processPortalEvent($event);
   }
-	$retval = xmlrpc_encode(count($events));
+  $retval = xmlrpc_encode(count($events));
 	return new xmlrpcresp($retval);
 }
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.24 2003/06/16 16:13:40 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.25 2003/06/20 16:24:33 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -172,6 +172,27 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 			}
 		}
 		return $roles;
+	}
+
+	/** Retrieves roles and contacts associated with this object */
+	function getCreators() {
+		global $db, $repository;
+
+		$creators = $db->getAssoc("SELECT c.* FROM sotf_contacts c, sotf_object_roles o, sotf_roles r WHERE c.id = o.contact_id AND  o.role_id=r.role_id AND r.creator='t' AND o.object_id='$this->id' ORDER BY c.name", false, null, DB_FETCHMODE_ASSOC, false);
+		return $creators;
+	}
+
+	function getCreatorNames() {
+	  $creators = $this->getCreators();
+	  $first = true;
+	  foreach($creators as $creator) {
+		 if($first)
+			$first = false;
+		 else 
+			$names .= ', ';
+		 $names .= $creator['name'];
+	  }
+	  return $names;
 	}
 
 	/** Static: finds the id for a given role (if exists). */
