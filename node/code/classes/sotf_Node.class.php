@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.15 2003/05/29 06:54:41 andras Exp $
+ * $Id: sotf_Node.class.php,v 1.16 2003/09/24 13:15:42 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -47,7 +47,8 @@ class sotf_Node extends sotf_NodeObject {
 	  if(!$node) {
 		 raiseError("Could not find home node for programme: " . $prg->id);
 	  }
-	  $url = $node->get('url') . "/$script?" . getenv('QUERY_STRING');
+	  $oldUrl = myGetenv("REQUEST_URI");
+	  $url = $node->get('url') . '/' . strstr($oldUrl, $script);
 	  $page->redirect($url);
 	  exit;
 	}
