@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.34 2003/05/27 07:42:59 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.35 2003/05/27 08:02:54 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -43,7 +43,7 @@ class sotf_NodeObject extends sotf_Object {
 		$this->internalData['node_id'] = $config['nodeId'];
 	 $this->internalData['arrived'] = $db->getTimestampTz();
 	 $this->internalData['last_change'] = $db->getTimestampTz();
-	 $this->internalData['change_stamp'] = 0;
+	 $this->internalData['change_stamp'] = '0';
 	 $internalObj = new sotf_Object('sotf_node_objects', $this->id, $this->internalData);
 	 $internalObj->create();
 	 $success = parent::create();
