@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: register.php,v 1.6 2003/06/26 14:06:45 andras Exp $
+ * $Id: register.php,v 1.7 2003/09/25 07:46:12 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -111,6 +111,8 @@ else
 	$smarty->assign("USER_FIELD", "<INPUT type=\"text\" name=\"username\" value=\"$username\">");
 	$smarty->assign("SUBMIT_TEXT", $page->getlocalized("Register"));
 }
+
+excludeRobots();
 
 $page->send();
 

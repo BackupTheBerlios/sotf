@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Rating.class.php,v 1.5 2003/05/29 08:20:39 andras Exp $
+ * $Id: sotf_Rating.class.php,v 1.6 2003/09/25 07:46:12 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -119,9 +119,15 @@ class sotf_Rating	 extends sotf_Object {
 	}
 
 	function setRemoteRating($data) {
-		$this->recordRating($data);
-		sotf_Object::addToUpdate('ratingUpdate', $data['prog_id']);
-		//$this->updateInstant($data['prog_id']);
+	  global $repository;
+	  $obj = $repository->getObject($data['prog_id']);
+	  if($obj) {
+		 $this->recordRating($data);
+		 sotf_Object::addToUpdate('ratingUpdate', $data['prog_id']);
+		 //$this->updateInstant($data['prog_id']);
+	  } else {
+		 debug("Rating for non-existent prog",  $data['prog_id']);
+	  }
 	}
 
 	/** calculate overall rating value for object */

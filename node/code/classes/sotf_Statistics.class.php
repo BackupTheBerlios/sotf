@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Statistics.class.php,v 1.6 2003/09/24 12:42:39 andras Exp $
+ * $Id: sotf_Statistics.class.php,v 1.7 2003/09/25 07:46:12 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -85,8 +85,10 @@ class sotf_Statistics extends sotf_Object {
 	 } else {
 		$obj = new sotf_Statistics();
       $prg = $repository->getObject($prgId);
-      if(!$prg)
-        raiseError("addStat: no such programme: $prgId");
+      if(!$prg) {
+        // don't raiseError("addStat: no such programme: $prgId");
+		  return null;
+		}
 		$obj->setAll(array('prog_id' => $prgId,
                          'station_id' => $data['station_id'],
                          'year' => $year,
