@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.36 2003/10/15 09:40:29 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.37 2005/01/18 16:43:01 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -147,7 +147,7 @@ class sotf_Neighbour extends sotf_Object {
 		debug("number of sent objects", count($modifiedObjects));
 		$objectsSent = $objectsSent + count($modifiedObjects);
 		$objs = array($chunkInfo, $modifiedObjects);
-		$response = $rpc->call($url . '/xmlrpcServer.php', 'sotf.sync', $objs);
+		$response = $rpc->call($url . "/xmlrpcServer.php/sync/$thisChunk", 'sotf.sync', $objs);
 		// error handling
 		if(is_null($response)) {
 		  $this->set('errors', $this->get('errors')+1);

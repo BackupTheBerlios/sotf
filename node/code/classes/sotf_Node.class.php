@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.17 2003/09/24 13:40:58 andras Exp $
+ * $Id: sotf_Node.class.php,v 1.18 2005/01/18 16:43:01 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -123,7 +123,7 @@ class sotf_Node extends sotf_NodeObject {
 		 debug("number of sent objects", count($modifiedObjects));
 		 $objectsSent = $objectsSent + count($modifiedObjects);
 		 $objs = array($chunkInfo, $modifiedObjects);
-		 $response = $rpc->call($url . '/xmlrpcServer.php', 'sotf.forward', $objs);
+		 $response = $rpc->call($url . "/xmlrpcServer.php/forward/$thisChunk", 'sotf.forward', $objs);
 		 // error handling
 		 if(is_null($response)) {
 			$db->rollback();
