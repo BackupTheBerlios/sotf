@@ -1,7 +1,7 @@
 <?php
 
 /*  
- * $Id: sotf_Portal.class.php,v 1.22 2003/06/23 14:16:43 andras Exp $
+ * $Id: sotf_Portal.class.php,v 1.23 2004/03/05 14:42:41 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: Máté Pataki, András Micsik
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -521,6 +521,7 @@ class sotf_Portal
 		$fields[broadcast_date] = $page->getlocalized("broadcast_date");
 		$fields[station] = $page->getlocalized("station");
 		$fields[language] = $page->getlocalized("language");
+		$fields[abstract] = $page->getlocalized("abstract");
 		//$fields[length] = $page->getlocalized("length");
 		return $fields;
 	}
