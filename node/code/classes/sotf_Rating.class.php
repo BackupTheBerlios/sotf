@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Rating.class.php,v 1.4 2003/05/29 06:35:52 andras Exp $
+ * $Id: sotf_Rating.class.php,v 1.5 2003/05/29 08:20:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -14,7 +14,6 @@ class sotf_Rating	 extends sotf_Object {
 	var $maxValue = 5;
 
 	function sotf_Rating($id='', $data='') {
-		debug("new rating object", $id);
 		$this->sotf_Object('sotf_ratings', $id, $data);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.15 2003/05/29 07:07:17 andras Exp $
+ * $Id: cron.php,v 1.16 2003/05/29 08:20:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -40,7 +40,7 @@ sotf_Object::doUpdates();
 // sync with all neighbours
 $rpc = new rpc_Utils;
 $neighbours = sotf_Neighbour::listAll();
-debug("neihbours", $neighbours);
+//debug("neighbours", $neighbours);
 if(count($neighbours) > 0) {
   while(list(,$neighbour) = each($neighbours)) {
       $neighbour->sync();

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.24 2003/05/29 06:54:41 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.25 2003/05/29 08:20:39 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -295,10 +295,12 @@ class sotf_Object {
 
   /** Returns value for a bool, translating SQL notation of true/false into PHP notation. */
   function getBool($prop_name) {
-	 if(isset($this->data[$prop_name]) && $this->data[$prop_name] == 't')
-		return TRUE;
-	 else
-		return FALSE;
+		if(isset($this->data[$prop_name]) && $this->data[$prop_name] == 't') {
+			return true;
+		} else {
+			//TODO: nemmuxik debug("FALSE", $this->data[$prop_name]);
+			return false;
+		}
   }
 	
   /**
@@ -338,30 +340,27 @@ class sotf_Object {
 	}
 
 	/** static */
-	function deleteToUpdate($table, $id) {
-		global $db;
-		$db->query("DELETE FROM sotf_to_update WHERE tablename='$table' AND row_id='$id'");
-	}
-
-	/** static */
 	function doUpdates() {
 		global $db;
 		$db->begin(true);
 		$list = $db->getAll("SELECT * FROM sotf_to_update");
 		while(list(,$item) = each($list)) {
-			debug("to_update", $item['tablename'] . ", " . $item['row_id']);
-			switch($item['tablename']) {
+			$tablename = $item['tablename'];
+			$rowId = $item['row_id'];
+			debug("to_update", "$tablename, $rowId");
+			switch($tablename) {
 			case 'ratingUpdate':
 				$rating = new sotf_Rating();
-				$rating->updateInstant($item['row_id']);
+				$rating->updateInstant($rowId);
 				break;
 			case 'sotf_stats':
-				$obj = new sotf_Statistics($item['row_id']);
+				$obj = new sotf_Statistics($rowId);
 				$obj->updateStats();
 				break;
 			default:
-				logError("Unknown to_update type: " . $item['tablename']);
+				logError("Unknown to_update type: " . $tablename);
 			}
+			$db->query("DELETE FROM sotf_to_update WHERE tablename='$tablename' AND row_id='$rowId'");
 		}
 		$db->commit();
 	}

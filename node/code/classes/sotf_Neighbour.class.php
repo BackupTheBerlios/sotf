@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.32 2003/05/28 14:49:54 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.33 2003/05/29 08:20:38 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -97,8 +97,9 @@ class sotf_Neighbour extends sotf_Object {
 	global $db;
 
 	 global $page;
-	 if(!$console && $this->getBool('use_for_outgoing')) {
-		debug("node $this->id is not used for outgoing sync");
+	 $remoteId = $this->get('node_id');
+	 if(!$console && $this->get('use_for_outgoing') != 't') {
+		debug("node $remoteId is not used for outgoing sync");
 		return;
 	 }
 	 debug("SYNCing with ", $this->get("node_id"));
@@ -107,7 +108,6 @@ class sotf_Neighbour extends sotf_Object {
 	 if($config['debug'])
 		$rpc->debug = true;
 	 $timestamp = $db->getTimestampTz();
-	 $remoteId = $this->get('node_id');
 	 $url = $this->getUrl();
 	 // remove trailing '/'
 	 while(substr($url, -1) == '/')
