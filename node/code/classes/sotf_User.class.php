@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.7 2002/11/15 16:11:23 andras Exp $
+// $Id: sotf_User.class.php,v 1.8 2002/12/03 14:43:51 andras Exp $
 
 /**
 * This is a class for handling users
@@ -200,5 +200,6 @@ class sotf_User
 		global $userdb;
 		return $userdb->getOne("SELECT auth_id FROM authenticate WHERE username = '$username'");
 	}
+
 }
 ?>

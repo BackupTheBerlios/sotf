@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: stations.php,v 1.7 2002/12/02 19:17:50 andras Exp $
+// $Id: stations.php,v 1.8 2002/12/03 14:43:51 andras Exp $
 
 require("init.inc.php");
 $hitsPerPage = $sotfVars->get("hitsPerPage", 15);
@@ -19,7 +19,7 @@ if ($delete and hasPerm('node','delete'))
   $page->redirect($_SERVER["PHP_SELF"]);
 }
 
-$limit = $page->resultspage(sotf_Station::countAll(), "$php_self");
+$limit = $page->splitList(sotf_Station::countAll(), "$php_self");
 
 //$result = $db->limitQuery($query, $limit["from"], $limit["maxresults"]);				//get results with limit
 

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_ComplexNodeObject.class.php,v 1.2 2002/11/28 18:31:07 andras Exp $
+// $Id: sotf_ComplexNodeObject.class.php,v 1.3 2002/12/03 14:43:51 andras Exp $
 
 /**
 * 
@@ -53,13 +53,20 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
       return NULL;
 	} // end func getIcon
 
-  /** this places the icon into the www/tmp, so that you can refer to it with <img src=
-  function cacheIcon() {
+  /** this places the icon into the www/tmp, so that you can refer to it with <img src= */
+  function cacheIcon($id = '', $icon = '') {
     global $cachedir, $cacheprefix;
-    $fname = "$cachedir/" . $this->id;
-    if(is_readable($fname))
+    if(!$id) {
+      $id = $this->id;
+      $icon = $this->getBlob('icon');
+    }
+    $fname = "$cachedir/" . $id . '.png';
+    // TODO: cache cleanup!
+    if(is_readable($fname)) {
+      return;
+    }
+    sotf_Utils::save($fname, $icon);
   }
-  */
 
 	/**
 	* Sets icon for object
