@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.24 2003/05/30 16:31:58 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.25 2003/06/02 11:38:34 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -201,7 +201,8 @@ function putEvents($params)
 	global $config, $db;
 	$events = xmlrpc_decode($params->getParam(0));
 	debug("events", $events);
-	$retval = xmlrpc_encode("OK");
+
+	$retval = xmlrpc_encode(count($events));
 	return new xmlrpcresp($retval);
 }
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editContact.php,v 1.12 2003/05/30 16:31:58 andras Exp $
+ * $Id: editContact.php,v 1.13 2003/06/02 11:38:34 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -65,9 +65,9 @@ if($save || $finish1 || $finish2) {
     $contact->set('fax', sotf_Utils::getParameter('fax'));
 	 $url = sotf_Utils::getParameter('url');
 	 if($url != 'http://') {
-		if(sotf_Utils::is_valid_URL($url))
+		if(sotf_Utils::is_valid_URL($url)) {
 		  $contact->set('url', $url);
-		else {
+		} else {
 		  $error = 1;
 		  $page->addStatusMsg("invalid-url");
 		}
