@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.14 2003/05/29 06:54:41 andras Exp $
+ * $Id: cron.php,v 1.15 2003/05/29 07:07:17 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -39,7 +39,8 @@ sotf_Object::doUpdates();
 
 // sync with all neighbours
 $rpc = new rpc_Utils;
-$neighbours = sotf_Neighbour::getAll();
+$neighbours = sotf_Neighbour::listAll();
+debug("neihbours", $neighbours);
 if(count($neighbours) > 0) {
   while(list(,$neighbour) = each($neighbours)) {
       $neighbour->sync();
@@ -59,6 +60,7 @@ if(count($nodes) > 0) {
 }
 
 //********* IMPORT ARRIVED XBMF
+
 $dirPath = $config['xbmfInDir'];
 $dir = dir($dirPath);
 while($entry = $dir->read()) {
@@ -70,14 +72,16 @@ while($entry = $dir->read()) {
 	}
 }
 $dir->close();
-foreach($XBMF as $xbmfFile) {
-	$id = sotf_Programme::importXBMF($config['xbmfInDir'] . "/$xbmfFile", $config['publishXbmf']);
-	if($id) {
-		debug("CRON","Imported new XBMF: $xbmfFile");
-    unlink($config['xbmfInDir'] . "/$xbmfFile");
-	} else {
-    logger("CRON","Import FAILED for XBMF: $xbmfFile");
-	}
+if(!empty($XBMF)) {
+  foreach($XBMF as $xbmfFile) {
+    $id = sotf_Programme::importXBMF($config['xbmfInDir'] . "/$xbmfFile", $config['publishXbmf']);
+    if($id) {
+      debug("CRON","Imported new XBMF: $xbmfFile");
+      unlink($config['xbmfInDir'] . "/$xbmfFile");
+    } else {
+      logger("CRON","Import FAILED for XBMF: $xbmfFile");
+    }
+  }
 }
 
 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.43 2003/05/29 06:54:41 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.44 2003/05/29 07:07:17 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -349,6 +349,7 @@ class sotf_NodeObject extends sotf_Object {
 		while(list(,$obj) = each($objects)) {
 		  // unserialize data object
 		  $obj['data'] = unserialize($obj['data']);
+		  debug("sending forward object", $obj);
 		  // delete from forward table (will roll back if failed)
 		  $db->query("DELETE FROM sotf_to_forward WHERE id='". $obj['id'] . "'");
 		}
@@ -362,7 +363,7 @@ class sotf_NodeObject extends sotf_Object {
 	 if(count($objects) > 0) {
 		reset($objects);
 		while(list(,$obj) = each($objects)) {
-		  debug("type", $obj['type']);
+		  debug("saving forward object", $obj);
 		  $data = $obj['data'];
 		  switch($obj['type']) {
 		  case 'stat':

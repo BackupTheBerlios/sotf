@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Statistics.class.php,v 1.2 2003/05/28 14:49:54 andras Exp $
+ * $Id: sotf_Statistics.class.php,v 1.3 2003/05/29 07:07:17 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -54,6 +54,7 @@ class sotf_Statistics extends sotf_Object {
 
   /** static */
   function addRemoteStat($data) {
+	 debug("remote stat", $data);
 	 return sotf_Statistics::recordStat($data);
   }
 
