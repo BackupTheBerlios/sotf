@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.37 2005/01/18 16:43:01 micsik Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.38 2005/03/09 12:42:02 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -185,6 +185,10 @@ class sotf_Neighbour extends sotf_Object {
   function syncResponse($chunkInfo, $objects) {
 	 global $db;
 
+	 if($this->get('accept_incoming') != 't') {
+		debug("node $remoteId is not allowed for incoming sync!");
+		return NULL;
+	 }
 	 $timestamp = $db->getTimestampTz();
 	 $remoteId = $this->get('node_id');
 	 // save modified objects
