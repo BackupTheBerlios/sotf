@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Station.class.php,v 1.20 2003/05/30 16:31:58 andras Exp $
+ * $Id: sotf_Station.class.php,v 1.21 2003/06/12 16:46:58 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -36,6 +36,13 @@ class sotf_Station extends sotf_ComplexNodeObject {
 		if(DB::isError($res))
 			raiseError($res);
 		return $res;
+	}
+
+	function delete() {
+	  global $db;
+	  // has to move contacts to another station if they are used elsewhere!
+	  sotf_Contact::moveContactsFromStation($this);
+	  parent::delete();
 	}
 
 	/** static: finds a station by its name

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editFiles.php,v 1.9 2003/05/14 15:30:39 andras Exp $
+ * $Id: editFiles.php,v 1.10 2003/06/12 16:46:59 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -133,13 +133,20 @@ for ($i=0;$i<count($config['audioFormats']);$i++)
     unset($mainAudio[$fname]);
   } else {
     $PRG_AUDIO[$i]['missing'] = 1;
+	 $missing = 1;
   }
 }
 
 debug("mainAudio", $mainAudio);
-while(list($fn,$finfo) = each($mainAudio)) {
-  $PRG_AUDIO[] = $finfo;
+if(is_array($mainAudio)) {
+  while(list($fn,$finfo) = each($mainAudio)) {
+	 $PRG_AUDIO[] = $finfo;
+  }
 }
+
+$smarty->assign('MISSING',$missing);
+
+$smarty->assign('MAIN_AUDIO_COUNT', $prgAudiolist->count());
 
 $smarty->assign('PRG_AUDIO',$PRG_AUDIO);
 

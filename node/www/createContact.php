@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: createContact.php,v 1.4 2003/03/05 09:11:39 andras Exp $
+ * $Id: createContact.php,v 1.5 2003/06/12 16:46:59 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -12,7 +12,7 @@ require("init.inc.php");
 $page->popup = true;
 $page->forceLogin();
 
-//$contactId = sotf_Utils::getParameter('contactid');
+$stationId = sotf_Utils::getParameter('stationid');
 $contactName = sotf_Utils::getParameter('name');
 
 if($contactName) {
@@ -26,7 +26,7 @@ if($contactName) {
 
   // create a new contact
   $contact = new sotf_Contact();
-  $status = $contact->create($contactName);
+  $status = $contact->create($contactName, $stationId);
   if(!$status) {
     $page->addStatusMsg('contact_create_failed');
   } else {
@@ -38,6 +38,7 @@ if($contactName) {
 
 // general data
 $smarty->assign("NAME", $contactName);
+$smarty->assign("STATION_ID", $stationId);
 
 $page->sendPopup();
 

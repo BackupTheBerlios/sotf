@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editRole.php,v 1.6 2003/06/06 14:47:11 andras Exp $
+ * $Id: editRole.php,v 1.7 2003/06/12 16:46:59 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -80,7 +80,10 @@ if($save) {
 }
 
 // general data
+$obj = & $repository->getObject($objectId);
+
 $smarty->assign("OBJECT_ID", $objectId);
+$smarty->assign("STATION_ID", $obj->getStationId());
 $smarty->assign("ROLE_ID", $roleId);
 $smarty->assign('ROLE_LIST', $repository->getRoles());
 
@@ -95,7 +98,7 @@ switch($scope) {
 	$contacts = array();
 	break;
  case 3:
-	$contacts = sotf_Contact::listObjectContactNames($repository->getObject($objectId));
+	$contacts = sotf_Contact::listObjectContactNames($obj);
 	break;
  case 4:
 	$contacts = sotf_Contact::listLocalContactNames();

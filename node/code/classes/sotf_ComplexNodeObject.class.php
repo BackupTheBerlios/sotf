@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.22 2003/06/05 14:49:06 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.23 2003/06/12 16:46:58 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -25,11 +25,13 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	//function checkDirs
 
 	/** overrides function in sotf_NodeObject */
+	/*
 	function isLocal() {
 		$retval = is_dir($this->getDir()); 
 		debug("isLocal2", $retval);
 		return $retval;
 	}
+	*/
 
 	function create() {
 	  $succ = parent::create();
@@ -64,6 +66,17 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		$retval['icon'] = sotf_Blob::cacheIcon($this->id);
 		return $retval;
 	}
+
+	function getStationId() {
+		//debug("class", get_class($this));
+		switch($this->tablename) {
+		case "sotf_stations":
+		  return $this->id;
+		default:
+		  return $this->get('station_id');
+		}
+	}
+
 
 	/************************************************
 	 *      METADATA

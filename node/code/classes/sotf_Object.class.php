@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.28 2003/06/04 13:19:59 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.29 2003/06/12 16:46:58 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -352,6 +352,20 @@ class sotf_Object {
 	 }
 	 return $retval;
   }
+
+	function getAllForHTML() {
+		global $db;
+		$retval = $this->data;
+		if(count($this->binaryFields) > 0 ) {
+			// translate binary fields
+			reset($this->binaryFields);
+			while(list(,$bf) = each($this->binaryFields)) {
+				$retval[$bf] = $db->unescape_bytea($retval[$bf]);
+			}
+		}
+		$retval = sotf_Utils::toHTML($retval);
+		return $retval;
+	}
 	
   /**
 	* 
