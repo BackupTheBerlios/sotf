@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.25 2003/02/24 14:15:51 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.26 2003/02/24 15:45:35 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -520,7 +520,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     debug("untar result", $result);
 	
     //parse the xml file
-    $myPack = new unpackXML($pathToFile . $folderName . "/metadata.xml");	//note that the unpacker needs AN ABSOLUTE path to the file
+    $myPack = new unpackXML($pathToFile . $folderName . "/XBMF/Metadata.xml");	//note that the unpacker needs AN ABSOLUTE path to the file
     if(!$myPack->error){		//if the file has been found
       $metadata = $myPack->process();	//process it into an associative array
     }
