@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_ComplexNodeObject.class.php,v 1.7 2002/12/11 17:40:52 andras Exp $
+// $Id: sotf_ComplexNodeObject.class.php,v 1.8 2002/12/13 14:07:26 andras Exp $
 
 /**
 * 
@@ -23,6 +23,13 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
       $roles[$i]['contact_data'] = $cobj->getAll();
     }
     return $roles;
+  }
+
+  /** static */
+  function findRole($objectId, $contactId, $roleId) {
+    global $db;
+    $id = $db->getOne("SELECT id FROM sotf_object_roles WHERE object_id='$objectId' AND contact_id='$contactId' AND role_id='$roleId' ");
+    return $id;
   }
 
   function addRole($contactId, $roleId) {
@@ -79,6 +86,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
     if(is_readable($fname) && filesize($fname)==strlen($icon)) {
       return;
     }
+    debug("cached icon for", $id);
     sotf_Utils::save($fname, $icon);
   }
 

@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: editRight.php,v 1.2 2002/11/28 18:31:07 andras Exp $
+// $Id: editRight.php,v 1.3 2002/12/13 14:07:26 andras Exp $
 
 require("init.inc.php");
 
@@ -49,7 +49,7 @@ if($save) {
     $rights->create();
   } else
     $rights->update();
-  $page->redirect("closeAndRefresh.php?part=perms");
+  $page->redirect("closeAndRefresh.php?anchor=rights");
 }
 
 // general data
