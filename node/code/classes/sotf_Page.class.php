@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.35 2003/06/26 14:06:45 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.36 2003/07/18 14:46:19 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -50,18 +50,20 @@ class sotf_Page
 		$user = $this->user;
 
 		// determine language
-		$lang = $_COOKIE['uiLang'];
-		if(!$lang && $this->user) {
+		$lang = sotf_Utils::getParameter('uiLang');
+		if(!$lang)
+			$lang = $_COOKIE['uiLang'];
+		if(!$lang && $this->user)
 			$lang = $this->user->language;
-			if(!in_array($lang, $config['outputLanguages']))
+		if(!in_array($lang, $config['outputLanguages']))
 				$lang = ''; // user's language is not allowed yet
-		}
 		/*
 			if(!$lang && in_array($_SERVER['HTTP_ACCEPT_LANGUAGE'], $config['outputLanguages']))
 		  $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		*/
 		if(!$lang)
 		  $lang = $config['defaultLanguage'];
+		debug("LANG in Page", $lang);
 
 		// load localization constants for language
 		$this->loadLoc();
