@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.34 2004/04/29 15:49:24 micsik Exp $
+ * $Id: xmlrpcServer.php,v 1.35 2004/06/23 11:37:09 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -69,7 +69,9 @@ function cvGet($params) {
   $name = xmlrpc_decoder($params->getParam(1));
   $lang = xmlrpc_decoder($params->getParam(2));
   $retval = $vocabularies->getCVocabulary($type, $name, $lang);
+  //debug("RETVAL0", $retval);
   $retval = xmlrpc_encoder($retval);
+  //debug("RETVAL", $retval);
   return new xmlrpcresp($retval);
 }
 

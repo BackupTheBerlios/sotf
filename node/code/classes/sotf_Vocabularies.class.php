@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Vocabularies.class.php,v 1.9 2004/05/01 16:07:19 micsik Exp $
+/* $Id: sotf_Vocabularies.class.php,v 1.10 2004/06/23 11:37:06 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -539,6 +539,10 @@ class sotf_Vocabularies {
 
   /** type=(topics,roles,genres) */
   function getCVocabulary($type, $name, $language) {
+		debug("type", $type);
+		debug("name", $name);
+		debug("language", $language);
+
     if($type=='topics') {
       $retval = $this->getTree($name, $language);
     } elseif($type=='roles') {

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.32 2004/04/29 12:45:59 micsik Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.33 2004/06/23 11:37:06 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -190,17 +190,22 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	
 	/** Retrieves roles and contacts associated with this object */
 	function getRoles($language='') {
-	  global $db, $vocabularies, $lang;
+	  global $db, $vocabularies, $lang, $repository;
 	  if(empty($language))
 		 $language = $lang;
 	  $roles = $db->getAll("SELECT id, contact_id, role_id FROM sotf_object_roles WHERE object_id='$this->id' ORDER BY role_id, contact_id");
 	  for($i=0; $i<count($roles); $i++) {
-		 $roles[$i]['role_name'] = $vocabularies->getRoleName($roles[$i]['role_id'], $language);
-		 $roles[$i]['creator'] = $vocabularies->isCreator($roles[$i]['role_id']);
-		 $cobj = new sotf_Contact($roles[$i]['contact_id']);
-		 $roles[$i]['contact_data'] = $cobj->getAllWithIcon();
-		 if(hasPerm($roles[$i]['contact_id'], 'change')) {
-			$roles[$i]['change_contact'] = 1;
+		 $cobj = & $repository->getObject($roles[$i]['contact_id']);
+		 if($cobj) {
+			$roles[$i]['role_name'] = $vocabularies->getRoleName($roles[$i]['role_id'], $language);
+			$roles[$i]['creator'] = $vocabularies->isCreator($roles[$i]['role_id']);
+			$roles[$i]['contact_data'] = $cobj->getAllWithIcon();
+			if(hasPerm($roles[$i]['contact_id'], 'change')) {
+			  $roles[$i]['change_contact'] = 1;
+			}
+		 } else {
+			logError("Referred contact does not exist: " . $roles[$i]['contact_id']);
+			unset($roles[$i]);
 		 }
 	  }
 	  return $roles;
