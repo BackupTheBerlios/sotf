@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showContact.php,v 1.11 2004/02/27 17:53:15 micsik Exp $
+ * $Id: showContact.php,v 1.12 2005/02/03 15:15:51 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -12,7 +12,20 @@ require("init.inc.php");
 
 $contactId = sotf_Utils::getParameter('id');
 
-$contact = & $repository->getObject($contactId);
+if(strpos($contactId, '@') !== FALSE) {
+  // someone tries with e-mail address
+  $contact = new sotf_Contact;
+  $contact->set('email', $contactId);
+  $contact->find();
+  if($contact->exists()) {
+	 $foundByEmail = 1;
+	 $contactId = $contact->id;
+  }
+}
+
+if(!$foundByEmail)
+  $contact = & $repository->getObject($contactId);
+
 if(!$contact)
   raiseError("no_such_object", $contactId);
 
