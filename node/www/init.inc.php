@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.44 2003/09/15 15:38:23 andras Exp $
+ * $Id: init.inc.php,v 1.45 2003/09/30 07:59:02 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -237,6 +237,9 @@ if($config['debug']) {
   $smarty->assign("VIEWLOG", $page->logURL());
 }
 $smarty->assign("UI_LANGS", $config['outputLanguages']);
+if(!empty($config['adminEmail'])) {
+	$smarty->assign("ADMIN_EMAIL", $config['adminEmail']);
+}
 
 debug("action", $page->action);
 debug("lang", $lang);
