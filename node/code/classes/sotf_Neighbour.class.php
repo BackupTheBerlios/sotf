@@ -1,7 +1,7 @@
-<?php
+<?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Neighbour.class.php,v 1.18 2003/02/04 15:00:34 andras Exp $
+/* 
+ * $Id: sotf_Neighbour.class.php,v 1.19 2003/02/19 17:06:35 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
