@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.6 2003/10/14 08:20:04 andras Exp $
+--	 $Id: db.sql,v 1.7 2003/10/14 15:16:06 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -591,7 +591,7 @@ CREATE TABLE "sotf_station_mappings" (
 "id" serial PRIMARY KEY,		-- just an id
 "type" varchar(30), -- type of thing
 "id_at_node" varchar(12) UNIQUE REFERENCES sotf_node_objects(id) ON DELETE CASCADE,		-- id of thing at node
-"station" varchar(12) UNIQUE REFERENCES sotf_stations(id) ON DELETE CASCADE,		-- id of station at node for which this mapping applies
+"station" varchar(12) REFERENCES sotf_stations(id) ON DELETE CASCADE,		-- id of station at node for which this mapping applies
 "id_at_station" varchar(20),	-- id of thing on station server
 CONSTRAINT "sotf_station_mappings_uniq" UNIQUE ("id_at_station", "station", "type")
 );
