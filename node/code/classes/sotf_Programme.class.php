@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.62 2003/06/20 16:24:33 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.63 2003/06/23 14:56:59 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -674,6 +674,14 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 // series
 	 if($metadata['series'] && $metadata['series']['id']) {
 		$seriesId = sotf_Programme::getMapping($metadata['series']['id']);
+		if(!$seriesId) {
+		  $series1 = new sotf_Series();
+		  $series1->set('name', $metadata['series']['title']);
+		  $series1->set('station_id', $station->id);
+		  $series1->find();
+		  if($series1->exists())
+			 $seriesId = $series1->id;
+		}
 		if($seriesId) {
 		  $newPrg->set('series_id', $seriesId);
 		  $series = &$repository->getObject($seriesId);
@@ -698,7 +706,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		  $userId = sotf_User::getUserid($foreignUser['login']);
 		  debug("owner/publisher", $foreignUser);
 		  if($userId) {
-			 if($permissions->hasPermission($station->id, 'create', $userId) ||
+			 if($permissions->hasPermission($station->id, 'admin', $userId) ||
 				 ($series && $permissions->hasPermission($series->id, 'create', $userId))) {
 				// add permission for user
 				$permissions->addPermission($newPrg->id, $userId, 'admin');
