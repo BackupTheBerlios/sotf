@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.9 2003/12/09 12:49:05 andras Exp $
+--	 $Id: db.sql,v 1.10 2003/12/18 15:01:17 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -39,7 +39,7 @@ CREATE VIEW "ftp_auth" AS SELECT
 	33000 AS uid, 
 	33 AS gid, 
 	sotf_users.password AS passwd, 
-	'__PATH_TO_USER_DIRS__' || sotf_users.username AS homedir, 
+	'__PATH_TO_USER_DIRS__' || '/' || sotf_users.username AS homedir, 
 	0 AS count, 
 	'/bin/sh' AS shell 
 	FROM sotf_users;
