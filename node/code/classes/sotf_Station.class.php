@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.12 2002/12/11 17:40:52 andras Exp $
+// $Id: sotf_Station.class.php,v 1.13 2002/12/15 14:37:21 andras Exp $
 
 class sotf_Station extends sotf_ComplexNodeObject {		
 
@@ -48,8 +48,6 @@ class sotf_Station extends sotf_ComplexNodeObject {
 		// delete files from the repository
     debug("deleting: ", $this->getDir());
 		sotf_Utils::erase($this->getDir());
-		// propagate deletion to other nodes
-    $this->createDeletionRecord();
 		// delete from sql db
 		return parent::delete();
 	}

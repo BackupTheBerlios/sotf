@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.15 2002/12/13 17:28:29 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.16 2002/12/15 14:37:21 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -123,7 +123,6 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   /** deletes the program, and all its data and files
    */
   function delete(){
-	 $this->createDeletionRecord();
 	 sotf_Utils::erase($this->getDir());
    return parent::delete();
   }

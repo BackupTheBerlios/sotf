@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Object.class.php,v 1.6 2002/12/12 18:18:26 andras Exp $
+// $Id: sotf_Object.class.php,v 1.7 2002/12/15 14:37:21 andras Exp $
 
 /**
 * Basic class for SQL stored data
@@ -59,15 +59,14 @@ class sotf_Object {
 	}
 
 	function save() {
-	 if($this->id) {
-		//$res = $this->db->getOne("SELECT count(*) AS tot FROM " . $this->tablename . " WHERE " . $this->idKey . "='" . $this->id . "' ");
-		//if(is_numeric($res) && $res > 0) { //UPDATE!
-		if($this->exists()) {
-			$this->update();
-		}
-	 } else {
+    if($this->id) {
+      $exists = $this->db->getOne("SELECT count(*) FROM " . $this->tablename . " WHERE " . $this->idKey . "='" . $this->id . "' ");
+      if($exists) {
+        $this->update();
+        return;
+      }
+    }
 		$this->create();
-	 }
 	}
 
 	/** updates fields in 'data' except binary fields */
