@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.29 2003/05/26 13:11:09 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.30 2003/05/26 13:13:00 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -190,7 +190,7 @@ class sotf_NodeObject extends sotf_Object {
 	 // an ordering in which objects should be retrieved because of foreign keys
 	 $tableOrder = $repository->tableOrder;
 	 // select objects to send to neighbour
-	 $result = $db->limitQuery("SELECT no.* FROM sotf_node_objects no, sotf_object_status os WHERE no.id = os.id AND no.node_id != '$remoteNode' AND os.node_id = '$remoteNode' ORDER BY strpos('$tableOrder', substring(id, 4, 2)), no.id", $from, $objectsPerPage);
+	 $result = $db->limitQuery("SELECT no.* FROM sotf_node_objects no, sotf_object_status os WHERE no.id = os.id AND no.node_id != '$remoteNode' AND os.node_id = '$remoteNode' ORDER BY strpos('$tableOrder', substring(no.id, 4, 2)), no.id", $from, $objectsPerPage);
 	 while (DB_OK === $result->fetchInto($row)) {
 		$objects1[] = $row;
 	 }
