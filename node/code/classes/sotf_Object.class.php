@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.26 2003/05/30 16:31:58 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.27 2003/06/02 12:25:49 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -366,7 +366,6 @@ class sotf_Object {
 		}
   }
 
-
 	/** static */
 	function addToUpdate($table, $id) {
 		global $db;
@@ -391,7 +390,8 @@ class sotf_Object {
 				break;
 			case 'sotf_stats':
 				$obj = new sotf_Statistics($rowId);
-				$obj->updateStats();
+				if($obj->exists())
+					$obj->updateStats();
 				break;
 			case 'updateMeta':
 				$obj = $repository->getObject($rowId);

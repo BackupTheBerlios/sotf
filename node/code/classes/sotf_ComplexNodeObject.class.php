@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.16 2003/05/30 16:31:58 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.17 2003/06/02 12:25:49 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -122,10 +122,11 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	function getLanguageSelectBoxes() {
 	  global $smarty, $config, $page;
 	  for($i=0; $i<count($config['languages']); $i++) {
-		 $langNames[$i] = $page->getlocalized($config['languages'][$i]);
+		 $langNames[$config['languages'][$i]] = $page->getlocalized($config['languages'][$i]);
 	  }
-	  $smarty->assign('LANG_CODES', $config['languages']);
-	  $smarty->assign('LANG_NAMES', $langNames);
+	  asort($langNames);
+	  $smarty->assign('LANG_CODES', array_keys($langNames));
+	  $smarty->assign('LANG_NAMES', array_values($langNames));
 	  $langs = explode(',',$this->get('language'));
 	  $smarty->assign('PRG_LANG1', $langs[0]);
 	  $smarty->assign('PRG_LANG2', $langs[1]);

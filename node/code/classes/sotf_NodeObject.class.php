@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.46 2003/05/30 16:31:58 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.47 2003/06/02 12:25:49 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -87,6 +87,8 @@ class sotf_NodeObject extends sotf_Object {
 	 $db->query("DELETE FROM sotf_user_permissions WHERE object_id='$this->id'");
 	 // delete replication status
 	 $this->removeFromRefreshTable($this->id);
+	 // delete from to_update table
+	 $db->query("DELETE FROM sotf_to_update WHERE row_id='$this->id'");
   }
 
   /** Creates a deletion record: used when a replicated object is deleted. */
