@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.18 2004/03/11 12:08:03 micsik Exp $
+ * $Id: functions.inc.php,v 1.19 2004/04/29 15:49:24 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -89,8 +89,8 @@ function myGetenv($name) {
 function addError($msg, $private='') {
   global $page;
   if(DB::isError($msg)) {
-    $msg = "SQL error"; 
 		$private .= ' - ' . $msg->getMessage();
+    $msg = "SQL error"; 
 	}
   logError($msg, $private);
 	if(!strstr($msg, ' '))

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.33 2004/04/29 12:46:01 micsik Exp $
+ * $Id: xmlrpcServer.php,v 1.34 2004/04/29 15:49:24 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -45,6 +45,7 @@ function checkAccess($url, $nodeId) {
   if(count($allowedIPs) == 0)
     logError("DNS does not work, cannor resolve host name!");
   $ip = getenv("REMOTE_ADDR");
+  debug("allowedIPs", $allowedIPs);
   if(!in_array($ip, $allowedIPs)) {
     logError(getenv('REMOTE_HOST') . " XML-RPC access denied");
     return "this IP is not from neighbour " . $nodeId;
