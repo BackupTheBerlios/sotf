@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.50 2003/12/01 12:44:51 andras Exp $
+ * $Id: init.inc.php,v 1.51 2003/12/03 15:19:59 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -43,6 +43,8 @@ if($config['debug']) {
 // the base URL for the whole site
 $config['rootUrl'] = 'http://' . myGetenv('SERVER_NAME') . $config['localPrefix'];
 //$config['rootUrl'] = $config['localPrefix'];
+//if(substr($config['rootUrl'], -1) != '/')
+//	$config['rootUrl'] .= '/';
 
 // The base URL for images
 $config['imageUrl'] = $config['rootUrl'] . '/static';
