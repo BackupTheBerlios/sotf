@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.43 2003/07/29 08:27:16 andras Exp $
+ * $Id: init.inc.php,v 1.44 2003/09/15 15:38:23 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -48,6 +48,7 @@ $config['rootUrl'] = 'http://' . $_SERVER['HTTP_HOST'] . $config['localPrefix'];
 $config['imageUrl'] = $config['rootUrl'] . '/static';
 
 $config['tmpDir'] = $config['wwwdir'] . '/tmp';
+$config['tmpUrl'] = $config['rootUrl'] . '/tmp';
 $config['cacheDir'] = $config['wwwdir'] . '/tmp/cache';
 $config['cacheUrl'] =  $config['rootUrl'] . '/tmp/cache';
 

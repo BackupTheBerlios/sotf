@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: rss.php,v 1.12 2003/09/15 11:45:20 andras Exp $
+ * $Id: rss.php,v 1.13 2003/09/15 15:38:24 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Kézdi 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -115,10 +115,9 @@ if($prgId) {
   $text = $smarty->fetch('rssContributors.htm');
   $properties["description"] = $text;
   */
-  $text = '';
+  $text = '<br clear="all" />';
   foreach($prg->getRoles() as $role) {
-	 if($text) $text .= ', ';
-	 $text = $text . $role['contact_data']['name'] . ' (' . $role['role_name'] . ')';
+	 $text = $text . '<br />' . $role['contact_data']['name'] . ' (' . $role['role_name'] . ')';
   }
   $properties["title"]= $page->getlocalized('Roles');
   $properties["link"]= $config['rootUrl'] . "/get.php/" . $prgId . '#roles';
@@ -162,10 +161,10 @@ if($prgId) {
   
   $properties=array();
   $links = $prg->getAssociatedObjects('sotf_links', 'caption');
-  $text = '';
+  $text = '<br clear="all" />';
   foreach($links as $link) {
-	 if($text) $text .= ' <br /> ';
-	 $text = $text . "<a target=\"_blank\" href=\"" . $link['url'] . '">' . $link['caption'] . '</a>';
+	 //if($text) $text .= ' <br /> ';
+	 $text = $text . "<br /><a target=\"_blank\" href=\"" . $link['url'] . '">' . $link['caption'] . '</a>';
   }
   $properties["title"]= $page->getlocalized('Links');
   $properties["link"]= $config['rootUrl'] . "/get.php/" . $prgId . '#links';
