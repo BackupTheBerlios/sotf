@@ -1,4 +1,4 @@
-/* $Id: tree.js,v 1.2 2002/12/11 17:40:53 andras Exp $ */
+/* $Id: tree.js,v 1.3 2002/12/12 18:18:26 andras Exp $ */
 
 
 // These scripts were originally found on cooltype.com.
@@ -25,9 +25,9 @@
 var isExpanded   = false;
 
 var imgOpened    = new Image(9,9);
-imgOpened.src    = 'images/minus.gif';
+imgOpened.src    = 'static/minus.gif';
 var imgClosed    = new Image(9,9);
-imgClosed.src    = 'images/plus.gif';
+imgClosed.src    = 'static/plus.gif';
 
 
 /**
