@@ -1,5 +1,5 @@
 
---  $Id: db.sql,v 1.7 2003/06/18 14:02:38 andras Exp $
+--  $Id: db.sql,v 1.8 2003/06/19 10:41:36 andras Exp $
 --
 -- Database definition for portal engine
 --
@@ -69,7 +69,7 @@ CREATE TABLE programmes_comments (
 "id" SERIAL PRIMARY KEY,
 "portal_id" int4 REFERENCES portal_settings(id) NOT NULL,
 "progid" varchar (20),
-"user_id" int4 REFERENCES portal_users(id) NOT NULL,
+"user_id" int4 REFERENCES portal_users(id),
 "reply_to" int4 REFERENCES programmes_comments(id),
 "path" varchar,
 "timestamp" timestamp DEFAULT date('now'::timestamp) NOT NULL,

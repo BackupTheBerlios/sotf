@@ -1,7 +1,7 @@
 <?php					// -*-c++-*-
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpc.inc,v 1.1 2003/02/26 17:03:28 andras Exp $
+// $Id: xmlrpc.inc,v 1.2 2003/06/19 10:41:36 andras Exp $
 
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
@@ -541,8 +541,10 @@
 				$credentials='Authorization: Basic ' . base64_encode($username . ':' . $password) . "\r\n";
 			}
 
+      //				"Host: ". $this->server . ":" . $this->port  . "\r\n" .
+
 			$op= "POST " . $this->path. " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n" .
-				"Host: ". $this->server  . "\r\n" .
+        "Host: ". $this->server  . "\r\n" .
 				$credentials . 
 				"Content-Type: text/xml\r\nContent-Length: " .
 				strlen($msg->payload) . "\r\n\r\n" .
@@ -1215,7 +1217,7 @@
 							$rs.="<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
 							break;
 						case $xmlrpcString:
-              $rs.="<${typ}>" . rawurlencode(rawurldecode($val)). "</${typ}>";  // micsik
+              $rs.="<${typ}>" . rawurlencode($val). "</${typ}>";  // micsik
 							//$rs.="<${typ}>" . htmlspecialchars($val). "</${typ}>";
 							break;
 						default:
@@ -1441,7 +1443,6 @@
 		global $xmlrpcInt;
 		global $xmlrpcDouble;
 		global $xmlrpcString;
-    global $xmlrpcBase64;  // micsik added
 		global $xmlrpcArray;
 		global $xmlrpcStruct;
 		global $xmlrpcBoolean;
@@ -1468,7 +1469,6 @@
 				break;
 			case 'string':
 				$xmlrpc_val->addScalar($php_val, $xmlrpcString);
-        //$xmlrpc_val->addScalar($php_val, $xmlrpcBase64); // micsik changed here
 				break;
 				// <G_Giunta_2001-02-29>
 				// Add support for encoding/decoding of booleans, since they are supported in PHP
