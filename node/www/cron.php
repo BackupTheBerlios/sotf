@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.22 2003/06/18 14:12:06 andras Exp $
+ * $Id: cron.php,v 1.23 2003/06/18 16:06:04 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -141,6 +141,12 @@ $dir->close();
 // TODO update subject tree language availability
 
 // TODO remove old sotf_delete objects
+
+// ******** Stop old streams
+
+$playlist = new sotf_Playlist();
+$playlist->stopOldStreams();
+
 
 stopTiming();
 $page->logRequest();
