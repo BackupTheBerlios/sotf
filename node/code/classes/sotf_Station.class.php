@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Station.class.php,v 1.22 2003/06/16 16:13:40 andras Exp $
+ * $Id: sotf_Station.class.php,v 1.23 2003/06/17 08:15:18 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -179,27 +179,31 @@ class sotf_Station extends sotf_ComplexNodeObject {
 	 * @method static listStations
 	 * @return array of sotf_Station objects
 	*/
-	function listStations($start, $hitsPerPage, $mode='newest', $language = 'none') {
+	function listStations($start, $hitsPerPage, $mode='', $language = '') {
 	  global $db;
 
-		if(empty($start)) 
-			$start = 0;
-		if($mode=='newest')
-		  $sortExpr = '  ORDER BY entry_date DESC ';
-		else
-		  $sortExpr = '  ORDER BY name ';
-		$language = sotf_Utils::magicQuotes($language);
-		if($language != 'none')
-		  $whereExpr = " WHERE language LIKE '%$language%' ";
-		else
-		  $whereExpr = "";
-		$res = $db->limitQuery("SELECT * FROM sotf_stations $whereExpr $sortExpr", $start, $hitsPerPage);
-		if(DB::isError($res))
-			raiseError($res);
-		while (DB_OK === $res->fetchInto($st)) {
-			$slist[] = new sotf_Station($st['id'], $st);
-		}
-		return $slist;
+	  if(empty($start)) 
+		 $start = 0;
+	  if(empty($mode))
+		 $mode = 'newest';
+	  if(empty($language))
+		 $language = 'none';
+	  if($mode=='newest')
+		 $sortExpr = '  ORDER BY entry_date DESC ';
+	  else
+		 $sortExpr = '  ORDER BY name ';
+	  $language = sotf_Utils::magicQuotes($language);
+	  if($language != 'none')
+		 $whereExpr = " WHERE language LIKE '%$language%' ";
+	  else
+		 $whereExpr = "";
+	  $res = $db->limitQuery("SELECT * FROM sotf_stations $whereExpr $sortExpr", $start, $hitsPerPage);
+	  if(DB::isError($res))
+		 raiseError($res);
+	  while (DB_OK === $res->fetchInto($st)) {
+		 $slist[] = new sotf_Station($st['id'], $st);
+	  }
+	  return $slist;
 	}
 
 	/**
