@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.18 2003/05/14 15:30:39 andras Exp $
+ * $Id: admin.php,v 1.19 2003/05/28 11:48:26 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -82,13 +82,12 @@ if(sotf_Utils::getParameter('sync')) {
 	checkPerm('node', 'change');
   // this can be long duty!
   set_time_limit(18000);
-  // get sync stamp and increment it
-  $syncStamp = $sotfVars->get('sync_stamp', 0);
-  $syncStamp++;
-  $sotfVars->set('sync_stamp', $syncStamp);
   // get neighbour object
   $nid = sotf_Utils::getParameter('nodeid');
   $neighbour = sotf_Neighbour::getById($nid);
+  // full sync?
+  if(sotf_Utils::getParameter('full'))
+	 sotf_NodeObject::newNodeInNetwork($nid);
   // sync
   $neighbour->sync(true);
   $page->redirect("admin.php#network");
