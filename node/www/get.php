@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.16 2003/05/27 10:38:23 andras Exp $
+ * $Id: get.php,v 1.17 2003/05/28 14:49:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -12,6 +12,8 @@ require("init.inc.php");
 //$smarty->assign("OKURL", $_SERVER['PHP_SELF'] . "?id=" . rawurlencode($id));
 $id = sotf_Utils::getParameter('id');
 if($id) {
+
+  $db->begin();
 
   $smarty->assign('ID', $id);
 
@@ -86,6 +88,8 @@ if($id) {
     $smarty->assign('inplaylist', sotf_UserPlaylist::contains($id));
   }
 }
+
+$db->commit();
 
 if(sotf_Utils::getParameter('popup')) {
   $smarty->assign('POPUP', 1);

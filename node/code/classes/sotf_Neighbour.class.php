@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.30 2003/05/27 16:46:36 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.32 2003/05/28 14:49:54 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -128,7 +128,7 @@ class sotf_Neighbour extends sotf_Object {
 		debug("No new objects to send");
 	 while($more) {
 		$db->begin(true);
-		$modifiedObjects = sotf_NodeObject::getModifiedObjects($remoteId, 0, $this->objectsPerRPCRequest);
+		$modifiedObjects = sotf_NodeObject::getModifiedObjects($remoteId, $this->objectsPerRPCRequest);
 		$more = sotf_NodeObject::countModifiedObjects($remoteId);
 		$chunkInfo = array('this_chunk' => $thisChunk,
 								 'node' => $localNodeData,
@@ -204,7 +204,7 @@ class sotf_Neighbour extends sotf_Object {
 	 return array($replyInfo);
   }
 
-  function getNeighbours() {
+  function getNeighbourString() {
 	 $neis = sotf_Neighbour::listAll();
 	 $first = 1;
 	 while(list(,$nei) = each($neis)) {

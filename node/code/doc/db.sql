@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.40 2003/05/28 11:30:13 andras Exp $
+--  $Id: db.sql,v 1.41 2003/05/28 14:49:54 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -511,7 +511,16 @@ CREATE TABLE "sotf_to_forward" (
 	"node_id" int2,	-- id of node to forward to
 	"prog_id" varchar(12) REFERENCES sotf_programmes(id) ON DELETE CASCADE,		-- id of programme
 	"type" varchar(10),  -- type of data
-	"data" text			-- data to be sent
+	"data" text,			-- data to be sent
+	"when" timestamptz	-- date of object
+);
+
+CREATE TABLE "sotf_to_update" (
+-- data to update  XXX
+	"id" serial PRIMARY KEY,
+	"tablename" varchar(40),	-- 
+	"row_id" varchar(12),				-- id within table
+	CONSTRAINT "sotf_to_update_u" UNIQUE ("tablename", "id")
 );
 
 CREATE TABLE "sotf_unique_access" (

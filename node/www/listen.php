@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.10 2003/05/28 11:30:13 andras Exp $
+ * $Id: listen.php,v 1.11 2003/05/28 14:49:54 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -20,7 +20,7 @@ $prg = new sotf_Programme($id);
 
 if(!$prg->isLocal()) {
   // have to send user to home node of this programme
-  sotf_Node::redirectToHomeNode($prg);
+  sotf_Node::redirectToHomeNode($prg, 'listen.php');
   exit;
 }
 
