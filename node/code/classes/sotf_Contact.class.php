@@ -1,13 +1,13 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Contact.class.php,v 1.3 2003/01/30 15:30:34 andras Exp $
+ * $Id: sotf_Contact.class.php,v 1.4 2003/03/04 14:59:29 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
-//define('ERROR_NAME_USED', 123);
+define('ERROR_NAME_USED', 123);
 
 class sotf_Contact extends sotf_ComplexNodeObject {		
 
@@ -22,12 +22,18 @@ class sotf_Contact extends sotf_ComplexNodeObject {
 		$this->sotf_ComplexNodeObject('sotf_contacts', $id, $data);
 	}
 
+  /** static */
+  function isNameInUse($name) {
+    global $db, $nodeId;
+  }
+
   function create($name) {
     global $nodeId;
-    #$name = sotf_Utils::magicQuotes(/*$nodeId . '_' . */ $name);
-    #$count = $this->db->getOne("SELECT count(*) FROM sotf_contacts WHERE name = '$name'");
-    #if($count > 0)
-    #  return ERROR_NAME_USED;
+    $id = $this->findByNameLocal($name);
+    if($id) {
+      debug("Create contact", "Failed, name in use");
+      return false;
+    }
     $this->data['name'] = $name;
     return parent::create();
   }
@@ -39,12 +45,23 @@ class sotf_Contact extends sotf_ComplexNodeObject {
   }
 
   /** static */
-  function findByName($name) {
-    global $db;
+  function findByNameLocal($name) {
+    global $db, $nodeId;
     $name = sotf_Utils::magicQuotes($name);
-    $res = $db->getOne("SELECT id FROM sotf_contacts WHERE name='$name'");
-    // what happens when there are 2 matches? but name field is unique...
-    return $res;
+    $id = $db->getOne("SELECT c.id FROM sotf_contacts c, sotf_node_objects n WHERE c.id = n.id AND n.node_id='$nodeId' AND c.name = '$name'");
+    return $id;
+  }
+
+  /** static */
+  function findByName($name) {
+    global $db, $nodeId;
+    $name = sotf_Utils::magicQuotes($name);
+    // first find the local contact, then any other...
+    //$id = sotf_Contact::findByNameLocal($name);
+    //if(!$id)
+      $id = $db->getOne("SELECT id FROM sotf_contacts WHERE name='$name'");
+    // what happens when there are 2 matches? returns first match...
+    return $id;
   }
 
   /** static */

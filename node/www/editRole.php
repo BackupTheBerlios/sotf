@@ -1,11 +1,12 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: editRole.php,v 1.2 2002/12/13 14:07:26 andras Exp $
+// $Id: editRole.php,v 1.3 2003/03/04 14:59:29 andras Exp $
 
 require("init.inc.php");
 
 $smarty->assign('PAGETITLE',$page->getlocalized('edit_role'));
 
+$page->popup = true;
 $page->forceLogin();
 
 $roleId = sotf_Utils::getParameter('roleid');
@@ -15,13 +16,11 @@ $objectId = sotf_Utils::getParameter('objectid');
 $save = sotf_Utils::getParameter('save');
 $roleSelected = sotf_Utils::getParameter('role');
 
-if (!hasPerm($objectId, "change")) {
-  raiseError("You have no permission to change these settings!");
-}
-
 if(empty($objectId)) {
      raiseError("Object id is missing!");
 }
+
+checkPerm($objectId, "change");
 
 if($roleId) {
   $role = & new sotf_NodeObject('sotf_object_roles', $roleId);

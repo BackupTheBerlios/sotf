@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.24 2003/02/26 14:57:10 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.25 2003/03/04 14:59:29 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -235,7 +235,8 @@ class sotf_Page
     //exit; //??
 	}
 	
-	function sendPopup(){
+	function sendPopup() {
+		$this->popup = true; // should be done at startup because of errors!
 	  $this->send('main_popup.htm');
 	}
 

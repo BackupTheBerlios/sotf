@@ -1,20 +1,19 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: editRight.php,v 1.3 2002/12/13 14:07:26 andras Exp $
+// $Id: editRight.php,v 1.4 2003/03/04 14:59:29 andras Exp $
 
 require("init.inc.php");
 
 $smarty->assign('PAGETITLE',$page->getlocalized('edit_right'));
 
+$page->popup = true;
 $page->forceLogin();
 
 $rightId = sotf_Utils::getParameter('rid');
 $objectId = sotf_Utils::getParameter('objectid');
 $save = sotf_Utils::getParameter('save');
 
-if (!hasPerm($objectId, "change")) {
-  raiseError("You have no permission to change these settings!");
-}
+checkPerm($objectId, "change");
 
 if(empty($objectId)) {
      raiseError("Object id is missing!");
@@ -35,11 +34,16 @@ if($save) {
   $stopTime = sotf_Utils::getParameter('stop_time');
   $rightsText = sotf_Utils::getParameter('rights_text');
   $fullProg = sotf_Utils::getParameter('fullprog');
-  // TODO check input params
   // save
   if($newRight)
     $rights = new sotf_NodeObject("sotf_rights");
-  if(!$fullProg) {
+  if($fullProg) {
+    $rights->set('start_time', null);
+    $rights->set('stop_time', null);
+  } else {
+    // check input params
+    if(!is_int($startTime) || !is_int($stopTime))
+      raiseError("not_integer");
     $rights->set('start_time', $startTime);
     $rights->set('stop_time', $stopTime);
   }
@@ -47,8 +51,9 @@ if($save) {
   if($newRight) {
     $rights->set('prog_id', $objectId);
     $rights->create();
-  } else
+  } else {
     $rights->update();
+  }
   $page->redirect("closeAndRefresh.php?anchor=rights");
 }
 

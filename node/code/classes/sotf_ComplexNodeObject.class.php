@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_ComplexNodeObject.class.php,v 1.11 2003/02/25 10:09:31 andras Exp $
+// $Id: sotf_ComplexNodeObject.class.php,v 1.12 2003/03/04 14:59:29 andras Exp $
 
 /**
 * 
@@ -30,6 +30,9 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
       $roles[$i]['role_name'] = $this->repository->getRoleName($roles[$i]['role_id']);
       $cobj = new sotf_Contact($roles[$i]['contact_id']);
       $roles[$i]['contact_data'] = $cobj->getAllWithIcon();
+      if(hasPerm($roles[$i]['contact_id'], 'change')) {
+        $roles[$i]['change_contact'] = 1;
+      }
     }
     return $roles;
   }

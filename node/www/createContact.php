@@ -1,15 +1,24 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: createContact.php,v 1.2 2002/11/26 18:27:00 andras Exp $
+// $Id: createContact.php,v 1.3 2003/03/04 14:59:29 andras Exp $
 
 require("init.inc.php");
 
+$page->popup = true;
 $page->forceLogin();
 
 //$contactId = sotf_Utils::getParameter('contactid');
 $contactName = sotf_Utils::getParameter('name');
 
 if($contactName) {
+
+  if(sotf_Contact::findByNameLocal($contactName)) {
+    //$page->addStatusMsg('contact_name_exists');
+    //$page->redirect("createCOntact.php);
+    raiseError("contact_name_exists");
+    exit;
+  }
+
   // create a new contact
   $contact = new sotf_Contact();
   $status = $contact->create($contactName);

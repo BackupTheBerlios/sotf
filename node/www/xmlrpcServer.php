@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.11 2003/02/27 16:56:10 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.12 2003/03/04 14:59:29 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -69,16 +69,18 @@ function syncResp($params) {
 
 function getQueryResults($params)
 {
-	global $classdir, $db, $rootdir;
+	global $classdir, $db, $rootdir, $cacheprefix;
 	$query = xmlrpc_decode($params->getParam(0));
 	$advsearch = new sotf_AdvSearch();	//create new search object object with this array
 	$SQLquery = $advsearch->Deserialize($query);		//deserialize the content of the hidden field
 	$query = $advsearch->GetSQLCommand();
 	$results = $db->getAll($query." LIMIT 30 OFFSET 0");
 	foreach($results as $key => $result)
-		$results[$key]['icon'] = $rootdir."/".sotf_Blob::cacheIcon($result['id']);
-	//{$CACHEDIR}/{$item.id}.png
-	//"{$IMAGEDIR}/noicon.png"
+	{
+		$icon = sotf_Blob::cacheIcon($result['id']);
+		$results[$key]['icon'] = $cacheprefix."/".$result['id'].".png";
+		//TODO if no icon {$IMAGEDIR}/noicon.png $imageprefix????
+	}
 	$retval = xmlrpc_encode($results);
 	return new xmlrpcresp($retval);
 }
