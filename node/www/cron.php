@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.10 2003/05/22 11:14:17 andras Exp $
+ * $Id: cron.php,v 1.11 2003/05/26 13:11:09 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -32,11 +32,6 @@ set_time_limit(18000);
 //ini_set("display_errors", 0);
 
 //******** Synchronize with network: send new local data and recievie new global data
-
-// get sync stamp and increment it
-$syncStamp = $sotfVars->get('sync_stamp', 0);
-$syncStamp++;
-$sotfVars->set('sync_stamp', $syncStamp);
 
 // sync with all neighbours
 $rpc = new rpc_Utils;

@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editMeta.php,v 1.13 2003/05/14 15:30:39 andras Exp $
+ * $Id: editMeta.php,v 1.14 2003/05/26 13:11:09 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -55,7 +55,6 @@ if($save || $finish || $finishpublish) {
                   'episode_sequence'=>'number',
                   'keywords'=>'text',
                   'abstract'=>'text',
-                  'language'=>'text',
                   'genre_id'=>'number',
                   'spatial_coverage'=>'text',
                   'temporal_coverage'=>'date',
@@ -82,6 +81,18 @@ if($save || $finish || $finishpublish) {
     }
     $prg->set($param, $value);
   }
+  // language hack
+  $langs = sotf_Utils::getParameter('language1');
+  $l2 = sotf_Utils::getParameter('language2');
+  $l3 = sotf_Utils::getParameter('language3');
+  if($l2) {
+	 $langs .= ",$l2";
+	 if($l3) {
+		$langs .= ",$l3";
+	 }
+  }
+  $prg->set('language', $langs);
+  // save
   if ($finishpublish) {
     $prg->publish();
     $page->redirect("editor.php");
@@ -209,6 +220,10 @@ for($i=0; $i<count($config['languages']); $i++) {
 }
 $smarty->assign('LANG_CODES', $config['languages']);
 $smarty->assign('LANG_NAMES', $langNames);
+$langs = explode(',',$prg->get('language'));
+$smarty->assign('PRG_LANG1', $langs[0]);
+$smarty->assign('PRG_LANG2', $langs[1]);
+$smarty->assign('PRG_LANG3', $langs[2]);
 
 // rights sections
 $smarty->assign('RIGHTS', $prg->getAssociatedObjects('sotf_rights', 'start_time'));

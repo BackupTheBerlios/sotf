@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.14 2003/05/14 15:30:39 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.15 2003/05/26 13:11:09 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -123,6 +123,20 @@ class db_Wrap extends DB_pgsql {
 		// MySQL:
 		//return " date_format($fieldName, '%e') ";
 	}
+
+  function begin($serializable = false) {
+    if($serializable)
+      $this->query("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+    return $this->query("BEGIN TRANSACTION");
+  }
+
+  function commit() {
+    return $this->query("COMMIT");
+  }
+
+  function rollback() {
+    return $this->query("ROLLBACK");
+  }
 
 	// just don't forget this...
 	function limitQuery($query, $from, $count) {
