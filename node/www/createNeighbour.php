@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: createNeighbour.php,v 1.5 2003/05/14 15:30:39 andras Exp $
+ * $Id: createNeighbour.php,v 1.6 2003/05/26 13:56:42 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -25,17 +25,26 @@ $createNew = sotf_Utils::getParameter('create_new_node');
 if($createNew) {
   if(!$url) {
     $page->addStatusMsg('no_url_given');
-  } elseif(sotf_Node::getNodeById($nid)) {
-    $page->addStatusMsg('node_id_occupied');
   } else {
-    $neighbor = new sotf_Neighbour();
-    $neighbor->set('node_id', $nid);
-    $neighbor->set('use_for_outgoing', 'f');
-    $neighbor->set('accept_incoming', 't');
-    $neighbor->set('pending_url', $url);
-    $neighbor->create();
-    $page->redirect("closeAndRefresh.php?anchor=network");
-    exit;
+	 // TODO: test URL correctness
+	 $node = sotf_Node::getNodeById($nid);
+	 if($node && $node->get('url') != $url) {
+		$page->addStatusMsg('node_id_occupied');
+	 } else {
+		if(!sotf_NodeObject::hasObjects($nid)) {
+		  // this node is new in the network,
+		  // all data has to be sent
+		  sotf_NodeObject::newNodeInNetwork($nid);
+		}
+		$neighbor = new sotf_Neighbour();
+		$neighbor->set('node_id', $nid);
+		$neighbor->set('use_for_outgoing', 'f');
+		$neighbor->set('accept_incoming', 't');
+		$neighbor->set('pending_url', $url);
+		$neighbor->create();
+		$page->redirect("closeAndRefresh.php?anchor=network");
+		exit;
+	 }
   }
   $page->redirect("createNeighbour.php?node_id=$nid&url=" . urlencode($url) . "#network");
   exit;

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.22 2003/05/26 13:11:09 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.23 2003/05/26 13:56:42 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -16,6 +16,14 @@ class sotf_Neighbour extends sotf_Object {
 
   function sotf_Neighbour($id='', $data='') {
 	 $this->sotf_Object('sotf_neighbours', $id, $data);
+  }
+
+  function delete() {
+	 global $db;
+	 $db->begin();
+	 sotf_NodeObject::removeFromRefreshTable($this->get('node_id'));
+	 parent::delete();
+	 $db->commit();
   }
 
 	/** 
@@ -161,13 +169,13 @@ class sotf_Neighbour extends sotf_Object {
 	 global $db;
 
 	 $timestamp = $db->getTimestampTz();
+	 $remoteId = $this->get('node_id');
 	 // save modified objects
 	 $db->begin();
-	 $updatedObjects = sotf_NodeObject::saveModifiedObjects($objects);
+	 $updatedObjects = sotf_NodeObject::saveModifiedObjects($objects, $remoteId);
 	 // if db error: don't commit!
 	 $db->commit();
 	 debug("number of updatd objects", $updatedObjects);
-	 //$remoteId = $this->get('node_id');
 	 // save time of this sync
 	 $this->set('last_sync_in', $timestamp);
 	 // take out from pending nodes
