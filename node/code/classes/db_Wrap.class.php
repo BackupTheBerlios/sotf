@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: db_Wrap.class.php,v 1.2 2002/11/08 16:42:56 andras Exp $
+// $Id: db_Wrap.class.php,v 1.3 2002/11/21 17:45:00 andras Exp $
 
 include_once($peardir . '/DB/pgsql.php');
 
@@ -18,11 +18,16 @@ class db_Wrap extends DB_pgsql {
 	  $err = parent::errorNative();
 	  error_log("PGSQL error: $err",0);
 	  error_log("in query: " . $this->last_query,0);
+		echo "<p><b>SQL error: $err</b> in <br>";
+		echo $this->last_query . "</p>";
+    exit;
+    /*
 	  global $sqlDebug;
 	  if($sqlDebug) {
 		echo "<p><b>SQL error: $err</b> in <br>";
 		echo $this->last_query . "</p>";
 	  }
+    */
 	  return $err;
 	}
 
@@ -102,8 +107,10 @@ class db_Wrap extends DB_pgsql {
 	
 	function query($query) {
 	  global $sqlDebug;
-	  if($sqlDebug)
-	    debug("DB","Query: $query");
+	  if($sqlDebug) {
+      $q = substr($query, 0, 250);
+	    debug("DB","Query: $q");
+    }
 	  return parent::query($query);
 	}
 

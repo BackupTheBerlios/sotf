@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_NodeObject.class.php,v 1.2 2002/11/15 16:11:22 andras Exp $
+// $Id: sotf_NodeObject.class.php,v 1.3 2002/11/21 17:45:00 andras Exp $
 
 /**
 * Objects that are replicated in the network
@@ -29,7 +29,7 @@ class sotf_NodeObject extends sotf_Object {
 	 global $nodeId;
 	 $this->id = $this->generateID();
 	 $this->db->query("INSERT INTO sotf_node_objects (id, node_id) VALUES('" . $this->id . "','$nodeId')");
-	 parent::create();
+	 return parent::create();
   }
 
   function update() {
@@ -46,7 +46,7 @@ class sotf_NodeObject extends sotf_Object {
   }
 
   function createDeletionRecord() {
-	 $dr = new sotf_NodeBase('sotf_deletions');
+	 $dr = new sotf_NodeObject('sotf_deletions');
 	 $dr->set('del_id', $this->id);
 	 $dr->create();
   }

@@ -1,13 +1,13 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Series.class.php,v 1.4 2002/11/11 17:26:33 andras Exp $
+// $Id: sotf_Series.class.php,v 1.5 2002/11/21 17:45:00 andras Exp $
 
 /**
 * Models a series
 *
 * @author Andras Micsik SZTAKI DSD micsik@sztaki.hu
 */
-class sotf_Series extends sotf_NodeObject {		
+class sotf_Series extends sotf_ComplexNodeObject {		
 
   var $roles;
 
@@ -20,14 +20,12 @@ class sotf_Series extends sotf_NodeObject {
      * @param string node node id
      * @param string id id within node
    */
-  function sotf_Series($nodeId='', $id=''){
-    parent::constructor('sotf_series', $nodeId, $id);
-    // load roles
-    $r = $this->db->getAll("SELECT node_id, id FROM sotf_series_roles WHERE series_id='$id' AND node_id='$nodeId'");
-    while (list (, $val) = each ($r)) {
-      $this->roles[$val['node_id'] . '_' . $val['id']] = new sotf_Role('sotf_series_roles', $val['node_id'], $val['id']);
+  function sotf_Series($id='', $data='') {
+    $this->binaryFields = array('icon', 'jingle');
+    $this->sotf_ComplexNodeObject('sotf_series', $id, $data);
+    if($id) {
+      //$this->stationName = $this->db->getOne("SELECT name FROM sotf_stations WHERE id='" . $this->get('station_id') . "'");
     }
-    // load access rights
   }
 
   /** get number of published programmes */
