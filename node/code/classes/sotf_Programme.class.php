@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.35 2003/03/04 17:11:51 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.36 2003/03/05 09:44:45 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -515,7 +515,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     mkdir($pathToFile . $folderName);
 	
     // untar contents of file to folder
-    $tar = new Archive_Tar($fileName, true);	// create archive handler
+    $tar = new Archive_Tar($fileName, true);								// create archive handler
     $tar->setErrorHandling(PEAR_ERROR_PRINT);								// enable error reporting
     $result = $tar->extract($pathToFile . $folderName);			// untar contents
     debug("untar result", $result);
@@ -530,7 +530,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		
 		if(!$metadata or $myPack->error){ //errors during import - stop execution
 			sotf_Utils::delete($pathToFile . $folderName);
-			trigger_error("The import did not succeed!");
+			echo "<font color=#FF0000><b>The import of $fileName did not succeed!</b></font>";
 			return false;	//did not succeed
 		}else{
 			echo "Came In: " . $myPack->encoding . "<br>";
