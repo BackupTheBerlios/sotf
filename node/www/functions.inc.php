@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.2 2003/02/23 17:48:13 andras Exp $
+ * $Id: functions.inc.php,v 1.3 2003/02/25 10:09:31 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -109,7 +109,7 @@ function hasPerm($object) {
   global $permissions;
 	$perm_list = func_get_args();
 	for ($i = 1; $i <count($perm_list); $i++) {
-		debug('checking for', $perm_list[$i]);
+		debug('checking for permission', $perm_list[$i]);
 		if($permissions->hasPermission($object, $perm_list[$i]))
 			return true;
 	}
@@ -117,8 +117,12 @@ function hasPerm($object) {
 }
 
 function moveUploadedFile($fieldName, $file) {
-  move_uploaded_file($_FILES[$fieldName]['tmp_name'], $file);
-  chmod($file, '0660');
+  if(!move_uploaded_file($_FILES[$fieldName]['tmp_name'], $file))
+		raiseError("Could not move uploaded file from " . $_FILES[$fieldName]['tmp_name'] . " to $file");
+	debug("Moved uploaded file", $_FILES[$fieldName]['tmp_name'] . " to $file");
+  if(!chmod($file, 0660)) {
+		logger("Could not chmod file $file!");
+	}
 }
 
 ?>

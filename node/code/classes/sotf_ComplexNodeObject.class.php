@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_ComplexNodeObject.class.php,v 1.10 2003/01/30 15:30:34 andras Exp $
+// $Id: sotf_ComplexNodeObject.class.php,v 1.11 2003/02/25 10:09:31 andras Exp $
 
 /**
 * 
@@ -124,7 +124,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
       return false;
     }
 	
-		//$info = GetAllMP3info($file->getPath());
+		//$info = GetAllFileInfo($file->getPath());
 		//if (($info['png']['width'] == $iconWidth) && ($info['png']['height'] == $iconHeight))
 
     debug("imgfile", $imgfile);
