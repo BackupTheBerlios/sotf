@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Node.class.php,v 1.8 2002/12/18 09:16:45 andras Exp $
+// $Id: sotf_Node.class.php,v 1.9 2002/12/18 15:07:22 andras Exp $
 
 class sotf_Node extends sotf_NodeObject {
 
@@ -53,7 +53,7 @@ class sotf_Node extends sotf_NodeObject {
 	 */
 	function countAll() {
 		global $db;
-		return $db->getOne("SELECT count(*) FROM sotf_nodes WHERE up='t'");
+		return $db->getOne("SELECT count(*) FROM sotf_nodes");
 	}
 
 }
