@@ -1,4 +1,12 @@
-<?
+<?php
+
+/*  
+ * $Id: register.php,v 1.3 2003/02/27 16:13:10 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
+
 require("init.inc.php");
 
 debug("realname1", $user->realname);
@@ -65,7 +73,12 @@ if($filled)
         $smarty->assign('ERRORMSG',$error);
 		}
 		if(!$error) {
-		  $page->redirect($okURL);
+      if ($okURL) {
+        $page->redirect($okURL);
+      } else {
+        $page->redirect('index.php');
+      }
+      exit;
 		}
 	}
 }
