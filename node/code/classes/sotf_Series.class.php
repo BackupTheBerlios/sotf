@@ -1,13 +1,13 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Series.class.php,v 1.3 2002/11/08 16:42:56 andras Exp $
+// $Id: sotf_Series.class.php,v 1.4 2002/11/11 17:26:33 andras Exp $
 
 /**
 * Models a series
 *
 * @author Andras Micsik SZTAKI DSD micsik@sztaki.hu
 */
-class sotf_Series extends sotf_RepBase {		
+class sotf_Series extends sotf_NodeObject {		
 
   var $roles;
 

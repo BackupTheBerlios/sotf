@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.4 2002/11/07 09:19:10 andras Exp $
+// $Id: sotf_User.class.php,v 1.5 2002/11/11 17:26:33 andras Exp $
 
 /**
 * This is a class for handling users
@@ -217,14 +217,14 @@ class sotf_User
 		{
 			$user = new sotf_User($name);
 			$userdb->query("UPDATE user_preferences SET num_logins=num_logins+1, last_visit='" . db_Wrap::getSQLDate() . "' WHERE auth_id='" . $user->id . "' ");
-			$_SESSION['username'] = $user->name;
+			$_SESSION['userid'] = $user->id;
 		}
 	}
 	
   function logout() {
     global $user;
     $user = '';
-    $_SESSION['username'] = '';
+    $_SESSION['userid'] = '';
   }
 
 	function listUsers() {
