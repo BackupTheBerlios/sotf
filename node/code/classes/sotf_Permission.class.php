@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.17 2003/05/14 15:30:39 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.18 2003/05/20 16:08:15 andras Exp $
 
 /**
  * This is a class for handling permossions.
@@ -24,11 +24,13 @@ class sotf_Permission {
     if(!$userid && is_object($user)) {
       $userid = $user->id;
     }
-    $permtable = $db->getAll("SELECT sotf_user_permissions.object_id, sotf_permissions.permission FROM sotf_user_permissions, sotf_permissions WHERE sotf_user_permissions.user_id = '$userid' AND sotf_user_permissions.permission_id = sotf_permissions.id");
-    //debug("permtable", $permtable);
-    // make an associative array containing the permissions for all objects
-    while(list(,$row) = each($permtable)) {
-      $permissions[$row["object_id"]][] = $row["permission"];	// object permission
+    if ($userid) {
+		$permtable = $db->getAll("SELECT sotf_user_permissions.object_id, sotf_permissions.permission FROM sotf_user_permissions, sotf_permissions WHERE sotf_user_permissions.user_id = '$userid' AND sotf_user_permissions.permission_id = sotf_permissions.id");
+		//debug("permtable", $permtable);
+		// make an associative array containing the permissions for all objects
+		while(list(,$row) = each($permtable)) {
+		  $permissions[$row["object_id"]][] = $row["permission"];	// object permission
+		}
     }
     if($this->debug) {
       error_log("current permissions",0);

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.28 2003/05/16 16:12:54 andras Exp $
+ * $Id: init.inc.php,v 1.29 2003/05/20 16:08:16 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -166,13 +166,20 @@ $smarty->show_info_include = $sotfVars->get('debug_smarty', 0);
 // this object contains various utilities
 $utils = new sotf_Utils;
 
-// we need trick for making pages indexed by Google
-// therefore we pass some parameters in pathinfo
-// after this call getParameter can be used to get these parameters as well
-sotf_Utils::collectPathinfoParams();
+// for easier access
+$scriptUrl = mygetenv('SCRIPT_NAME');
+debug('scripturl', $scriptUrl);
 
 // page object is for request handling and page generation
 $page = new sotf_Page;
+
+// we need trick for making pages indexed by Google
+// therefore we pass some parameters in pathinfo
+// after this call getParameter can be used to get these parameters as well
+$pathinfoParamExceptions = array('getFile','getIcon','getJingle','getUserFile');
+if(!in_array($page->action, $pathinfoParamExceptions)) {
+	sotf_Utils::collectPathinfoParams();
+}
 
 // permissions object is for managing and asking for permissions
 $permissions = new sotf_Permission;
@@ -212,9 +219,5 @@ if($config['debug']) {
 debug("action", $page->action);
 debug("lang", $lang);
 debug("userid", $user->id);
-
-// for easier access
-$scriptUrl = mygetenv('SCRIPT_NAME');
-debug('scripturl', $scriptUrl);
 
 ?>

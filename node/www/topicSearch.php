@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: topicSearch.php,v 1.6 2003/05/16 16:12:54 andras Exp $
+ * $Id: topicSearch.php,v 1.7 2003/05/20 16:08:16 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -9,34 +9,54 @@
 
 require("init.inc.php");
 
+$treeId = sotf_Utils::getParameter('tree');
 $ID = sotf_Utils::getParameter('ID');
 //$NAME = sotf_Utils::getParameter('NAME');
 
+if(!$ID) {
+  $ID = $repository->getTopicTreeRoot($treeId);
+}
+
 if($ID) {
-     $NAME = $repository->getTopicName($ID);
+  $info = $repository->getTopicInfo($ID, $lang);
+  $smarty->assign("TOPIC", $info);
+  $treeId = $info['tree_id'];
+  $NAME = $info['name'];
 }
 
-// TODO: garbage collect :-)
+// collect subtopics
+$subtopics = $repository->getSubTopics($ID, $lang);
+$smarty->assign('SUBTOPICS', $subtopics);
 
-$query="SELECT * FROM (".
-	" SELECT sotf_programmes.*, sotf_stations.name as station, sotf_series.title as serietitle, sotf_series.description as seriedescription FROM sotf_programmes".
-	" LEFT JOIN sotf_stations ON sotf_programmes.station_id = sotf_stations.id".
-	" LEFT JOIN sotf_series ON sotf_programmes.series_id = sotf_series.id".
-	") as programmes WHERE published = 't' AND".
-	" (programmes.id = sotf_prog_topics.prog_id".
-	" and sotf_prog_topics.topic_id = '$ID')";
-
-$max = $db->getOne("SELECT count(*) FROM (".$query.") as count");	//get the number of results
-
-$limit = $page->splitList($max, "?ID=$ID");
-//$result = $db->limitQuery($query, $limit["from"], $limit["maxresults"]);				//get results with limit
-$result = $db->getAll($query.$limit["limit"]);
-
-// cache icons for results
-for($i=0; $i<count($result); $i++) {
-  $result[$i]['icon'] = sotf_Blob::cacheIcon($result[$i]['id']);
+// collect supertopics
+$super = $repository->getSuperTopic($ID, $lang);
+while($super) {
+  $supertopics[] = $super;
+  $super = $repository->getSuperTopic($super['id'], $lang);
+}
+if($supertopics) {
+  $smarty->assign('SUPERTOPICS', array_reverse($supertopics));
 }
 
+if(!$supertopics) {
+  // collect info on topic tree
+  $smarty->assign('TREE', $repository->getTopicTreeInfo($treeId, $lang));
+  // list all topic trees
+  $smarty->assign('TREES', $repository->listTopicTrees($lang));
+}
+
+$max = $repository->countProgsForTopic($ID);
+
+if($max > 0) {
+  $limit = $page->splitList($max, "?ID=$ID");
+
+  $result = $repository->getProgsForTopic($ID, $limit["from"], $limit["maxresults"]);
+
+  // cache icons for results
+  for($i=0; $i<count($result); $i++) {
+	 $result[$i]['icon'] = sotf_Blob::cacheIcon($result[$i]['id']);
+  }
+}
 
 $smarty->assign("ID", $ID);						//topic id
 $smarty->assign("NAME", $NAME);						//topic name
