@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.28 2003/03/03 16:32:54 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.29 2003/03/04 14:26:42 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -524,7 +524,13 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     //parse the xml file
     $myPack = new unpackXML($pathToFile . $folderName . "/XBMF/Metadata.xml");	//note that the unpacker needs AN ABSOLUTE path to the file
     if(!$myPack->error){		//if the file has been found
-      $metadata = $myPack->process();	//process it into an associative array
+      if($metadata = $myPack->process()){	//process it into an associative array
+				//
+			}else{	//catch errors
+				//error during import
+				trigger_error("The import did not succeed!",1);
+				return false;	//did not succeed
+			}
     }
 	
     //dump($metadata, "METADATA");
