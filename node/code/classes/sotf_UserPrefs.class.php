@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_UserPrefs.class.php,v 1.5 2003/04/08 14:21:58 andras Exp $
+// $Id: sotf_UserPrefs.class.php,v 1.6 2003/05/07 14:33:03 andras Exp $
 
 /**
 * This is a class for storing and handling user preferences
@@ -26,6 +26,10 @@ class sotf_UserPrefs
 	*/
 	var $editorSettings = array();
 
+	/**
+	* URL of the portal used by the user
+	*/
+	var $portalSettings = array();
 
 
   /** this will clear default query or queries, so the user will have normal home page with list of new programmes */
