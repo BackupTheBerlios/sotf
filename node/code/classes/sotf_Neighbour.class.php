@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.34 2003/07/29 12:01:57 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.35 2003/07/29 14:06:33 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -91,7 +91,7 @@ class sotf_Neighbour extends sotf_Object {
 		$page->addStatusMsg($msg);
   }
 
-  var $objectsPerRPCRequest = 30;
+  var $objectsPerRPCRequest = 20;
 
   function sync($console = false) {
 	global $db;
