@@ -1,4 +1,11 @@
-<?php  //-*- tab-width: 3; indent-tabs-mode: 1; -*-
+<?php 
+
+/*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
+ * $Id: sotf_Page.class.php,v 1.16 2003/01/30 15:30:34 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
 
 class sotf_Page
 {
@@ -198,8 +205,8 @@ class sotf_Page
 		global $debug, $startTime, $totalTime, $PHP_SELF;
 		$host = getHostName();
 		error_log("$host: FINISHED IN $totalTime ms WITH " . getenv("REQUEST_URI"),0);
-		//if($debug)
-		//  error_log("*********************************************************************************\n",0);
+		if($debug)
+		  error_log("--------------------------------------------------------------------\n",0);
 	}
 
 	function send($template = 'main.htm'){

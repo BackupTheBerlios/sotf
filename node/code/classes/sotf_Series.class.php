@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Series.class.php,v 1.6 2002/11/28 18:31:07 andras Exp $
+// $Id: sotf_Series.class.php,v 1.7 2003/01/30 15:30:34 andras Exp $
 
 /**
 * Models a series
@@ -17,7 +17,6 @@ class sotf_Series extends sotf_ComplexNodeObject {
      * @param string id id within node
    */
   function sotf_Series($id='', $data='') {
-    $this->binaryFields = array('icon', 'jingle');
     $this->sotf_ComplexNodeObject('sotf_series', $id, $data);
     if($id) {
       //$this->stationName = $this->db->getOne("SELECT name FROM sotf_stations WHERE id='" . $this->get('station_id') . "'");

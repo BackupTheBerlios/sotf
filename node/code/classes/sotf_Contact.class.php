@@ -1,6 +1,11 @@
 <?php 
-// -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Contact.class.php,v 1.2 2003/01/16 13:14:42 andras Exp $
+
+/*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
+ * $Id: sotf_Contact.class.php,v 1.3 2003/01/30 15:30:34 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
 
 //define('ERROR_NAME_USED', 123);
 
@@ -14,7 +19,6 @@ class sotf_Contact extends sotf_ComplexNodeObject {
 		 * @param string id id within node
 	 */
 	function sotf_Contact($id='', $data='') {
-    $this->binaryFields = array('icon', 'jingle');
 		$this->sotf_ComplexNodeObject('sotf_contacts', $id, $data);
 	}
 
