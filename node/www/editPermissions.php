@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editPermissions.php,v 1.7 2003/06/16 16:13:40 andras Exp $
+ * $Id: editPermissions.php,v 1.8 2003/06/17 12:16:03 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -73,18 +73,19 @@ if($save) {
 }
 
 $smarty->assign('CONTEXT', $context);
-$smarty->assign('ADMIN_EXPL', $page->getlocalized($context . '_admin_expl'));
-$smarty->assign('CHANGE_EXPL', $page->getlocalized($context . '_change_expl'));
-$smarty->assign('CREATE_EXPL', $page->getlocalized($context . '_create_expl'));
-$smarty->assign('DELETE_EXPL', $page->getlocalized($context . '_delete_expl'));
-$smarty->assign('AUTHORIZE_EXPL', $page->getlocalized($context . '_authorize_expl'));
+//$smarty->assign('ADMIN_EXPL', $page->getlocalized($context . '_admin_expl'));
+//$smarty->assign('CHANGE_EXPL', $page->getlocalized($context . '_change_expl'));
+//$smarty->assign('CREATE_EXPL', $page->getlocalized($context . '_create_expl'));
+//$smarty->assign('DELETE_EXPL', $page->getlocalized($context . '_delete_expl'));
+//$smarty->assign('AUTHORIZE_EXPL', $page->getlocalized($context . '_authorize_expl'));
 
 $smarty->assign('OBJECT_NAME', $objectname);
 $smarty->assign('OBJECT_ID', $objectid);
 //$smarty->assign('USER_NAME', $username);
 $smarty->assign('USER_ID', $userid);
 
-$smarty->assign('PERMISSIONS', $permissions->getPermissions($objectid, $userid));
+if($userid)
+	  $smarty->assign('PERMISSIONS', $permissions->getPermissions($objectid, $userid));
 
 $page->sendPopup();
 

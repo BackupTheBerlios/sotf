@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.20 2003/06/06 15:56:21 andras Exp $
+ * $Id: cron.php,v 1.21 2003/06/17 12:16:03 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -103,10 +103,12 @@ if(!empty($prgIds)) {
 
 //******** Update topic counts
 
+debug("updating", "topic counts");
 $repository->updateTopicCounts();
 
 //******** Clean caches and tmp dirs
 
+debug("cleaning", "tmpDir");
 $clearTime = time() - 24*60*60;
 $dir = dir($config['tmpDir']);
 while($entry = $dir->read()) {
@@ -123,6 +125,7 @@ while($entry = $dir->read()) {
 }
 $dir->close();
 
+debug("cleaning", "cacheDir");
 $clearTime = time() - 60*60;
 $dir = dir($config['cacheDir']);
 while($entry = $dir->read()) {
@@ -139,6 +142,8 @@ while($entry = $dir->read()) {
 $dir->close();
 
 // TODO update subject tree language availability
+
+// TODO remove old sotf_delete objects
 
 stopTiming();
 $page->logRequest();
