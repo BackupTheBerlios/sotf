@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Page.class.php,v 1.18 2003/02/12 10:21:48 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.19 2003/02/12 11:39:07 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -40,6 +40,7 @@ class sotf_Page
 		// load user data
 		if($_SESSION['userid'])
 		{
+      debug("userid", $_SESSION['userid']);
 			$this->user = new sotf_User($_SESSION['userid']);
 		}
 		// Currently it is not needed
