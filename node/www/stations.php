@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: stations.php,v 1.5 2002/11/21 17:45:01 andras Exp $
+// $Id: stations.php,v 1.6 2002/11/26 18:27:01 andras Exp $
 
 require("init.inc.php");
 $hitsPerPage = $sotfVars->get("hitsPerPage", 15);
@@ -26,14 +26,14 @@ $stations = sotf_Station::listStations($start, $hitsPerPage);
 for($i=0; $i<count($stations); $i++)
 {
 	
-	if ($stations[$i]->getLogo())
-    $hasLogo = true;
+	if ($stations[$i]->getIcon())
+    $hasIcon = true;
   
 	 $sprops = array('id'		=> $stations[$i]->id,
                    'name'	=> $stations[$i]->get('name'),
                    'description'	=> $stations[$i]->get('description'),
                    'numProgs'		=> $stations[$i]->numProgrammes(),
-                   'hasLogo'			=> $hasLogo,
+                   'hasIcon'			=> $hasIcon,
                    'isLocal'			=> $stations[$i]->isLocal());
    if(hasPerm('node','delete')) {
      $sprops['managers'] = $permissions->listUsersWithPermission($stations[$i]->id, 'admin');

@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.5 2002/11/21 17:45:00 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.6 2002/11/26 18:27:00 andras Exp $
 
 /**
 * This is a class for handling permossions.
@@ -116,11 +116,12 @@ class sotf_Permission
 		$plist = $db->getAll("SELECT u.user_id AS id, p.permission AS perm FROM sotf_user_permissions u, sotf_permissions p WHERE p.id = u.permission_id AND u.object_id='$objectId'");
     if(DB::isError($retval))
       raiseError($retval);
+    $retval = array();
     while(list(,$perm) = each($plist)) {
       $name = $user->getUserName($perm['id']);
       $retval[$name][] = $page->getlocalized('perm_' . $perm['perm']);
     }
-    debug("listNodeUsersWithPerm", $retval);
+    //debug("listNodeUsersWithPerm", $retval);
     ksort($retval);
     return $retval;
 	}
