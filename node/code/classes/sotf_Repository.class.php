@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.16 2003/01/31 12:49:42 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.17 2003/01/31 13:04:42 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_ComplexNodeObject.class.php');
@@ -53,7 +53,7 @@ class sotf_Repository {
 									);
 
   /** The order in which to send table data to neighbour nodes. */
-  var $tableOrder = "no,bl,co,st,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,de,ra,re,sx";
+  var $tableOrder = "no,co,st,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,bl,de,ra,re,sx";
 
   var $rootdir;
   var $db;
