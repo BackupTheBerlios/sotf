@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.12 2002/12/13 17:35:42 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.13 2002/12/18 16:34:18 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_ComplexNodeObject.class.php');
@@ -81,11 +81,15 @@ class sotf_Repository {
     $tc = substr($objectId, 3,2);
     $class = $this->codeToClass[$tc];
     if($class) {
-      return new $class($objectId);
+      $obj = new $class($objectId);
     } else {
       $table = array_search($tc, $this->tableCodes);
-      return new sotf_NodeObject($table, $objectId);
+      $obj = new sotf_NodeObject($table, $objectId);
     }
+    if( count($obj->getAll())==0 )
+      return NULL;
+    else
+      return $obj;
   }
 
   //TODO

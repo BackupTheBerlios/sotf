@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Object.class.php,v 1.8 2002/12/17 15:13:50 andras Exp $
+// $Id: sotf_Object.class.php,v 1.9 2002/12/18 16:34:18 andras Exp $
 
 /**
 * Basic class for SQL stored data
@@ -151,9 +151,12 @@ class sotf_Object {
 		if(DB::isError($res)){
 			raiseError($res);
 		}
-		if (count($res)==0)
-			raiseError("No such id: '$this->id' in '$this->tablename'");
-		$this->setAll($res);
+		if (count($res) > 0) {
+      $this->setAll($res);
+    } else {
+			logError("No such id: '$this->id' in '$this->tablename'");
+      $this->data = array();
+    }
 	}
 
   function find() {
