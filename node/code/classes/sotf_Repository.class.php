@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.33 2003/05/25 14:26:46 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.34 2003/05/27 07:43:00 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -46,7 +46,7 @@ class sotf_Repository {
 									"sotf_prog_rating" => "ra",
 									"sotf_refs" => "re",
 									"sotf_stats" => "sx",
-                  "sotf_blobs" => "bl"
+									"sotf_blobs" => "bl"
 									);
 
   /** Mapping of table codes into class names. */
@@ -103,7 +103,7 @@ class sotf_Repository {
       $table = array_search($tc, $this->tableCodes);
       $obj = new sotf_NodeObject($table, $objectId, $data);
     }
-    if( count($obj->getAll())==0 )
+    if(!$obj->exists())
       return NULL;
 	 return $obj;
   }
