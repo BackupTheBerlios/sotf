@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.6 2002/11/21 17:45:00 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.7 2002/11/22 17:07:36 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -94,6 +94,11 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   function update() {
 	 parent::update();
 	 $this->saveMetadataFile();
+  }
+
+  function getAssociatedObjects($tableName, $orderBy) {
+    $objects = $this->db->getAll("SELECT * FROM $tableName WHERE prog_id='$this->id' ORDER BY $orderBy");
+    return $objects;
   }
 
   function loadOtherFiles() {

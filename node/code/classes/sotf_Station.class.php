@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Station.class.php,v 1.7 2002/11/21 17:45:00 andras Exp $
+// $Id: sotf_Station.class.php,v 1.8 2002/11/22 17:07:36 andras Exp $
 
 class sotf_Station extends sotf_ComplexNodeObject {		
 
@@ -106,7 +106,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
 		if ($file->type != "none")
 		{
 			$info = GetAllMP3info($file->getPath());
-			if (($info['png']['width'] == $iconWidth) && ($info['png']['height'] == $iconHeight))
+			if (($info['png']['width'] <= $iconWidth) && ($info['png']['height'] <= $iconHeight))
 				if ($fp = fopen($file->getPath(),'rb'))
 				{
 					$data = fread($fp,filesize($file->getPath()));
@@ -114,6 +114,7 @@ class sotf_Station extends sotf_ComplexNodeObject {
           // save into DB
 					$this->setBlob("icon",$data);
           // save into file system
+
           if(!copy($file->getPath(), $this->getStationDir() . '/icon.png'))
             raiseError("could not copy icon file!");
 					return true;
