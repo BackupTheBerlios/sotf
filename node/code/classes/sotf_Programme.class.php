@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.14 2002/12/12 18:18:26 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.15 2002/12/13 17:28:29 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -232,6 +232,18 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     }
   }
 
+  /** static */
+  function getAllStats() {
+    global $db;
+    return $db->getRow("SELECT sum(visits) AS visits, sum(listens) AS listens, sum(downloads) AS downloads FROM sotf_stats");
+  }
+
+  /** static */
+  function getFileStats() {
+    global $db;
+    return $db->getRow("SELECT sum(filesize) AS filesize, sum(play_length) AS play_length FROM sotf_media_files");
+  }
+
   function getRefs() {
     $db = $this->db;
     $id = $this->id;
@@ -327,6 +339,23 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   function listAudioFiles($mainContent = 'true') {
     $objects = $this->db->getAll("SELECT * FROM sotf_media_files WHERE prog_id='$this->id' AND main_content='$mainContent' ORDER BY filename");
     return $objects;
+  }
+
+  function selectFileToListen() {
+      // TODO: write this better
+    $files = $this->listAudioFiles();
+    // if lowest bitrate is free, select that
+    while(list(,$f) = each($files)) {
+      if(preg_match("/^24kbps/", $f['format']) && $f['stream_access']=='t')
+        return $f['id'];
+    }
+    reset($files);
+    // return first free to strem
+    while(list(,$f) = each($files)) {
+      if($f['stream_access']=='t')
+        return $f['id'];
+    }
+    return '';
   }
 
   /** Returns an array containing info about the available other files. */

@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.11 2002/12/13 14:07:26 andras Exp $
+// $Id: sotf_User.class.php,v 1.12 2002/12/13 17:28:29 andras Exp $
 
 /**
 * This is a class for handling users
@@ -206,6 +206,11 @@ class sotf_User
 	function listUsers() {
 		global $userdb;
 		return $userdb->getCol("SELECT username FROM authenticate ORDER BY username");
+	}
+
+	function countUsers() {
+		global $userdb;
+		return $userdb->getOne("SELECT count(*) FROM authenticate");
 	}
 
 	function getUsername($user_id) {
