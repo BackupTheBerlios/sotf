@@ -1,6 +1,6 @@
-<?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
+<?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.44 2003/06/23 07:30:20 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.45 2003/06/23 09:42:33 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -46,7 +46,8 @@ class sotf_Repository {
 									"sotf_prog_rating" => "ra",
 									"sotf_prog_refs" => "re",
 									"sotf_prog_stats" => "sx",
-									"sotf_blobs" => "bl"
+									"sotf_blobs" => "bl",
+									"sotf_portals" => "po"
 									);
 
   /** Mapping of table codes into class names. */
@@ -55,11 +56,11 @@ class sotf_Repository {
 									"st" => "sotf_Station",
 									"se" => "sotf_Series",
 									"pr" => "sotf_Programme",
-                  "bl" => "sotf_Blob"
+									"bl" => "sotf_Blob"
 									);
 
   /** The order in which to send table data to neighbour nodes. */
-  var $tableOrder = "no,st,co,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,bl,de,ra,re,sx";
+  var $tableOrder = "no,st,co,se,pr,ri,ed,of,mf,li,td,tt,to,pt,ge,ro,rn,sr,bl,de,ra,re,sx,po";
 
   var $rootdir;
   var $db;
