@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Node.class.php,v 1.7 2002/12/17 15:13:50 andras Exp $
+// $Id: sotf_Node.class.php,v 1.8 2002/12/18 09:16:45 andras Exp $
 
 class sotf_Node extends sotf_NodeObject {
 
@@ -18,7 +18,10 @@ class sotf_Node extends sotf_NodeObject {
 		$id = $db->getOne("SELECT id FROM sotf_nodes WHERE node_id = '$nodeId'");
 		if(DB::isError($id))
 			raiseError($id);
-		return new sotf_Node($id);
+    if($id)
+      return new sotf_Node($id);
+    else
+      return NULL;
 	}
 
 	/** 
