@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.26 2003/06/19 10:07:55 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.27 2003/06/19 10:25:37 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -165,7 +165,7 @@ function getProgrammes($params)
 //		debug("------------>".$query." AND id = '$prg'<------------------");
 		$p = $db->getRow($query." AND id = '$prg'");
 		if ($p != NULL) $results[] = $p;
-		else $results[] = array("id" => $prg, "title" => "DELETED");
+		//else $results[] = array("id" => $prg, "title" => "DELETED");
 
 	}
 
