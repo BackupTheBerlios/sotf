@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: topicTreeFrame.php,v 1.4 2003/03/05 09:11:40 andras Exp $
+ * $Id: topicTreeFrame.php,v 1.5 2003/05/09 15:11:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -10,32 +10,6 @@
 require("init.inc.php");
 
 $smarty->assign("openTree", sotf_Utils::getParameter("open"));
-
-function SORTIT($a, $b)
-{
-	if (($a["supertopic"] != 0) AND ($b["supertopic"] != 0))	//both are leafs
-	{
-		$sabc = strcmp($a["supertopic"], $b["supertopic"]);
-		if ($sabc != 0) return $sabc;
-		return strcmp($a["name"], $b["name"]);
-	}
-	elseif (($a["supertopic"] == 0) AND ($b["supertopic"] != 0))	//first is root second leaf
-	{
-		$sabc = strcmp($a["id"], $b["supertopic"]);
-		if ($sabc != 0) return $sabc;
-		return -1;
-	}
-	elseif (($a["supertopic"] != 0) AND ($b["supertopic"] == 0))	//first is leaf second root
-	{
-		$sabc = strcmp($a["supertopic"], $b["id"]);
-		if ($sabc != 0) return $sabc;
-		return +1;
-	}
-	elseif (($a["supertopic"] == 0) AND ($b["supertopic"] == 0))	//both are roots
-	{
-		return strcmp($a["id"], $b["id"]);
-	}
-}
 
 $parent = sotf_Utils::getParameter('parent');
 $name = sotf_Utils::getParameter('name');
@@ -75,13 +49,8 @@ if ($topic_counter != "")
 	print($id);
 }
 
-
-$query = "SELECT sotf_topic_tree_defs.*, sotf_topics.topic_name, sotf_topics_counter.number from sotf_topic_tree_defs".
-		" LEFT JOIN sotf_topics ON sotf_topics.topic_id = sotf_topic_tree_defs.id".
-		" LEFT JOIN sotf_topics_counter ON sotf_topics_counter.topic_id = sotf_topic_tree_defs.id";
-$result = $db->getAll($query);
-
-usort($result, "SORTIT");
+// TODO: select lang and topic tree!!
+$result = $repository->getTree(1, 'en', true);
 
 $parentid;
 $counter = 0;

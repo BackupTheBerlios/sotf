@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.14 2003/04/04 11:18:40 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.15 2003/05/09 15:11:55 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -25,6 +25,8 @@ debug("--------------- XML-RPC SERVER STARTED ----------------------------------
 $map['sotf.sync'] = array('function' => 'syncResp');
 $map['portal.query'] = array('function' => 'getQueryResults');
 $map['portal.playlist'] = array('function' => 'getProgrammes');
+$map['sotf.cv.listnames'] = array('function' => 'cvListNames');
+$map['sotf.cv.get'] = array('function' => 'cvGet');
 //$map['sotf.allIds'] = array('function' => 'allIds');
 //$map['sotf.getById'] = array('function' => 'getById');
 //$map['sotf.ref'] = array('function' => 'itemReference');
@@ -44,6 +46,27 @@ function checkAccess($neighbour) {
     logError(getenv('REMOTE_HOST') . " XML-RPC access denied");
     return "this IP is not from neighbour " . $neighbour->get('node_id');
   }
+}
+
+function cvListNames($params) {
+  global $repository;
+  debug("incoming XML-RPC request: sotf.cv.listnames");
+  // TODO: check access
+  $retval = $repository->getCVocabularyNames();
+  $retval = xmlrpc_encode($retval);
+  return new xmlrpcresp($retval);
+}
+
+function cvGet($params) {
+  global $repository;
+  debug("incoming XML-RPC request: sotf.cv.get");
+  // TODO: check access
+  $type = xmlrpc_decode($params->getParam(0));
+  $name = xmlrpc_decode($params->getParam(1));
+  $lang = xmlrpc_decode($params->getParam(2));
+  $retval = $repository->getCVocabulary($type, $name, $lang);
+  $retval = xmlrpc_encode($retval);
+  return new xmlrpcresp($retval);
 }
 
 function syncResp($params) {

@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.29 2003/02/19 17:06:35 andras Exp $
+--  $Id: db.sql,v 1.30 2003/05/09 15:11:55 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -276,6 +276,7 @@ CREATE TABLE "sotf_topic_tree_defs" (
 -- REPLICATED
 	"id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
 	"supertopic" varchar(12) DEFAULT '0',
+	"tree_id" int2,
 	"name" varchar(100)
 );
 
