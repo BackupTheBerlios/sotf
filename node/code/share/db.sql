@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.8 2003/11/28 16:51:52 andras Exp $
+--	 $Id: db.sql,v 1.9 2003/12/09 12:49:05 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -29,7 +29,8 @@ CREATE TABLE "sotf_users" (
   "password" varchar(50) DEFAULT '' NOT NULL,
   "last_visit" timestamptz,
   "num_logins" int4 DEFAULT '0',
-  "getmail" char(1) DEFAULT 'N' NOT NULL
+  "getmail" char(1) DEFAULT 'N' NOT NULL,
+  "utoken" varchar(50)
 );
 
 CREATE VIEW "ftp_auth" AS SELECT 
