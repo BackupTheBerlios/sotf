@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: index.php,v 1.14 2003/05/28 11:30:13 andras Exp $
+ * $Id: index.php,v 1.15 2003/06/02 09:12:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -14,6 +14,7 @@ if($_REQUEST['select_station']) {
   $page->redirect($config['localPrefix'] . "/showStation.php/" . $_POST['station']);
 }
 
+$db->begin();
 
 $data['numNodes'] = sotf_Node::countAll();
 if($data['numNodes']==0) {
@@ -96,6 +97,8 @@ if($defQuery) {
 
 // get topics with most content
 $smarty->assign('TOPICS', $repository->getTopTopics(5));
+
+$db->commit();
 
 $page->send();
 
