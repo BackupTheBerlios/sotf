@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-  @(#) $Id: rss2html.xsl,v 1.1 2003/04/08 14:21:59 andras Exp $
+  @(#) $Id: rss2html.xsl,v 1.2 2003/07/16 16:00:21 andras Exp $
   -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rss="http://purl.org/rss/1.0/" xmlns="http://www.w3.org/1999/xhtml">
 
-<xsl:output method="html"/>
+<xsl:output method="html" encoding="utf-8" />
 
 <xsl:template match="/">
 <html>
