@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.12 2004/03/03 15:12:01 micsik Exp $
+--	 $Id: db.sql,v 1.13 2005/01/06 10:22:50 micsik Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -425,7 +425,8 @@ CREATE TABLE "sotf_deletions" (
 -- remember and propagate deletions to other nodes
 -- REPLICATED
 "id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
-"del_id" varchar(12) UNIQUE NOT NULL -- REFERENCES sotf_node_objects(id)
+"del_id" varchar(12) UNIQUE NOT NULL, -- REFERENCES sotf_node_objects(id)
+"del_time" timestamptz
 );
 
 CREATE TABLE "sotf_playlists" (

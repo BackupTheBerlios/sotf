@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearchresults.php,v 1.13 2004/04/29 12:46:01 micsik Exp $
+ * $Id: advsearchresults.php,v 1.14 2005/01/06 10:22:51 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -39,8 +39,12 @@ $max = count($SQLquery);				//$fields will contain all the USED field names
 for($i =0; $i<$max; $i++)
 	$fields[$SQLquery[$i][1]] = $allfields[$SQLquery[$i][1]];
 
-$fields[$advsearch->GetSort1()] = $allfields[$advsearch->GetSort1()];
-$fields[$advsearch->GetSort2()] = $allfields[$advsearch->GetSort2()];
+//$fields[$advsearch->GetSort1()] = $allfields[$advsearch->GetSort1()];
+//$fields[$advsearch->GetSort2()] = $allfields[$advsearch->GetSort2()];
+
+$fields[$advsearch->GetSort1()] = $page->getlocalized($advsearch->GetSort1());
+$fields[$advsearch->GetSort2()] = $page->getlocalized($advsearch->GetSort2());
+
 
 if (array_key_exists("title", $fields))
 {

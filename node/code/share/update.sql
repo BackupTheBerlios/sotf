@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---  $Id: update.sql,v 1.8 2004/03/03 15:12:01 micsik Exp $
+--  $Id: update.sql,v 1.9 2005/01/06 10:22:50 micsik Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -194,4 +194,8 @@ CREATE INDEX "prog_id_sotf_prog_topics_key" ON "sotf_prog_topics"("prog_id");
 -- some placeholder
 ALTER TABLE "sotf_stations" ADD "id2" varchar (50);
 -- also sotf_stations.name field became longer, but not a big problem
+
+-- 2004-10-19
+
+ALTER TABLE "sotf_deletions" ADD "del_time" timestamptz;
 

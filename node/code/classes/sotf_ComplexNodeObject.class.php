@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.34 2004/06/23 14:05:20 micsik Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.35 2005/01/06 10:22:48 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -43,11 +43,14 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	}
 	
 	function delete() {
+	  global $db;
 	  if($this->isLocal()) {
 		 // delete files from the repository
 		 debug("deleting: ", $this->getDir());
 		 sotf_Utils::erase($this->getDir());
 		 // delete from sql db
+		 // somehow foreign keys do not work in this case, so let's do it by hand:
+		 $db->query("DELETE FROM sotf_object_roles WHERE object_id='" . $this->id . "'");
 	  }
 	  return parent::delete();
 	}

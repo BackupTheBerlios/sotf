@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.59 2004/03/05 14:38:07 micsik Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.60 2005/01/06 10:22:48 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -129,8 +129,10 @@ class sotf_NodeObject extends sotf_Object {
 
   /** Creates a deletion record: used when a replicated object is deleted. */
   function createDeletionRecord() {
+	 global $db;
 	 $dr = new sotf_NodeObject('sotf_deletions');
 	 $dr->set('del_id', $this->id);
+	 $dr->set('del_time', $db->getTimestampTz());
 	 $dr->create();
   }
 

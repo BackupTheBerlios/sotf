@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Statistics.class.php,v 1.9 2004/08/19 08:52:58 micsik Exp $
+ * $Id: sotf_Statistics.class.php,v 1.10 2005/01/06 10:22:48 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -79,6 +79,8 @@ class sotf_Statistics extends sotf_Object {
 	 $fileId = $data['file'];
     $where = " WHERE prog_id='$prgId' AND year='$year' AND month='$month' AND day='$day' AND week='$week'";
 	 $db->begin();
+	 // to avoid deadlocks I try this:
+	 $db->query("LOCK TABLE sotf_stats, sotf_unique_access, sotf_to_update IN ROW EXCLUSIVE MODE");
 	 $id = $db->getOne("SELECT id FROM sotf_stats $where");
 	 if($id) {
 		$obj = new sotf_Statistics($id);
