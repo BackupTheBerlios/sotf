@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.10 2002/12/17 15:13:50 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.11 2002/12/18 17:30:57 andras Exp $
 
 /**
 * This is a class for handling permossions.
@@ -172,8 +172,7 @@ class sotf_Permission
       return NULL;  // not logged in yet
     $stationId = sotf_Utils::magicQuotes($stationId);
     $sql = "SELECT s.id AS id, s.title AS title FROM sotf_series s, sotf_user_permissions u".
-    		" WHERE u.user_id = '$user->id'";
-//    		" AND u.object_id=s.id";
+    		" WHERE u.user_id = '$user->id' AND u.object_id=s.id";
     if ($stationId) $sql .= " AND s.station_id='$stationId'";
     $sql .= " ORDER BY s.title";
     $sdata = $db->getAll($sql);
