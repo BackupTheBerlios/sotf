@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.29 2003/03/04 14:26:42 alex Exp $
+// $Id: sotf_Programme.class.php,v 1.30 2003/03/04 14:34:49 alex Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -509,8 +509,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
   function importXBMF($fileName, $publish=false) {
     global $db, $xbmfInDir, $permissions, $repository;
     
-    
-    $pathToFile = $xbmfInDir .'/';
+    $pathToFile = $xbmfInDir . '/';
     // create temp folder with unique name
     $folderName = uniqid("xbmf");
     mkdir($pathToFile . $folderName);
@@ -524,11 +523,11 @@ class sotf_Programme extends sotf_ComplexNodeObject {
     //parse the xml file
     $myPack = new unpackXML($pathToFile . $folderName . "/XBMF/Metadata.xml");	//note that the unpacker needs AN ABSOLUTE path to the file
     if(!$myPack->error){		//if the file has been found
-      if($metadata = $myPack->process()){	//process it into an associative array
-				//
-			}else{	//catch errors
+      $metadata = $myPack->process();
+			if(!$metadata){	//process it into an associative array
 				//error during import
-				trigger_error("The import did not succeed!",1);
+				sotf_Utils::delete($pathToFile . $folderName);
+				trigger_error("The import did not succeed!",2);
 				return false;	//did not succeed
 			}
     }
