@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  @(#) $Id: rss2html.xsl,v 1.2 2003/07/16 16:00:21 andras Exp $
+  @(#) $Id: rss2html.xsl,v 1.3 2003/07/21 13:56:50 andras Exp $
   -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rss="http://purl.org/rss/1.0/" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -79,7 +79,11 @@ div.textinput-form { font-family: sans-serif, arial, helvetica }
 <xsl:value-of select="dc:date"/>
 <xsl:text>)</xsl:text>
 </li></div>
-<div class="item-description"><xsl:value-of select="rss:description"/></div>
+<div class="item-description">
+  <!--   <xsl:copy> -->
+   <xsl:value-of select="rss:description"/>
+   <!-- </xsl:copy> -->
+</div>
 <hr />
 </xsl:for-each>
 </ul>
