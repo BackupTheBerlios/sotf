@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.66 2003/07/29 08:27:15 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.67 2003/10/13 10:37:06 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -654,7 +654,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 		$newPrg = new sotf_Programme();
 		$stId = trim($metadata['stationid']);
 		if(is_numeric($stId)) {
-		  $stId = $this->makeId($config['nodeId'],  'sotf_stations', (int)$stId);
+		  $stId = $newPrg->makeId($config['nodeId'],  'sotf_stations', (int)$stId);
 		}
 		$station = &$repository->getObject($stId);
 		if(!$station) {
