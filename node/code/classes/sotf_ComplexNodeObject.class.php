@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.26 2003/07/29 08:27:15 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.27 2003/09/15 08:35:03 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -155,6 +155,26 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	  $smarty->assign('PRG_LANG3', $langs[2]);
 	}
 
+	function get2LetterLanguageCode($languages = '') {
+	  if(!$languages)
+		 $languages = $this->get('language');
+	  if(!empty($languages)) {
+		 $langs = explode(',',$languages);
+		 switch($langs[0]) {
+		 case 'eng': return 'en';
+		 case 'ger':
+		 case 'deu': return 'de';
+		 case 'hun': return 'hu';
+		 case 'fra': return 'fr';
+		 case 'dut': return 'nl';
+		 default:
+         return '';
+			logError("Unknown translation to 2-letter code: " . $langs[0]);
+		 }
+	  } else {
+		 return 'en';
+	  }
+	}
 
 	/************************* ROLE MANAGEMENT **************************************/
 	
