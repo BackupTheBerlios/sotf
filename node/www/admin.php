@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: admin.php,v 1.27 2003/12/04 16:17:31 andras Exp $
+ * $Id: admin.php,v 1.28 2005/03/09 15:29:51 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -37,7 +37,8 @@ if($xbmfFile) {
 
 // update CVS
 if(sotf_Utils::getParameter('updatecvs')) {
-	checkPerm('node', 'change');
+  die("doesn't work this way, sorry");
+  checkPerm('node', 'change');
 
   chdir($config['basedir']);
   header("Content-type: text/plain\n");

@@ -1,14 +1,16 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: log.php,v 1.6 2003/05/14 15:30:39 andras Exp $
+ * $Id: log.php,v 1.7 2005/03/09 15:29:51 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
-require("config.inc.php");
-require($config['classdir'] . '/sotf_Utils.class.php');
+require("init.inc.php");
+$page->forceLogin();
+checkPerm('node', "change");
+
 ?>
 
 <html>
