@@ -1,5 +1,13 @@
 <?php
 
+/*  
+ * $Id: index.php,v 1.4 2003/06/23 14:16:43 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: Máté Pataki, András Micsik
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ * 
+ */
+
 require("portal_login.php");
 $portals = $portal -> getPortals();
 $smarty->assign("portals", $portals);

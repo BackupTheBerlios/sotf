@@ -1,5 +1,13 @@
 <?php
 
+/*  
+ * $Id: functions.inc.php,v 1.2 2003/06/23 14:16:43 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: Máté Pataki, András Micsik
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ * 
+ */
+
 function startTiming(){
   global $startTime;
   $microtime = microtime();

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.28 2003/06/20 16:24:34 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.29 2003/06/23 14:18:34 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -125,7 +125,7 @@ function getQueryResults($params)
 	foreach($results as $key => $result)
 	{
 		$icon = sotf_Blob::cacheIcon($result['id']);
-		$results[$key]['icon'] = $config['cacheUrl']."/".$result['id'].".png";
+		if ($icon) $results[$key]['icon'] = $config['cacheUrl']."/".$result['id'].".png";
 		//TODO if no icon {$IMAGEDIR}/noicon.png $imageprefix????
 
 		$prg = & new sotf_Programme($result['id']);
@@ -173,7 +173,7 @@ function getProgrammes($params)
 	{
 //		debug("------------>".$result['id']."<------------------");
 		$icon = sotf_Blob::cacheIcon($result['id']);
-		$results[$key]['icon'] = $config['cacheUrl']."/".$result['id'].".png";
+		if ($icon) $results[$key]['icon'] = $config['cacheUrl']."/".$result['id'].".png";
 		//TODO if no icon {$IMAGEDIR}/noicon.png $imageprefix????
 
 		$prg = & new sotf_Programme($result['id']);

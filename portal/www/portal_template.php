@@ -1,5 +1,13 @@
 <?php
 
+/*  
+ * $Id: portal_template.php,v 1.5 2003/06/23 14:16:44 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: Máté Pataki, András Micsik
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ * 
+ */
+
 require("portal_login.php");
 //require("init.inc.php");
 //require("$classdir/sotf_Portal.class.php");

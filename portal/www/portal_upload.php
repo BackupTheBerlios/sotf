@@ -1,5 +1,13 @@
 <?php
 
+/*  
+ * $Id: portal_upload.php,v 1.5 2003/06/23 14:16:44 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: Máté Pataki, András Micsik
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ * 
+ */
+
 require("portal_login.php");
 
 $settings = $portal->loadSettings();	//load saved portal settings
