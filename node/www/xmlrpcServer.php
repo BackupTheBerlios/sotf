@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.21 2003/05/29 06:54:41 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.22 2003/05/29 07:00:16 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -37,7 +37,6 @@ $map['sotf.cv.get'] = array('function' => 'cvGet');
 new xmlrpc_server($map);
 
 function checkAccess($url, $nodeId) {
-  $url = $neighbour->getUrl();
   if(!$url)
     return "No url found for neighbour node";
   $parsed = parse_url($url);
