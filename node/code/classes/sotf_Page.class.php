@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.32 2003/05/29 11:15:56 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.33 2003/06/19 10:07:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -24,6 +24,8 @@ class sotf_Page
 	var $errorURL;
 	/** if this page appears in a popup */
 	var $popup = false;
+	/** if this page is halted with an error */
+	var $halted = false;
 	/** cookie name used to store auth key (see getAuthKey()) */
 	var $authKeyName = 'sessKey';
 	/** auth key (see getAuthKey()) */
@@ -219,6 +221,15 @@ class sotf_Page
 		  $smarty->assign('POPUP', 1);
 		}
 
+		if(!$this->popup && !$this->halted) {
+			if($_SESSION['stream']) {
+				$smarty->assign('STREAM_DATA', $_SESSION['stream']);
+				// collect streaming info
+				$playlist = new sotf_Playlist();
+				$smarty->assign("STREAM_INFO", $playlist->getStreamInfo($_SESSION['stream']));
+			}
+		}
+
 		unset($_SESSION['halted']);
 		session_unregister('halted');
 		// handle status messages
@@ -266,6 +277,7 @@ class sotf_Page
 		 $smarty->assign("ERRORS", $this->errors);
 		 $smarty->assign("ERROR_URL", $this->errorURL);
 		 $smarty->assign("REFERER", myGetenv('HTTP_REFERER'));
+		 $this->halted = true;
 		 $this->send('error.htm');
 	  }
 	  exit;

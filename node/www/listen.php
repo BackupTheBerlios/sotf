@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.14 2003/06/18 16:08:41 andras Exp $
+ * $Id: listen.php,v 1.15 2003/06/19 10:07:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -9,8 +9,30 @@
 
 require("init.inc.php");
 
+if(sotf_Utils::getParameter('reconnect')) {
+  $playlist = new sotf_Playlist();
+  $playlist->sendMyRemotePlaylist();
+  $page->logRequest();
+  exit;
+}
+
+if(sotf_Utils::getParameter('stop')) {
+  $playlist = new sotf_Playlist();
+  $playlist->stopMyStream();
+  $page->redirect(myGetenv('HTTP_REFERER'));
+  exit;
+}
+
 $id = sotf_Utils::getParameter('id');
 $fileid = sotf_Utils::getParameter('fileid');
+
+if(!$id) {
+  sotf_Utils::collectPathinfoParams();
+  if(!$id)
+	 $id = $pathinfoParams['id'];
+  if(!$fileid)
+	 $id = $pathinfoParams['fileid'];
+}
 
 if(empty($id)) {
   raiseError("Missing parameters!");
@@ -26,14 +48,9 @@ if(!$prg->isLocal()) {
 
 $playlist = new sotf_Playlist();
 
-$playlist->stopMyStream();
-
 $playlist->addProg($prg, $fileid);
 
 $playlist->startStreaming();
-
-// TODO wait until stream really starts
-sleep(2);
 
 // must start stream before! otherwise we don't know stream url
 $playlist->sendRemotePlaylist();

@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.25 2003/06/02 11:38:34 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.26 2003/06/19 10:07:55 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -163,7 +163,10 @@ function getProgrammes($params)
 	{
 //		debug("------------>".$prg."<------------------");
 //		debug("------------>".$query." AND id = '$prg'<------------------");
-		$results[] = $db->getRow($query." AND id = '$prg'");
+		$p = $db->getRow($query." AND id = '$prg'");
+		if ($p != NULL) $results[] = $p;
+		else $results[] = array("id" => $prg, "title" => "DELETED");
+
 	}
 
 	foreach($results as $key => $result)
@@ -192,6 +195,7 @@ function getProgrammes($params)
 //		}
 
 	}
+
 	$retval = xmlrpc_encode($results);
 	return new xmlrpcresp($retval);
 }
@@ -201,7 +205,11 @@ function putEvents($params)
 	global $config, $db;
 	$events = xmlrpc_decode($params->getParam(0));
 	debug("events", $events);
-
+  switch($events['name']) {
+  case 'programme_added':
+    
+  default:
+  }
 	$retval = xmlrpc_encode(count($events));
 	return new xmlrpcresp($retval);
 }

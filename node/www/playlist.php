@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: playlist.php,v 1.7 2003/03/05 09:11:40 andras Exp $
+ * $Id: playlist.php,v 1.8 2003/06/19 10:07:55 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -26,12 +26,12 @@ if (sotf_Utils::getParameter("delete_selected") != "")			//delete selected butto
 if (sotf_Utils::getParameter("play_selected") != "")			//delete selected button pressed
 {
   $pl = new sotf_Playlist();
-	$checkbox = sotf_Utils::getParameter("checkbox");
-	for($i=0; $i < count($checkbox); $i++) {
+  $checkbox = sotf_Utils::getParameter("checkbox");
+  for($i=0; $i < count($checkbox); $i++) {
     $prg = new sotf_Programme($checkbox[$i]);
     $pl->addProg($prg);
-	}
-  $pl->startStreaming();
+  }
+  $pl->startStreaming();  
   $pl->sendRemotePlaylist();
   $page->logRequest();
   exit;
