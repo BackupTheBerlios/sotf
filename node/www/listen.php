@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: listen.php,v 1.11 2003/05/28 14:49:54 andras Exp $
+ * $Id: listen.php,v 1.12 2003/06/03 13:14:44 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -30,6 +30,7 @@ $playlist->addProg($prg, $fileid);
 
 $playlist->startStreaming();
 
+// must start stream before! otherwise we don't know stream url
 $playlist->sendRemotePlaylist();
 
 $page->logRequest();

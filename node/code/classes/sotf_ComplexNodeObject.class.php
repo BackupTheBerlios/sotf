@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.17 2003/06/02 12:25:49 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.18 2003/06/03 13:14:44 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -329,7 +329,7 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	* @return	mixed	Returns the path of the jingle if exist, else return boolean false
 	* @use	$config['audioFormats']
 	*/
-	function getJingle($index = 1)
+	function getJingle($index = 0)
 	{
 		global $config;
 
