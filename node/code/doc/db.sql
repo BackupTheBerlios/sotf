@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.55 2003/06/23 07:26:21 andras Exp $
+--  $Id: db.sql,v 1.56 2003/06/23 07:30:20 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -564,6 +564,8 @@ CREATE TABLE "sotf_streams" (
 	"host" varchar(50),				-- host receiving the stream
 	"flags" varchar(20)				-- various flags
 );
+
+CREATE SEQUENCE "sotf_portals_seq";
 
 CREATE TABLE "sotf_portals" (
 -- list of portals connected to this node 

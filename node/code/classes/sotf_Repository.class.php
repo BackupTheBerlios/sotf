@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.43 2003/06/20 16:24:33 andras Exp $
+/* $Id: sotf_Repository.class.php,v 1.44 2003/06/23 07:30:20 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -597,7 +597,7 @@ class sotf_Repository {
       $obj->save();
       break;
     case 'page_impression':
-      $obj = new sotf_Object('sotf_portals');
+      $obj = new sotf_NodeObject('sotf_portals');
       $obj->set('url', $event['url']);
       $obj->find();
       $obj->set('name', $event['portal_name']);
@@ -606,7 +606,7 @@ class sotf_Repository {
       $obj->save();
       break;
     case 'portal_updated':
-      $obj = new sotf_Object('sotf_portals');
+      $obj = new sotf_NodeObject('sotf_portals');
       $obj->set('url', $event['url']);
       $obj->find();
       $obj->set('name', $event['portal_name']);
@@ -614,7 +614,7 @@ class sotf_Repository {
       $obj->save();
       break;
     case 'users':
-      $obj = new sotf_Object('sotf_portals');
+      $obj = new sotf_NodeObject('sotf_portals');
       $obj->set('url', $event['url']);
       $obj->find();
       //$obj->set('name', $event['portal_name']);

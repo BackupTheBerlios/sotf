@@ -1,5 +1,5 @@
 
---  $Id: update.sql,v 1.8 2003/06/23 07:26:21 andras Exp $
+--  $Id: update.sql,v 1.9 2003/06/23 07:30:20 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -76,6 +76,8 @@ ALTER TABLE "sotf_prog_refs" ADD COLUMN "portal_name" varchar(200);
 ALTER TABLE "sotf_prog_refs" ADD COLUMN "portal_home" varchar(200);
 
 ALTER TABLE "sotf_comments" ADD COLUMN "comment_title" text;
+
+CREATE SEQUENCE "sotf_portals_seq";
 
 CREATE TABLE "sotf_portals" (
 -- list of portals connected to this node 
