@@ -1,4 +1,12 @@
-<?php
+<?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
+
+/*  
+ * $Id: login.php,v 1.3 2003/03/05 09:11:40 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
+
 require("init.inc.php");
 
 $username = sotf_Utils::getParameter('userid');

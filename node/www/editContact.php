@@ -1,4 +1,12 @@
-<?php
+<?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
+
+/*  
+ * $Id: editContact.php,v 1.10 2003/03/05 09:11:39 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
+
 
 require("init.inc.php");
 
@@ -23,6 +31,14 @@ $smarty->assign('CONTACT_NAME',$contact->get('name'));
 if(!$contact->isLocal()) {
   raiseError("You can only edit local contacts!");
 }
+
+// delete
+if(sotf_Utils::getParameter('delete')) {
+  checkPerm($contact->id, "delete");
+  $contact->delete();
+  $page->redirect("closeAndRefresh.php?anchor=roles");
+}
+
 checkPerm($contact->id, "change");
 
 // upload icon

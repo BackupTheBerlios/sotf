@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editStation.php,v 1.13 2003/03/04 14:59:29 andras Exp $
+ * $Id: editStation.php,v 1.14 2003/03/05 09:11:40 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -34,6 +34,16 @@ if($save) {
   $st->set('description', $desc);
   $st->update();
   $page->redirect("editStation.php?stationid=$stationid");
+  exit;
+}
+
+// delete series
+$delseries = sotf_Utils::getParameter('delseries');
+if($delseries) {
+  $seriesid = sotf_Utils::getParameter('seriesid');
+  $series = new sotf_Series($seriesid);
+  $series->delete();
+  $page->redirect("editStation.php?stationid=$stationid#series");
   exit;
 }
 

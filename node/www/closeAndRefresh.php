@@ -1,5 +1,6 @@
 	<html>
 	  <head>
+       <!-- $Id: closeAndRefresh.php,v 1.4 2003/03/05 09:11:39 andras Exp $ -->
 		<title>
 		  Close this window automatically
 		</title>

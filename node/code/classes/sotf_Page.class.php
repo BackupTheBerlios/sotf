@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.25 2003/03/04 14:59:29 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.26 2003/03/05 09:11:39 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -245,10 +245,12 @@ class sotf_Page
 		 debug("alertWithErrors()");
 		 print("\n<script type=\"text/javascript\" language=\"javascript1.1\">");
 		 foreach($this->errors as $err) {
-			print "\nalert('" . addslashes(strtr($err, "\n\r\t\0",'  ')) . "');";
+			print "\n alert('" . addslashes(strtr($err, "\n\r\t\0",'  ')) . "');";
 		 }
-		 print("\nhistory.back();");
+		 print("\n if(history.length > 0) history.back();");
 		 print("\n</script>");
+		 $closeMsg = $this->getlocalized('error_close');
+		 print("<a href=\"closeAndRefresh.php\">$closeMsg</a>");
 	  } else {
 		 debug("no errors");
 	  }

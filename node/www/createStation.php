@@ -1,6 +1,11 @@
-<?php
-// -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: createStation.php,v 1.2 2002/12/11 17:40:52 andras Exp $
+<?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
+
+/*  
+ * $Id: createStation.php,v 1.3 2003/03/05 09:11:39 andras Exp $
+ * Created for the StreamOnTheFly project (IST-2001-32226)
+ * Authors: András Micsik, Máté Pataki, Tamás Déri 
+ *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
+ */
 
 require("init.inc.php");
 
@@ -11,10 +16,7 @@ $manager = sotf_Utils::getParameter('username');
 
 $page->forceLogin();
 
-if (!hasPerm('node','create')) {
-  raiseError($page->getlocalized('no_permission'));
-  exit;
-}
+checkPerm('node','create');
 
 if ($new) {
 

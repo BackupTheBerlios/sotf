@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.12 2003/03/04 14:59:29 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.13 2003/03/05 09:11:40 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -71,6 +71,7 @@ function getQueryResults($params)
 {
 	global $classdir, $db, $rootdir, $cacheprefix;
 	$query = xmlrpc_decode($params->getParam(0));
+
 	$advsearch = new sotf_AdvSearch();	//create new search object object with this array
 	$SQLquery = $advsearch->Deserialize($query);		//deserialize the content of the hidden field
 	$query = $advsearch->GetSQLCommand();
@@ -83,6 +84,12 @@ function getQueryResults($params)
 	}
 	$retval = xmlrpc_encode($results);
 	return new xmlrpcresp($retval);
+}
+
+function getProgrammes($params)
+{
+	global $classdir, $db, $rootdir, $cacheprefix;
+	$prglist = xmlrpc_decode($params->getParam(0));
 }
 
 stopTiming();
