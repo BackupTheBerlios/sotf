@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: get.php,v 1.22 2003/09/26 15:21:42 andras Exp $
+ * $Id: get.php,v 1.23 2003/10/13 07:49:34 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -85,8 +85,9 @@ if($id) {
   $smarty->assign('RATING', $rating->getInstantRating($id));
 
   // my rating?
-  debug("r", $rating->getMyRating($id));
-  $smarty->assign('MY_RATING', $rating->getMyRating($id));
+  $myRating = $rating->getMyRating($id);
+  debug("r", $myRating);
+  $smarty->assign('MY_RATING', $myRating);
 
   if ($page->loggedIn()) {
     // is in my playlist?

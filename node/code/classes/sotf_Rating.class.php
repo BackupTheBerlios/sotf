@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Rating.class.php,v 1.6 2003/09/25 07:46:12 andras Exp $
+ * $Id: sotf_Rating.class.php,v 1.7 2003/10/13 07:49:34 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -167,7 +167,7 @@ class sotf_Rating	 extends sotf_Object {
 	}
 
 	function getMyRating($objId) {
-		global $page, $user;
+	  global $page, $user, $config;
 		if(!$page->loggedIn()) {
 			$key = $page->getAuthKey();
 			if($key) {
@@ -176,7 +176,7 @@ class sotf_Rating	 extends sotf_Object {
 					return $this->get('rate');
 			}
 		} else {
-			$this->find($objId, $user->id);
+		  $this->find($objId, $user->id, $config['nodeId']);
 			if($this->exists())
 				return $this->get('rate');
 			
