@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getFile.php,v 1.13 2004/02/27 17:53:15 micsik Exp $
+ * $Id: getFile.php,v 1.14 2004/08/19 08:53:00 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -12,7 +12,15 @@ require("init.inc.php");
 $filename = sotf_Utils::getParameter('filename');
 $id = sotf_Utils::getParameter('id');
 $mainAudio = sotf_Utils::getParameter('audio');
-$prg = & new sotf_Programme($id);
+
+if(empty($id)) {
+  raiseError("Missing parameters!", 'id');
+}
+if(empty($filename)) {
+  raiseError("Missing parameters!", 'filename');
+}
+
+$prg = $repository->getObject($id);
 
 if(!$prg)
   raiseError("no_such_object", $id);
