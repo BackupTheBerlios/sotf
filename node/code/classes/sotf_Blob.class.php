@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Blob.class.php,v 1.4 2003/06/16 16:13:40 andras Exp $
+// $Id: sotf_Blob.class.php,v 1.5 2003/09/16 12:00:04 andras Exp $
 
 /**
 * @author Andras Micsik - micsik@sztaki.hu
@@ -13,6 +13,17 @@ class sotf_Blob extends sotf_NodeObject {
     $this->binaryFields = array('data');
 		$this->sotf_NodeObject($this->tablename, $id, $data);
 	}
+
+  function hasBlob($id, $name) {
+    $obj = new sotf_Blob();
+    $obj->set('object_id', $id);
+    $obj->set('name', $name);
+    $obj->find();
+    if($obj->exists()) {
+      return true;
+    } else
+      return false;
+  }
 
   /** Static: returns the blob with the given name for the given object ('id'). */
   function findBlob($id, $name) {

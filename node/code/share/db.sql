@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.2 2003/07/29 13:40:53 andras Exp $
+--	 $Id: db.sql,v 1.3 2003/09/16 12:00:05 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -187,7 +187,7 @@ CREATE TABLE "sotf_programmes" (
 "abstract" text,													-- dc.description
 "entry_date" date DEFAULT date('now'::text) NOT NULL,	-- dc.date.available
 "production_date" date,											-- dc.date.created
-"broadcast_date" date,											-- dc.date.issued
+"broadcast_date" timestamptz,											-- dc.date.issued
 "modify_date" date,												-- dc.date.modified
 "expiry_date" date DEFAULT (timestamptz(date('now'::text)) + '56 days'::"interval"),	-- when programme will be made unavailable
 "type" varchar(50) DEFAULT 'sound',							-- DCMI type (audio/video/etc.)

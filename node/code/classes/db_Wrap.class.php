@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.20 2003/07/29 13:40:52 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.21 2003/09/16 12:00:04 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -58,6 +58,10 @@ class db_Wrap extends DB_pgsql {
 	    $date = getdate($timestamp);
 	    return $date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours']. ':' . $date['minutes'];
 	  }
+
+  function myTZ() {
+    return $this->formatTZ(date('Z'));
+  }
 
 	function formatTZ($sec) {
 	  $h = intval($sec/3600);

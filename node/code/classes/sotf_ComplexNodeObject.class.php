@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.27 2003/09/15 08:35:03 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.28 2003/09/16 12:00:05 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -80,7 +80,6 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 		  return $this->get('station_id');
 		}
 	}
-
 
 	/************************************************
 	 *      METADATA
@@ -393,22 +392,33 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	* @return	mixed	Returns the path of the jingle if exist, else return boolean false
 	* @use	$config['audioFormats']
 	*/
-	function getJingle($index = 0)
-	{
-		global $config;
+	function getJingle($index = 0) {
+	  global $config;
+	  
+	  $file = $this->getMetaDir() . '/jingle_' . sotf_AudioCheck::getFormatFilename($index);
+	  debug("searching for", $file);
+	  
+	  if (is_file($file) && !is_file($file.'.lock')) {
+		 return $file;
+	  }
+	  
+	  $file = '';
+	  $this->getMetaDir() . '/jingle_';
+	  $d = dir($this->getMetaDir());
+	  while($entry = $d->read()) {
+		 if (substr($entry, 0, 6) == 'jingle_') {
+			$file = $this->getMetaDir() . '/' . $entry;
+			break;
+		 }
+	  }
+	  $d->close();
+	  
+	  debug("2nd round", $file);
 
-		$file = $this->getMetaDir() . '/jingle_' . sotf_AudioCheck::getFormatFilename($index);
-		debug("searching for", $file);
-
-		if (is_file($file) && !is_file($file.'.lock'))
-		{
-			return $file;
-		}
-		else
-		{
-			return false;
-			//return new PEAR_Error($stationId . " has no jingle!");
-		}
+	  if($file)
+		 return $file;
+	  else
+		 return false;
 	}
 
 	/** Deletes a jingle */

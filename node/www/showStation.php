@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: showStation.php,v 1.11 2003/07/29 13:40:53 andras Exp $
+ * $Id: showStation.php,v 1.12 2003/09/16 12:00:06 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -54,6 +54,8 @@ if($st->isLocal()) {
   $smarty->assign('IS_LOCAL',1);
 }
 $smarty->assign('ROLES', $st->getRoles());
+if($st->getJingle())
+	  $smarty->assign('JINGLE', 1);
 
 if ($entered)
      $smarty->assign('ENTERED',$entered);

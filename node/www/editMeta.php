@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editMeta.php,v 1.18 2003/07/29 08:27:15 andras Exp $
+ * $Id: editMeta.php,v 1.19 2003/09/16 12:00:06 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -78,6 +78,9 @@ if($save || $finish || $finishpublish) {
 	      $value = sotf_Utils::getParameter($param . 'Year') . '-'
 	        . sotf_Utils::getParameter($param . 'Month') . '-'
 	        . sotf_Utils::getParameter($param . 'Day');
+			if($param == 'broadcast_date') {
+			  $value = $value . ' ' . sotf_Utils::getParameter('broadcast_timeHour') . ':' . sotf_Utils::getParameter('broadcast_timeMinute') . ' ' . $db->myTZ();
+			}
 		} else {
 		  $value = NULL;
 		}
@@ -186,6 +189,7 @@ if($seticon) {
 if($new)
      $smarty->assign("NEW",1);
 $smarty->assign('PRG_DATA', $prg->getAllForHTML());
+$smarty->assign('BROADCAST_TIME', strtotime($prg->get('broadcast_date')));
 
 // station data
 $station = $prg->getStation();
