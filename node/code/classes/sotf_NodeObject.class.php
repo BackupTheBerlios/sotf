@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_NodeObject.class.php,v 1.5 2002/12/15 14:37:21 andras Exp $
+// $Id: sotf_NodeObject.class.php,v 1.6 2002/12/16 08:37:07 andras Exp $
 
 /**
 * Objects that are replicated in the network
@@ -35,15 +35,15 @@ class sotf_NodeObject extends sotf_Object {
       if($exists) {
         if($this->lastChange && (strtotime($this->lastChange) > strtotime($changed))) {
           $this->update();
-          debug("updated " $this->id);
+          debug("updated ", $this->id);
         } else {
-          debug("arrived older version of" $this->id);
+          debug("arrived older version of", $this->id);
         }
         return;
       }
     }
 		$this->create();
-    debug("created " $this->id);
+    debug("created ", $this->id);
 	}
 
   function create() {
