@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: createStation.php,v 1.4 2003/06/16 16:13:40 andras Exp $
+ * $Id: createStation.php,v 1.5 2004/03/03 15:12:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -31,11 +31,13 @@ if ($new) {
   }
 
   $station_old = $station;
+  /*
   $station = sotf_Utils::makeValidName($station, 32);
   if ($station != $station_old) {
 			$page->addStatusMsg('illegal_name');
       $problem = 1;
   }
+  */
 
   if(sotf_Station::isNameInUse($station)) {
     $page->addStatusMsg('name_in_use');

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Station.class.php,v 1.24 2003/07/22 12:51:41 andras Exp $
+ * $Id: sotf_Station.class.php,v 1.25 2004/03/03 15:11:58 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -80,10 +80,9 @@ class sotf_Station extends sotf_ComplexNodeObject {
 	/** the directory where contents are stored. */
 	function getDir() {
 	  global $repository;
-	  $name = $this->get("name");
-	  if(empty($name))
-		 raiseError("this station has no name!");
-	  return $repository->rootdir . '/' . $name;
+	  if(empty($this->id))
+		 raiseError("this station has no id!");
+	  return $repository->rootdir . '/' . $this->id;
 	}
 
 	/** returns the directory where metadata/jingles/icons are stored */

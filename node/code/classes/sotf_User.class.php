@@ -1,5 +1,5 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_User.class.php,v 1.25 2003/11/28 16:51:52 andras Exp $
+// $Id: sotf_User.class.php,v 1.26 2004/03/03 15:11:58 micsik Exp $
 
 /** 
 * This is a class for basic handling of users. Preferences and
@@ -131,6 +131,11 @@ class sotf_User {
 		 return $page->getlocalized("invalid_username");
 	  }
 	  debug("USERDB", "registering user: ". $name);
+	  $name1 = sotf_Utils::makeValidName($name, 32);
+	  if ($name1 != $name) {
+		 //$page->addStatusMsg('illegal_name');
+		 return $page->getlocalized("illegal_name");
+	  }
 	  $fields['password'] = sotf_Utils::magicQuotes($password);
 	  $fields['username'] = sotf_Utils::magicQuotes($name);
 	  $fields['language'] = sotf_Utils::magicQuotes($language);

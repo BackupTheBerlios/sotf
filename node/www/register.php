@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: register.php,v 1.7 2003/09/25 07:46:12 andras Exp $
+ * $Id: register.php,v 1.8 2004/03/03 15:12:01 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -35,6 +35,13 @@ if($filled)
 		$error = true;
 		$smarty->assign('INVALID_USERNAME',true);
 		//$errorMsg = appendWith($errorMsg, $page->getlocalized("invalid_username"));
+	}
+	// check if username acceptible
+	$name1 = sotf_Utils::makeValidName($username, 32);
+	if ($name1 != $username) {
+	  $username = $name1;
+	  $smarty->assign('ERRORMSG',$page->getlocalized("illegal_name"));
+	  $error = true;
 	}
 	if(!$change && sotf_User::userNameCheck($username))
 	{  // check if username is not already in use

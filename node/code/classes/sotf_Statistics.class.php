@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Statistics.class.php,v 1.7 2003/09/25 07:46:12 andras Exp $
+ * $Id: sotf_Statistics.class.php,v 1.8 2004/03/03 15:11:58 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -90,7 +90,7 @@ class sotf_Statistics extends sotf_Object {
 		  return null;
 		}
 		$obj->setAll(array('prog_id' => $prgId,
-                         'station_id' => $data['station_id'],
+                         'station_id' => $prg->get('station_id'),
                          'year' => $year,
                          'month' => $month,
                          'week' => $week,

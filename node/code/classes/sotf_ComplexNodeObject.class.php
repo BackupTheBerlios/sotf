@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.29 2003/09/22 07:12:36 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.30 2004/03/03 15:11:58 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -108,6 +108,17 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	/************************************************
 	 *      LANGUAGE HACK
 	 ************************************************/
+
+	/** can be static */
+	function getLanguagesArray($languages = '') {
+	  if(!$languages)
+		 $languages = $this->get('language');
+	  if(!empty($languages)) {
+		 $langs = explode(',',$languages);
+		 return $langs;
+	  }
+	  return array();
+	}
 
 	/** can be static */
 	function getLanguagesLocalized($languages = '') {
