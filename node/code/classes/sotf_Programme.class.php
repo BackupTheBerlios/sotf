@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Programme.class.php,v 1.24 2003/02/24 10:17:02 andras Exp $
+// $Id: sotf_Programme.class.php,v 1.25 2003/02/24 14:15:51 andras Exp $
 
 define("GUID_DELIMITER", ':');
 define("TRACKNAME_LENGTH", 32);
@@ -527,8 +527,10 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	
     //dump($metadata, "METADATA");
 
-    $stationName = 'DooBeeDoo';
-    $station = sotf_Station::getByName($stationName);
+    // TODO: by default I put the programme into the first station
+    $stId = $db->getOne("SELECT id FROM sotf_stations ORDER BY id");
+
+    $station = new sotf_Station($stId);
     $track = $metadata['title']['basetitle'];
     $newPrg = new sotf_Programme();
     debug("create with track", $track);
