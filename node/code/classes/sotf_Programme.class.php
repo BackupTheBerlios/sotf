@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.46 2003/05/27 07:43:00 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.47 2003/05/27 10:38:23 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -184,9 +184,11 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 }
   }
 
+  /*
   function exists() {
-	 return isset($data['id']);
+	 return isset($this->data['id']);
   }
+  */
 
   /** makes a new item available, announces to other nodes */
   function publish() {

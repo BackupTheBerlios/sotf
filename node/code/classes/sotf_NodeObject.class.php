@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.35 2003/05/27 08:02:54 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.36 2003/05/27 10:38:23 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -24,7 +24,7 @@ class sotf_NodeObject extends sotf_Object {
   }
 
   /** Comfort method to retrieve an object in a cacheable way. */
-  function getObject($id) {
+  function &getObject($id) {
 	 global $repository;
 	 return $repository->getObject($id);
   }
