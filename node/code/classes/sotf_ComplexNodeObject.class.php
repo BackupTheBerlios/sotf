@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.28 2003/09/16 12:00:05 andras Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.29 2003/09/22 07:12:36 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -403,15 +403,17 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	  }
 	  
 	  $file = '';
-	  $this->getMetaDir() . '/jingle_';
-	  $d = dir($this->getMetaDir());
-	  while($entry = $d->read()) {
-		 if (substr($entry, 0, 6) == 'jingle_') {
-			$file = $this->getMetaDir() . '/' . $entry;
-			break;
-		 }
-	  }
-	  $d->close();
+	  $jdir = $this->getMetaDir();
+	  if(is_dir($jdir)) {
+		  $d = dir($jdir);
+		  while($entry = $d->read()) {
+			 if (substr($entry, 0, 6) == 'jingle_') {
+				$file = $jdir . '/' . $entry;
+				break;
+			 }
+		  }
+		  $d->close();
+	}
 	  
 	  debug("2nd round", $file);
 
