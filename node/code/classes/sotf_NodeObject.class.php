@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.31 2003/05/26 13:56:42 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.32 2003/05/26 14:07:16 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -38,7 +38,7 @@ class sotf_NodeObject extends sotf_Object {
 		$this->adminObject->id = $this->id;
 	 }
 	 if($repository->isVocabularyTable($this->tablename))
-		$this->internalData['node_id'] = 0;
+		$this->internalData['node_id'] = '0';
 	 else
 		$this->internalData['node_id'] = $config['nodeId'];
 	 $this->internalData['arrived'] = $db->getTimestampTz();
@@ -127,7 +127,7 @@ class sotf_NodeObject extends sotf_Object {
 	 $count = $db->getOne("SELECT count(*) FROM sotf_object_status WHERE node_id = '$newId'");
 	 if($count > 0)
 		raiseError("THis new node is not new at all: $newId");
-	 $db->query("INSERT INTO sotf_object_status SELECT id, '$newId' AS node_id FROM sotf_node_objects WHERE node_id != '$newId'");
+	 $db->query("INSERT INTO sotf_object_status SELECT id, '$newId' AS node_id FROM sotf_node_objects WHERE node_id != '$newId' OR node_id IS NULL");
 	 $db->commit();
   }
   
