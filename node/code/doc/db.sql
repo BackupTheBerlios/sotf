@@ -1,6 +1,6 @@
 -- -*- tab-width: 3; indent-tabs-mode: 1; -*-
  
---  $Id: db.sql,v 1.42 2003/05/29 06:35:52 andras Exp $
+--  $Id: db.sql,v 1.43 2003/05/29 13:27:53 andras Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -423,6 +423,7 @@ CREATE TABLE "sotf_prog_rating" (
 	"id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
 	"prog_id" varchar(12) NOT NULL,						-- id of programme rated
 	"rating_value" float,									-- value of rating
+	"nodes_only" float,										-- value calculated excluding ratings from portals
 	"alt_value" float,										-- rating calculated in an alternative way XXX
 	"rating_count" int DEFAULT 0,							-- total number of raters	
 	"rating_count_reg" int DEFAULT 0,					-- number of registered raters	
