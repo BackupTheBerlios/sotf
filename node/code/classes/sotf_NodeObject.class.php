@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_NodeObject.class.php,v 1.24 2003/01/31 17:07:05 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.25 2003/02/03 14:32:05 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -54,7 +54,7 @@ class sotf_NodeObject extends sotf_Object {
     parent::update();
     $this->internalData = $this->db->getRow("SELECT * FROM sotf_node_objects WHERE id='$this->id' ");
     if($this->internalData['node_id'] != $nodeId && $this->internalData['node_id'] != 0 )
-      raiseError("Updating a remote object is prohibited");
+      logError("Updating a remote object: " . $this->id);
     $this->internalData['arrived_stamp'] = $sotfVars->get('sync_stamp', 0);
     $this->internalData['arrived'] = $this->db->getTimestampTz();
     $this->internalData['last_change'] = $this->db->getTimestampTz();
