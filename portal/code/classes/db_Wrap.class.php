@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.2 2003/05/30 15:34:51 andras Exp $
+ * $Id: db_Wrap.class.php,v 1.3 2003/06/04 11:50:03 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -144,6 +144,10 @@ class db_Wrap extends DB_pgsql {
 
   function rollback() {
     return $this->query("ROLLBACK");
+  }
+
+  function lockTable($table) {
+    return $this->query("LOCK TABLE $table");
   }
 
 	// just don't forget this...

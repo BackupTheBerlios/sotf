@@ -1,5 +1,5 @@
 
---  $Id: db.sql,v 1.4 2003/05/30 15:34:52 andras Exp $
+--  $Id: db.sql,v 1.5 2003/06/04 11:50:03 andras Exp $
 --
 -- Database definition for portal engine
 --
@@ -30,7 +30,8 @@ CREATE TABLE "portal_users" (
    "name" varchar NOT NULL,
    "password" varchar NOT NULL,
    "email" varchar,
-   "activate" int4
+   "activate" int4,
+   "timestamp" datetime DEFAULT date('now'::datetime) NOT NULL
 );
 
 CREATE TABLE "portal_prglist" (
