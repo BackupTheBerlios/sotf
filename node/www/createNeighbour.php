@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: createNeighbour.php,v 1.6 2003/05/26 13:56:42 andras Exp $
+ * $Id: createNeighbour.php,v 1.7 2003/05/27 09:29:04 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -38,9 +38,11 @@ if($createNew) {
 		}
 		$neighbor = new sotf_Neighbour();
 		$neighbor->set('node_id', $nid);
-		$neighbor->set('use_for_outgoing', 'f');
+		$neighbor->set('use_for_outgoing', 't');
 		$neighbor->set('accept_incoming', 't');
 		$neighbor->set('pending_url', $url);
+		$neighbor->set('errors', '0');
+		$neighbor->set('success', '0');
 		$neighbor->create();
 		$page->redirect("closeAndRefresh.php?anchor=network");
 		exit;

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.19 2003/05/27 07:42:59 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.20 2003/05/27 09:29:03 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -74,7 +74,7 @@ class sotf_Object {
 	 reset($this->data);
 	 while(list($key,$val)=each($this->data)){
 		if($key != $this->idKey) {
-		  if($val === NULL || $val == '') {
+		  if($val === NULL) {
 			 $my_sql[] = $key . " = NULL";
 		  } else {
 			 //dump($val, 'val');
@@ -106,7 +106,7 @@ class sotf_Object {
 	 reset($this->data);
 	 while(list($key,$val)=each($this->data)){
 		$keys[] = $key;
-		if($val === NULL || $val == '') {
+		if($val === NULL) {
 		  $values[] = "NULL";
 		} else {
 		  if(in_array($key, $this->binaryFields)) {
