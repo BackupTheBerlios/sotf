@@ -1,7 +1,7 @@
 <?php
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Neighbour.class.php,v 1.16 2003/01/31 13:04:42 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.17 2003/02/03 14:56:48 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -175,19 +175,23 @@ class sotf_Neighbour extends sotf_Object {
     $remoteId = $this->get('node_id');
     $currentStamp = $sotfVars->get('sync_stamp', 0);
     $lastSyncStamp = $this->lastSyncStamp();
-    $count = sotf_NodeObject::countModifiedObjects($remoteId, $lastSyncStamp);
-    if($chunkInfo['this_chunk'] == $chunkInfo['num_chunks']) {
-      // last chunk: no limits
-      $objectsPerPage = 100000;
-    } else {
-      $objectsPerPage = ceil($count / $chunkInfo['num_chunks']);
-    }
     $chunkInfo['old_stamp'] = $lastSyncStamp;
     $chunkInfo['current_stamp'] = $currentStamp;
-    $from = $objectsPerPage * $chunkInfo['this_chunk'] + 1;
-    debug("chunk info", $chunkInfo);
-    // get new objects to send as reply
-    $objects = sotf_NodeObject::getModifiedObjects($this->get('node_id'), $lastSyncStamp, $from, $objectsPerPage, $updatedObjects);
+    $count = sotf_NodeObject::countModifiedObjects($remoteId, $lastSyncStamp);
+    if($count > 0) {
+      if($chunkInfo['this_chunk'] == $chunkInfo['num_chunks']) {
+        // last chunk: no limits
+        $objectsPerPage = 1000000;
+      } else {
+        $objectsPerPage = ceil($count / $chunkInfo['num_chunks']);
+      }
+      $from = $objectsPerPage * ($chunkInfo['this_chunk'] -1) + 1;
+      debug("chunk info", $chunkInfo);
+      // get new objects to send as reply
+      $objects = sotf_NodeObject::getModifiedObjects($this->get('node_id'), $lastSyncStamp, $from, $objectsPerPage, $updatedObjects);
+    } else {
+      $objects = array();
+    }
     // save time of this sync
     $this->saveSyncStatus($timestamp, $currentStamp);
     return array($chunkInfo, $objects);
