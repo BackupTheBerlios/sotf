@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.24 2003/07/29 08:27:15 andras Exp $
+ * $Id: cron.php,v 1.25 2003/10/15 09:40:30 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -9,6 +9,8 @@
 
 require("init.inc.php");
 require_once($config['classdir'] . "/rpc_Utils.class.php");
+
+excludeRobots();
 
 /** This page has to be called periodically (e.g. using wget) and it
  *  performs all periodic maintenance tasks for the node server
