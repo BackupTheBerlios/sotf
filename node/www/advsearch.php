@@ -1,7 +1,7 @@
 <?php  // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: advsearch.php,v 1.15 2003/05/14 15:30:39 andras Exp $
+ * $Id: advsearch.php,v 1.16 2003/12/12 15:35:56 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -79,7 +79,7 @@ for ($i=0; $i < $max; $i++)			//go through all the values on the form
 	$SQLquery[$i][2] = $SQLeq[$i];
 	if ($SQLquery[$i][4] == "date")
 	{
-		$SQLquery[$i][3] = mktime(0,0,0,$SQLstring[$k],$SQLstring[$k+1],$SQLstring[$k+2]);	//	mktime(0,0,0,$month,$day,$year);
+		$SQLquery[$i][3] = mktime(0,0,0,$SQLstring[$k+1],$SQLstring[$k+2],$SQLstring[$k]);	//	mktime(0,0,0,$month,$day,$year);
 		$k += 2;
 	}
 	elseif ($SQLquery[$i][4] == "length")
