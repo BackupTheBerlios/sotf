@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: sotf_Page.class.php,v 1.36 2003/07/18 14:46:19 andras Exp $
+ * $Id: sotf_Page.class.php,v 1.37 2003/07/21 14:45:44 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -34,7 +34,6 @@ class sotf_Page
 	function sotf_Page()
 	{
 		global $lang, $user, $config, $smarty;
-		global $config, $lang, $smartyDebug;
 
 		// load user data
 		if($_SESSION['currentUserId'])
@@ -55,15 +54,25 @@ class sotf_Page
 			$lang = $_COOKIE['uiLang'];
 		if(!$lang && $this->user)
 			$lang = $this->user->language;
-		if(!in_array($lang, $config['outputLanguages']))
+		debug("LANG1", $lang);
+		// check if this is an allowed language
+		$langOK = false;
+		foreach($config['outputLanguages'] as $oLang) {
+			if($lang == $oLang[0]) {
+				$langOK = true;
+				break;
+			}
+		}
+		if(!$langOK)
 				$lang = ''; // user's language is not allowed yet
+		debug("LANG2", $lang);
 		/*
 			if(!$lang && in_array($_SERVER['HTTP_ACCEPT_LANGUAGE'], $config['outputLanguages']))
 		  $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		*/
 		if(!$lang)
 		  $lang = $config['defaultLanguage'];
-		debug("LANG in Page", $lang);
+		debug("LANG5", $lang);
 
 		// load localization constants for language
 		$this->loadLoc();

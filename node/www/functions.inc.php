@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.13 2003/06/16 16:13:40 andras Exp $
+ * $Id: functions.inc.php,v 1.14 2003/07/21 14:45:44 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -151,6 +151,8 @@ function hasPermPrivate($mixed, $permName) {
 		return $permissions->hasPermission('node', $permName);
 	} else {
 		$obj = & $repository->getObject($mixed);
+		if(!$obj)
+			raiseError("Database inconsistency: no such object: $mixed");
 		$fields = $obj->getAll();
 	}
 	// check perm on the object itself
