@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getFile.php,v 1.15 2005/02/01 10:06:31 micsik Exp $
+ * $Id: getFile.php,v 1.16 2005/02/01 14:17:40 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -10,17 +10,31 @@
 require("init.inc.php");
 
 $filename = sotf_Utils::getParameter('filename');
+if(!$filename)
+  $filename = sotf_Utils::getParameter('f');
 $id = sotf_Utils::getParameter('id');
+$fid = sotf_Utils::getParameter('fid');
 $mainAudio = sotf_Utils::getParameter('audio');
 
-if(empty($id)) {
-  raiseError("Missing parameters!", 'id');
-}
-if(empty($filename)) {
-  raiseError("Missing parameters!", 'filename');
+if(empty($fid)) {
+  if(empty($id)) {
+	 raiseError("Missing parameters!", 'id');
+  }
+  if(empty($filename)) {
+	 raiseError("Missing parameters!", 'filename');
+  }
 }
 
-$prg = $repository->getObject($id);
+if($fid) {
+  $fobj = &$repository->getObject($fid);
+  if(!$fobj)
+	 raiseError("no_such_object", $fid);
+  $prg = $repository->getObject($fobj->get('prog_id'));
+  $mainAudio = $fobj->get('main_content') == 't';
+  $filename = $fobj->get('filename');
+} else {
+  $prg = $repository->getObject($id);
+}
 
 if(!$prg)
   raiseError("no_such_object", $id);
