@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Permission.class.php,v 1.7 2002/11/28 18:31:07 andras Exp $
+// $Id: sotf_Permission.class.php,v 1.8 2002/12/02 19:17:49 andras Exp $
 
 /**
 * This is a class for handling permossions.
@@ -167,19 +167,6 @@ class sotf_Permission
       return NULL;  // not logged in yet
     global $db, $user;
     $retval = $db->getAll("SELECT s.name AS name, s.id AS id FROM sotf_stations s, sotf_user_permissions u, sotf_permissions p WHERE u.user_id = '$user->id' AND u.object_id=s.id AND p.id = u.permission_id AND ( p.permission='add_prog' OR p.permission='admin')");
-    return $retval;
-  }
-
-  /** returns programmes owned/edited by current user */
-  function myProgrammes() {
-		if(!isset($this->currentPermissions))
-      return NULL;  // not logged in yet
-    global $db, $user;
-    $sql = "SELECT p.* FROM sotf_programmes p, sotf_user_permissions u WHERE u.user_id = '$user->id' AND u.object_id=p.id ORDER BY p.entry_date DESC";
-    $plist = $db->getAll($sql);
-    foreach($plist as $item) {
-      $retval[] = new sotf_Programme($item['id'], $item);
-    }
     return $retval;
   }
 

@@ -1,6 +1,6 @@
 <?php 
 //-*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Repository.class.php,v 1.7 2002/11/28 18:31:07 andras Exp $
+// $Id: sotf_Repository.class.php,v 1.8 2002/12/02 19:17:49 andras Exp $
 
 require_once($classdir . '/sotf_NodeObject.class.php');
 require_once($classdir . '/sotf_ComplexNodeObject.class.php');
@@ -103,6 +103,43 @@ class sotf_Repository {
       $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$tid'");
     }
     return $name;
+  }
+
+  function updateTopicCounts() {
+    // calculate counts by topic
+    $this->db->query("DROP TABLE sotf_topics_counter");
+    $this->db->query("SELECT setval('sotf_topics_counter_id_seq', 1, false)");
+    $this->db->query("SELECT nextval('sotf_topics_counter_id_seq') AS id, t.id AS topic_id, count(p.id) AS number, NULL::int AS total INTO sotf_topics_counter FROM sotf_topic_tree_defs t LEFT JOIN sotf_prog_topics p ON t.id = p.topic_id GROUP BY t.id");
+    // calculate totals including subtopic counts
+    $topics = $this->db->getAll("SELECT t.id, supertopic, number FROM sotf_topic_tree_defs t, sotf_topics_counter c WHERE t.id = c.topic_id ");
+    for($i=0; $i<count($topics); $i++) {
+      $this->sumTopics($topics, $i);
+    }
+    for($i=0; $i<count($topics); $i++) {
+      if($topics[$i]['total'] != 0)
+        $this->db->query("UPDATE sotf_topics_counter SET total='" . $topics[$i]['total'] . "' WHERE topic_id='" . $topics[$i]['id'] . "'");
+    }
+    $this->db->query("UPDATE sotf_topics_counter SET total=0 WHERE total IS NULL");
+  }
+
+  /** private recursive function to calculate topic totals including subtopics */
+  function sumTopics(&$topics, $index) {
+    // calculate total for $topics[$index]
+    debug("sumTopics", "$index, " . $topics[$index]['id']);
+    if(isset($topics[$index]['total'])) {
+      // it's already calculated
+      debug("mar kesz", $topics[$index]['total']);
+      return $topics[$index]['total'];
+    }
+    $topicId = $topics[$index]['id'];
+    $total = $topics[$index]['number'];
+    for($i=0; $i<count($topics); $i++) {
+      if($topics[$i]['supertopic'] == $topicId)
+        $total = $total + $this->sumTopics($topics, $i);
+    }
+    $topics[$index]['total'] = $total;
+    debug("szamitva", $topics[$index]['total']);
+    return $topics[$index]['total'];
   }
 
   function getRoleName($id) {

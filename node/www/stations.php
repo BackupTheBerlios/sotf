@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: stations.php,v 1.6 2002/11/26 18:27:01 andras Exp $
+// $Id: stations.php,v 1.7 2002/12/02 19:17:50 andras Exp $
 
 require("init.inc.php");
 $hitsPerPage = $sotfVars->get("hitsPerPage", 15);
@@ -19,9 +19,11 @@ if ($delete and hasPerm('node','delete'))
   $page->redirect($_SERVER["PHP_SELF"]);
 }
 
-// TODO: page splitting in station list!
+$limit = $page->resultspage(sotf_Station::countAll(), "$php_self");
 
-$stations = sotf_Station::listStations($start, $hitsPerPage);
+//$result = $db->limitQuery($query, $limit["from"], $limit["maxresults"]);				//get results with limit
+
+$stations = sotf_Station::listStations($limit["from"] , $limit["maxresults"]);
 
 for($i=0; $i<count($stations); $i++)
 {
