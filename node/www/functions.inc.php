@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: functions.inc.php,v 1.1 2003/02/19 17:06:35 andras Exp $
+ * $Id: functions.inc.php,v 1.2 2003/02/23 17:48:13 andras Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -102,11 +102,23 @@ function noErrors() {
   return empty($page->errors);
 }
 
-// this one is used from smarty to check permissions
-function hasPerm($object, $perm) {
+/** shortcut for permission check: hasPerm(<objectId>, <permName1>, <permName2>, ...)
+will return true if the current user has at least on of the listed permissions for the object.
+Also used in smarty templates to check permissions. */
+function hasPerm($object) {
   global $permissions;
-  return $permissions->hasPermission($object, $perm);
+	$perm_list = func_get_args();
+	for ($i = 1; $i <count($perm_list); $i++) {
+		debug('checking for', $perm_list[$i]);
+		if($permissions->hasPermission($object, $perm_list[$i]))
+			return true;
+	}
+	return false;
 }
 
+function moveUploadedFile($fieldName, $file) {
+  move_uploaded_file($_FILES[$fieldName]['tmp_name'], $file);
+  chmod($file, '0660');
+}
 
 ?>
