@@ -1,6 +1,6 @@
 <?php
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: db_Wrap.class.php,v 1.6 2002/12/19 17:37:10 andras Exp $
+// $Id: db_Wrap.class.php,v 1.7 2002/12/19 17:50:17 andras Exp $
 
 include_once($peardir . '/DB/pgsql.php');
 
@@ -115,7 +115,7 @@ class db_Wrap extends DB_pgsql {
 	function query($query) {
 	  global $sqlDebug;
 	  if($sqlDebug) {
-      $q = substr($query, 0, 250);
+      $q = $query; //substr($query, 0, 250);
 	    debug("DB","Query: $q");
     }
 	  return parent::query($query);
