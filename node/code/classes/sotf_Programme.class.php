@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.63 2003/06/23 14:56:59 andras Exp $
+ * $Id: sotf_Programme.class.php,v 1.64 2003/06/24 14:54:32 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -744,6 +744,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 $newPrg->set('alternative_title', sotf_Programme::normalizeText($metadata['alternative'],255));
 	 $newPrg->set('episode_sequence', sotf_Programme::normalizeText($metadata['episodesequence']));
 	 $newPrg->set('abstract', sotf_Programme::normalizeText($metadata['description']));
+	 $newPrg->set('keywords', sotf_Programme::normalizeText($metadata['keywords']));
 	 
 	 $newPrg->set("production_date", date('Y-m-d', strtotime($metadata['created'])));
 	 $newPrg->set("broadcast_date", date('Y-m-d', strtotime($metadata['issued'])));
