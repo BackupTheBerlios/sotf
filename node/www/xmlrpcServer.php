@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: xmlrpcServer.php,v 1.7 2003/01/31 13:10:18 andras Exp $
+ * $Id: xmlrpcServer.php,v 1.8 2003/02/20 14:07:47 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -22,6 +22,7 @@ ini_set("display_errors", 0);
 debug("--------------- XML-RPC SERVER STARTED -----------------------------------");
 
 $map['sotf.sync'] = array('function' => 'syncResp');
+$map['portal.query'] = array('function' => 'getQueryResults');
 //$map['sotf.allIds'] = array('function' => 'allIds');
 //$map['sotf.getById'] = array('function' => 'getById');
 //$map['sotf.ref'] = array('function' => 'itemReference');
@@ -64,6 +65,19 @@ function syncResp($params) {
   return new xmlrpcresp($retval);
 }
 
+
+function getQueryResults($params)
+{
+	global $classdir, $db;
+	$query = xmlrpc_decode($params->getParam(0));
+	require("$classdir/sotf_AdvSearch.class.php");
+	$advsearch = new sotf_AdvSearch();	//create new search object object with this array
+	$SQLquery = $advsearch->Deserialize($query);		//deserialize the content of the hidden field
+	$query = $advsearch->GetSQLCommand();
+	$results = $db->getAll($query." LIMIT 30 OFFSET 0");
+	$retval = xmlrpc_encode($results);
+	return new xmlrpcresp($retval);
+}
 
 stopTiming();
 $page->logRequest();
