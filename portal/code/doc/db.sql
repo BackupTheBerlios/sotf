@@ -1,5 +1,5 @@
 
---  $Id: db.sql,v 1.6 2003/06/11 07:42:41 andras Exp $
+--  $Id: db.sql,v 1.7 2003/06/18 14:02:38 andras Exp $
 --
 -- Database definition for portal engine
 --
@@ -73,6 +73,8 @@ CREATE TABLE programmes_comments (
 "reply_to" int4 REFERENCES programmes_comments(id),
 "path" varchar,
 "timestamp" timestamp DEFAULT date('now'::timestamp) NOT NULL,
+"ipaddr" varchar(24) NOT NULL,
+"email" varchar(100),
 "title" varchar,
 "comment" varchar,
 "level" int2);
