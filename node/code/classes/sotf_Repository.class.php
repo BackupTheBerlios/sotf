@@ -1,7 +1,7 @@
 <?php 
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: sotf_Repository.class.php,v 1.20 2003/02/26 13:32:56 andras Exp $
+ * $Id: sotf_Repository.class.php,v 1.21 2003/02/28 14:01:52 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -140,15 +140,19 @@ class sotf_Repository {
 
   function getTopicName($topicId) {
     global $lang;
-    $db = $this->db;
-    $name = $db->getOne("SELECT topic_name FROM sotf_topics WHERE topic_id='$topicId' AND language='$lang'");
-    $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$topicId'");
-    debug("tid", "X${tid}X");
-    while($tid != '0') {
-      $n1 = $db->getOne("SELECT topic_name FROM sotf_topics WHERE topic_id='$tid' AND language='$lang'");
-      $name = $n1 . ' / ' . $name;
-      $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$tid'");
+    if($topicId) {
+      $db = $this->db;
+      $name = $db->getOne("SELECT topic_name FROM sotf_topics WHERE topic_id='$topicId' AND language='$lang'");
+      $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$topicId'");
       debug("tid", "X${tid}X");
+      while($tid != '0') {
+        $n1 = $db->getOne("SELECT topic_name FROM sotf_topics WHERE topic_id='$tid' AND language='$lang'");
+        $name = $n1 . ' / ' . $name;
+        $tid = $db->getOne("SELECT supertopic FROM sotf_topic_tree_defs WHERE id='$tid'");
+        debug("tid", "X${tid}X");
+      }
+    } else {
+      $name = '???';
     }
     debug('name', $name);
     return $name;
