@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.56 2003/07/29 13:40:52 andras Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.57 2003/07/29 13:48:28 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -246,6 +246,7 @@ class sotf_NodeObject extends sotf_Object {
 		 }
 	  } else {
 		 debug("arrived new object", $this->id);
+		 $db->begin();
 		 $this->internalData['arrived'] = $db->getTimestampTz();
 		 $internalObj = new sotf_Object('sotf_node_objects', $this->id, $this->internalData);
 		 $internalObj->create();
@@ -253,16 +254,18 @@ class sotf_NodeObject extends sotf_Object {
 		 $changed = sotf_Object::create();
 		 $db->silent = false;
 		 if(!$changed) {
-			$internalObj->delete();
+			// $internalObj->delete(); //not needed because of transaction
 			if(preg_match('/referential integrity violation/', $this->error)) {
 			  debug("normal problem", $this->error);
 			} else {
 			  logError("Could not create object: " . $this->id . " because of " . $this->error);
 			}
+			$db->rollback();
 		 } else {
 			debug("created ", $this->id);
 			$this->addToRefreshTable($this->id, $fromNode);
 			$this->removeFromRefreshTable($this->id, $fromNode);
+			$db->commit();
 		 }
 	  }
 	  // handle deletions
