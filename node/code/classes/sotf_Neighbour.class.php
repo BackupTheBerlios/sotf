@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Neighbour.class.php,v 1.28 2003/05/27 15:52:23 andras Exp $
+ * $Id: sotf_Neighbour.class.php,v 1.29 2003/05/27 16:44:20 andras Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -123,7 +123,6 @@ class sotf_Neighbour extends sotf_Object {
 	 $thisChunk = 1;
 	 // do XML-RPC conversation
 	 $objectsSent = 0;
-	 $objectsReceived = 0;
 	 $more = sotf_NodeObject::countModifiedObjects($remoteId);
 	 if(!$more)
 		debug("No new objects to send");
@@ -136,8 +135,8 @@ class sotf_Neighbour extends sotf_Object {
 								 'objects_remaining' => $more
 								 );
 		debug("chunk info", $chunkInfo);
-		//debug("number of sent objects", count($modifiedObjects));
-		//$objectsSent = $objectsSent + count($modifiedObjects);
+		debug("number of sent objects", count($modifiedObjects));
+		$objectsSent = $objectsSent + count($modifiedObjects);
 		$objs = array($chunkInfo, $modifiedObjects);
 		$response = $rpc->call($url . '/xmlrpcServer.php', 'sotf.sync', $objs);
 		// error handling
@@ -155,22 +154,23 @@ class sotf_Neighbour extends sotf_Object {
 	 }
 
 	 debug("total number of objects sent",$objectsSent );
-	 debug("total number of objects received",$objectsReceived );
 	 //$this->log($console, "number of updated objects: " .count($updatedObjects));
 	 
 	 // save node and neighbour stats
-	 $node = sotf_Node::getLocalNode();
 	 $this->set('success', $this->get('success')+1);
 	 $this->set('last_sync_out', $timestamp);
-	 $node->set('last_sync_out', $timestamp);
+	 $localNode->set('last_sync_out', $timestamp);
 	 // take out from pending nodes
 	 if($this->get('pending_url')) {
-		$this->set('pending_url','');
-		$neis = sotf_Neighbour::listIds();
-		$node->set('neighbours', join(',', $neis));
+		$remoteNode = $sotf_Node::getNodeById($remoteId);
+		// TODO: problem is that if this is first sync or one-way connection, then object fro remote node may not exist
+		if($remoteNode) {
+		  $this->set('pending_url','');
+		}
+		$localNode->set('neighbours', $this->getNeighbourString());
 	 }
 	 $this->update();
-	 $node->update();
+	 $localNode->update();
   }
 
   function syncResponse($chunkInfo, $objects) {
@@ -184,6 +184,8 @@ class sotf_Neighbour extends sotf_Object {
 	 // if db error: don't commit!
 	 $db->commit();
 	 debug("number of updated objects", $updatedObjects);
+	 $replyInfo = array('received' => count($objects),
+							  'updated' => $updatedObjects);
 
 	 if($chunkInfo['objects_remaining'] == 0) {
 		// last chunk,  save node and neighbour stats
@@ -193,16 +195,30 @@ class sotf_Neighbour extends sotf_Object {
 		// take out from pending nodes, update neighbour list
 		if($this->get('pending_url')) {
 		  $this->set('pending_url','');
-		  $neis = sotf_Neighbour::listIds();
-		  $node->set('neighbours', join(',', $neis));
+		  $node->set('neighbours', $this->getNeighbourString());
 		}
 		$this->update();
 		$node->update();
+		//$replyInfo['node'] = $node->getAll();
 	 }
-
-	 $replyInfo = array('received' => count($objects),
-							  'updated' => $updatedObjects);
 	 return array($replyInfo);
+  }
+
+  function getNeighbours() {
+	 $neis = sotf_Neighbour::listAll();
+	 $first = 1;
+	 while(list(,$nei) = each($neis)) {
+		if($first)
+		  $first = 0;
+		else
+		  $retval .= ',';
+		$retval .= $nei->get('node_id');
+		if($nei->getBool('accept_incoming'))
+		  $retval .= 'i';
+		if($nei->getBool('use_for_outgoing'))
+		  $retval .= 'o';
+	 }
+	 return $retval;
   }
 
 }
