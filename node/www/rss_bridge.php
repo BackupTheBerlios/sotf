@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
   /*  
-	* $Id: rss_bridge.php,v 1.1 2005/05/20 11:47:41 wreutz Exp $
+	* $Id: rss_bridge.php,v 1.2 2005/05/20 13:46:10 wreutz Exp $
 	*      based on podcast.php,v 1.2 2005/02/01 14:17:41 micsik Exp $
 	* Authors: András Micsik
 	*          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -160,7 +160,7 @@ $fromDay = date('Y-m-d', $dayInThePast);
 
 // prepare RSS writer
 $rss = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-$rss .= "<rss version=\"2.0\" xmlns:sotf=\"http://sotf.sourceforge.net/rss/2.0/modules/sotf\" xlmns:dc=\"http://purl.org/dc/elements/1.1/\">";
+$rss .= "<rss version=\"2.0\" xmlns:sotf=\"http://sotf.sourceforge.net/rss/2.0/modules/sotf\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">";
 
 // do the job, fill in RSS
 if($prgId) { //************************* PROGRAMME ********************************
