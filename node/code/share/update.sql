@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---  $Id: update.sql,v 1.9 2005/01/06 10:22:50 micsik Exp $
+--  $Id: update.sql,v 1.10 2005/05/24 10:29:52 micsik Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -199,3 +199,7 @@ ALTER TABLE "sotf_stations" ADD "id2" varchar (50);
 
 ALTER TABLE "sotf_deletions" ADD "del_time" timestamptz;
 
+-- 2005-05-04
+
+DROP INDEX "sotf_media_files_u";
+CREATE INDEX "sotf_media_files_f" ON "sotf_media_files"("filename");
