@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---	 $Id: db.sql,v 1.13 2005/01/06 10:22:50 micsik Exp $
+--	 $Id: db.sql,v 1.14 2005/05/27 16:51:03 micsik Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -135,7 +135,6 @@ CREATE SEQUENCE "sotf_stations_seq";
 CREATE TABLE "sotf_stations" (
 -- REPLICATED 
 "id" varchar(12) PRIMARY KEY REFERENCES sotf_node_objects(id) ON DELETE CASCADE,
-"id2" varchar(50),                    -- currently not used
 "name" varchar(60) NOT NULL,
 "description" text,
 "url" varchar(100),										-- URL for radio station website, if any
