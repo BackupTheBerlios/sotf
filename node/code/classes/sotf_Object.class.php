@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.35 2003/09/29 15:43:23 andras Exp $
+ * $Id: sotf_Object.class.php,v 1.36 2005/05/27 15:09:50 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -442,9 +442,9 @@ class sotf_Object {
 	/** static */
 	function doUpdates() {
 		global $db, $repository;
-		$db->begin(true);
 		$list = $db->getAll("SELECT * FROM sotf_to_update");
 		while(list(,$item) = each($list)) {
+			$db->begin(true);
 			$tablename = $item['tablename'];
 			$rowId = $item['row_id'];
 			debug("to_update", "$tablename, $rowId");
@@ -467,8 +467,8 @@ class sotf_Object {
 				logError("Unknown to_update type: " . $tablename);
 			}
 			$db->query("DELETE FROM sotf_to_update WHERE tablename='$tablename' AND row_id='$rowId'");
+			$db->commit();
 		}
-		$db->commit();
 	}
 
   /**
