@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
   /*  
-	* $Id: podcast.php,v 1.2 2005/02/01 14:17:41 micsik Exp $
+	* $Id: podcast.php,v 1.3 2005/06/22 09:09:33 wreutz Exp $
 	* Authors: András Micsik
 	*          at MTA SZTAKI DSD, http://dsd.sztaki.hu
 	*/
@@ -62,7 +62,7 @@ function selectAudio(&$prg) {
 		//$f['url'] = $config['rootUrl'] . '/getFile.php/' . $f['filename'] . '?audio=1&id=' . $prg->id . '&filename=' . $f['filename'];
 		//$f['url'] = $config['rootUrl'] . '/getFile.php?audio=1&id=' . $prg->id . '&filename=' . $f['filename'];
 		$baseUrl = sotf_Node::getHomeNodeRootUrl($prg);
-		$f['url'] = $baseUrl . '/getFile.php/fid__' . $f['id'];
+		$f['url'] = $baseUrl . '/getFile.php/fid__' . $f['id'].".mp3"; // wreutz: very dirty hack for ipooder to work on os x
 		return $f;
 	 }
   }
