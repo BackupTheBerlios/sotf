@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.57 2005/02/01 14:17:40 micsik Exp $
+ * $Id: init.inc.php,v 1.58 2005/06/22 11:06:11 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -246,7 +246,7 @@ $vocabularies = new sotf_Vocabularies($db);
 $smarty->assign("NODEID", $config['nodeId']);
 $smarty->assign("NODE_NAME", $config['nodeName']);
 $smarty->assign("ROOT_URL", $config['rootUrl']);
-//$smarty->assign("ROOT_URL", $config['localPrefix']);
+$smarty->assign("ROOT_PREFIX", $config['localPrefix']);
 $smarty->assign("IMAGE_URL", $config['imageUrl']);
 $smarty->assign("CACHE_URL", $config['cacheUrl']);
 $smarty->assign("PHP_SELF", mygetenv('PHP_SELF'));
