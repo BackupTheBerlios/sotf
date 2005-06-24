@@ -25,7 +25,7 @@
  * @package Smarty
  */
 
-/* $Id: Config_File.class.php,v 1.1 2005/06/22 13:18:23 wreutz Exp $ */
+/* $Id: Config_File.class.php,v 1.2 2005/06/24 19:24:03 wreutz Exp $ */
 
 /**
  * Config file reading class
