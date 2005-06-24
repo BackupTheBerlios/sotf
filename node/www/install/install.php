@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: install.php,v 1.29 2005/06/22 13:18:22 wreutz Exp $
+ * $Id: install.php,v 1.30 2005/06/24 18:43:24 wreutz Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -774,7 +774,8 @@ if ($install_createdb)			//if create node db button pressed
 			 $install_color[$id] = $install_green;
 		  }
 	}
-	print('fertig');
+
+
 PrintTitle($id);
 print('<DIV ALIGN="center"><BR />
 	<INPUT type="submit" name="delete_topic" value="Delete vocabularies">
