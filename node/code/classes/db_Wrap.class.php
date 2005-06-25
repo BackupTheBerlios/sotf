@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.24 2004/02/27 17:53:12 micsik Exp $
+ * $Id: db_Wrap.class.php,v 1.25 2005/06/25 23:03:20 wreutz Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -83,7 +83,7 @@ class db_Wrap extends DB_pgsql {
   function formatTZ($sec) {
     $h = intval($sec/3600);
     $m = sprintf('%02d',abs(intval(($sec-$h*3600)/60)));
-    if($h{0} != '-')
+    if($h >= 0)
       $h = "+$h";
     return "$h:$m";
   }

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap_mysql.class.php,v 1.1 2003/12/01 12:45:59 andras Exp $
+ * $Id: db_Wrap_mysql.class.php,v 1.2 2005/06/25 23:03:20 wreutz Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: Wolfgang Reutz
@@ -90,7 +90,7 @@ class db_Wrap_mysql extends DB_mysql {
   function formatTZ($sec) {
     $h = intval($sec/3600);
     $m = sprintf('%02d',abs(intval(($sec-$h*3600)/60)));
-    if($h{0} != '-')
+    if($h >= 0)
       $h = "+$h";
     return "$h:$m";
   }
