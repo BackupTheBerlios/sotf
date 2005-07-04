@@ -1,6 +1,6 @@
 -- -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
---  $Id: update.sql,v 1.11 2005/05/27 16:51:03 micsik Exp $
+--  $Id: update.sql,v 1.12 2005/07/04 21:52:16 wreutz Exp $
 --
 -- Created for the StreamOnTheFly project (IST-2001-32226)
 -- Author: András Micsik at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -200,3 +200,7 @@ ALTER TABLE "sotf_deletions" ADD "del_time" timestamptz;
 
 DROP INDEX "sotf_media_files_u";
 CREATE INDEX "sotf_media_files_f" ON "sotf_media_files"("filename");
+
+-- 2005-07-04
+-- removed default of now + 56 days for expiry_date in sotf_programmes
+ALTER TABLE sotf_programmes ALTER COLUMN expiry_date DROP DEFAULT;

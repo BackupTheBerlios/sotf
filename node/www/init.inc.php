@@ -1,13 +1,24 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.58 2005/06/22 11:06:11 micsik Exp $
+ * $Id: init.inc.php,v 1.59 2005/07/04 21:52:16 wreutz Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
 	//	echo "<h3>Karbantartás miatt pár percig zárva.</h3><h3>Sorry, the server is currently under maintenance. Please try again later.</h3>"; exit;
+
+//////////////////////////////////////////////////////////////////////////
+// wreutz: added domxml wrapper for PHP5
+//         todo: implement PHP5 dom to replace PHP4 domxml
+//               build a switch based on PHP version for both implementations
+
+
+if (version_compare(PHP_VERSION,'5','>='))
+ require_once('domxml-php4-to-php5.php'); //Load the PHP5 converter
+ 
+//////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
 require_once('functions.inc.php');
