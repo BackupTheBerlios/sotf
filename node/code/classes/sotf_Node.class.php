@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_Node.class.php,v 1.19 2005/02/01 10:06:18 micsik Exp $
+ * $Id: sotf_Node.class.php,v 1.20 2005/07/07 09:56:25 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -158,13 +158,13 @@ class sotf_Node extends sotf_NodeObject {
 	 $updatedObjects = sotf_NodeObject::saveForwardObjects($objects);
 	 // if db error: don't commit!
 	 $db->commit();
-	 debug("number of updated objects", $updatedObjects);
+	 debug("number of processed forward objects", $updatedObjects);
 	 $replyInfo = array('received' => count($objects),
 							  'updated' => $updatedObjects);
 
 	 if($chunkInfo['objects_remaining'] == 0) {
 		// last chunk, do something useful!!
-		sotf_Object::doUpdates();
+		//temporarily taken out sotf_Object::doUpdates();
 	 }
 	 return array($replyInfo);
   }

@@ -1,7 +1,7 @@
 <?php					// -*-c++-*-
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpc.inc,v 1.7 2004/03/11 12:08:03 micsik Exp $
+// $Id: xmlrpc.inc,v 1.8 2005/07/07 09:56:34 micsik Exp $
 
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
@@ -438,10 +438,14 @@
 		var $verifypeer=1;
 		var $verifyhost=1;
 		var $no_multicall=false;
+	  var $connTimeout;
+	  var $recvTimeout;
 
-		function xmlrpc_client($path, $server, $port=0)
+	  function xmlrpc_client($path, $server, $port=0, $cTimeout=0, $rTimeout=0)
 		{
 			$this->port=$port; $this->server=$server; $this->path=$path;
+			$this->connTimeout = $cTimeout;
+			$this->recvTimeout = $rTimeout;
 		}
 
 		function setDebug($in)
@@ -513,6 +517,8 @@
 			{
 				$port=80;
 			}
+			if(!$timeout)
+			  $timeout = $this->connTimeout;
 			if($timeout>0)
 			{
 				$fp=fsockopen($server, $port,$this->errno, $this->errstr, $timeout);
@@ -527,6 +533,11 @@
 				$r=new xmlrpcresp(0, $xmlrpcerr['http_error'],$xmlrpcstr['http_error']);
 				return $r;
 			}
+			if($this->recvTimeout > 0)
+			  if(!socket_set_timeout($fp, $this->recvTimeout)) 
+			    logError("could not set socket timeout");
+			//alternative way: socket_set_option($fp, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>$timeout, "usec"=>0));
+
 			// Only create the payload if it was not created previously
 			if(empty($msg->payload))
 			{

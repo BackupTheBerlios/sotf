@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.36 2005/05/27 15:09:50 micsik Exp $
+ * $Id: sotf_Object.class.php,v 1.37 2005/07/07 09:56:25 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -442,6 +442,7 @@ class sotf_Object {
 	/** static */
 	function doUpdates() {
 		global $db, $repository;
+		debug("object updates started");
 		$list = $db->getAll("SELECT * FROM sotf_to_update");
 		while(list(,$item) = each($list)) {
 			$db->begin(true);
@@ -469,6 +470,7 @@ class sotf_Object {
 			$db->query("DELETE FROM sotf_to_update WHERE tablename='$tablename' AND row_id='$rowId'");
 			$db->commit();
 		}
+		debug("object updates finished");
 	}
 
   /**
