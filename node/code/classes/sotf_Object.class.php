@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.37 2005/07/07 09:56:25 micsik Exp $
+ * $Id: sotf_Object.class.php,v 1.38 2005/07/15 13:17:12 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -103,10 +103,20 @@ class sotf_Object {
 	 if(DB::isError($res)){
 		raiseError($res);
 	 }
-	 $this->changed = false;
-	 
-	 // mark if this change requires a refresh in the metadata.xml file
-	 $this->markParentToUpdate();
+
+	 //$count = $db->affectedRows();
+	 $count = $res;
+
+	 if($count > 1)
+		 logError("This updated more objects", $count);
+	 if($count < 1)
+		 logError("Update failed", $count);
+	 if($count==1) {
+		 $this->changed = false;
+		 // mark if this change requires a refresh in the metadata.xml file
+		 $this->markParentToUpdate();
+	 }
+	 return $count;
   }
 
   /** creates db record with all fields from 'data' */

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.61 2005/04/06 14:55:12 micsik Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.62 2005/07/15 13:17:11 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -223,7 +223,11 @@ class sotf_NodeObject extends sotf_Object {
 		 if($this->internalData['change_stamp'] && $this->internalData['change_stamp'] > $oldData['change_stamp']) {
 			// this is newer, save it
 			debug("arrived newer version of", $this->id);
-			sotf_Object::update();
+			$changed = sotf_Object::update();
+			if(!$changed) {
+			  $changed = sotf_Object::create();
+			  logger("WARNING: Object $this->id did not exist, so created!!!", $change);
+			}
 			// save internal data
 			$this->internalData['arrived'] = $db->getTimestampTz();
 			$internalObj = new sotf_Object('sotf_node_objects', $this->internalData['id'], $this->internalData);
@@ -238,7 +242,6 @@ class sotf_NodeObject extends sotf_Object {
 			debug("updated ", $this->id);
 			$this->addToRefreshTable($this->id, $fromNode);
 			$this->removeFromRefreshTable($this->id, $fromNode);
-			$changed = true;
 		 } elseif($this->internalData['change_stamp'] == $oldData['change_stamp']) {
 			debug("arrived same version of", $this->id);
 			$this->removeFromRefreshTable($this->id, $fromNode);
