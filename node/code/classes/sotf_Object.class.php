@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
 /*	
- * $Id: sotf_Object.class.php,v 1.38 2005/07/15 13:17:12 micsik Exp $
+ * $Id: sotf_Object.class.php,v 1.39 2005/07/15 14:15:47 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -116,7 +116,7 @@ class sotf_Object {
 		 // mark if this change requires a refresh in the metadata.xml file
 		 $this->markParentToUpdate();
 	 }
-	 return $count;
+	 return ($count==1);
   }
 
   /** creates db record with all fields from 'data' */
