@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: getFile.php,v 1.17 2005/06/22 09:09:33 wreutz Exp $
+ * $Id: getFile.php,v 1.18 2005/07/23 09:34:20 wreutz Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -74,12 +74,7 @@ if ($file->type != "none")
 	// send file
 	
 	// wreutz: added this to get rid of fid_123mf12 filename and save as the real filename of the file
-	$user_agent = strtolower ($_SERVER["HTTP_USER_AGENT"]);
-    if ((is_integer (strpos($user_agent, "msie"))) && (is_integer (strpos($user_agent, "win")))) {
-        header( "Content-Disposition: filename=".basename($filename).";\n" );
-    } else {
-        header( "Content-Disposition: attachment; filename=".basename($filename).";\n" );
-    }
+    header( "Content-Disposition: filename=".basename($filename).";\n" );
     // wreutz: end
 
 	readfile($filename);
