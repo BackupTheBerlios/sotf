@@ -1,13 +1,14 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.59 2005/07/04 21:52:16 wreutz Exp $
+ * $Id: init.inc.php,v 1.60 2005/08/11 15:11:27 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
  */
 
-	//	echo "<h3>Karbantartás miatt pár percig zárva.</h3><h3>Sorry, the server is currently under maintenance. Please try again later.</h3>"; exit;
+//echo "<h3>Sorry, the server is currently under maintenance. Please try again tomorrow.</h3>
+// <h3>Karbantartás miatt mai nap zárva.</h3>"; exit;
 
 //////////////////////////////////////////////////////////////////////////
 // wreutz: added domxml wrapper for PHP5

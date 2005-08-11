@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_Programme.class.php,v 1.86 2005/07/04 21:52:12 wreutz Exp $
+ * $Id: sotf_Programme.class.php,v 1.87 2005/08/11 15:11:26 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -83,7 +83,7 @@ class sotf_Programme extends sotf_ComplexNodeObject {
 	 $db->begin();
 	 // TODO may need some locking to get unique track id
 	 $container = & $repository->getObject($stationOrSeriesId);
-	 echo get_class($container);
+	 // echo get_class($container);
 	 switch(strtolower(get_class($container))) {
 	 case 'sotf_series':
 		$this->set('series_id', $container->id);

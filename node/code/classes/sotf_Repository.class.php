@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.56 2005/07/15 13:17:12 micsik Exp $
+/* $Id: sotf_Repository.class.php,v 1.57 2005/08/11 15:11:26 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -311,6 +311,39 @@ class sotf_Repository {
       logError("unknown portal event: " . $event['name']);
     }
   }
+
+  /************************************************
+   *      MAINTENANCE
+	 *
+	 * This is rarely needed, but with some old postgres, cascading deletes may have problems.
+	 * Not complete, partial solution, to be finished.
+   ************************************************/
+
+	function cleanTables($test = false) {
+		$data = $this->db->getAll("select r.* from sotf_prog_refs r left join sotf_programmes p on (r.prog_id=p.id) where p.id is null");
+		$this->cleanOrphans('sotf_prog_refs', $data, 'prog_id', $test);
+		$data = $this->db->getAll("select r.* from sotf_media_files r left join sotf_programmes p on (r.prog_id=p.id) where p.id is null");
+		$this->cleanOrphans('sotf_media_files', $data, 'prog_id', $test);
+
+
+	}
+
+	function cleanOrphans($table, $rows, $ref, $test) {
+		while(list(,$row) = each($rows)) {
+			//debug("ROW", $row);
+			$id = $row['id'];
+			$refId = $row[$ref];
+			$obj = &$this->getObjectNoCache($refId);
+			if(!$obj) {
+				if($test)
+					logger("DELETE FROM $table WHERE id='$id'");
+				else
+					$this->db->query("DELETE FROM $table WHERE id='$id'");
+			} else {
+				logError("$id cannot be deleted: $refId still exists?");
+			}
+		}
+	}
 
 }
 
