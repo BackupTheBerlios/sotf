@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /* 
- * $Id: sotf_NodeObject.class.php,v 1.62 2005/07/15 13:17:11 micsik Exp $
+ * $Id: sotf_NodeObject.class.php,v 1.63 2005/08/29 08:32:20 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -223,10 +223,15 @@ class sotf_NodeObject extends sotf_Object {
 		 if($this->internalData['change_stamp'] && $this->internalData['change_stamp'] > $oldData['change_stamp']) {
 			// this is newer, save it
 			debug("arrived newer version of", $this->id);
-			$changed = sotf_Object::update();
-			if(!$changed) {
+			$oldObj = $repository->getObjectNoCache($this->id);
+			if(!$oldObj) {
+			  debug("creating, because object did not exist...");
 			  $changed = sotf_Object::create();
-			  logger("WARNING: Object $this->id did not exist, so created!!!", $change);
+			} else {
+			  $changed = sotf_Object::update();
+			}
+			if(!$changed) {
+			  logger("WARNING: Object creation failed ($this->id)!!!", $change);
 			}
 			// save internal data
 			$this->internalData['arrived'] = $db->getTimestampTz();

@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*-
 
-/* $Id: sotf_Repository.class.php,v 1.57 2005/08/11 15:11:26 micsik Exp $
+/* $Id: sotf_Repository.class.php,v 1.58 2005/08/29 08:32:20 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -322,8 +322,15 @@ class sotf_Repository {
 	function cleanTables($test = false) {
 		$data = $this->db->getAll("select r.* from sotf_prog_refs r left join sotf_programmes p on (r.prog_id=p.id) where p.id is null");
 		$this->cleanOrphans('sotf_prog_refs', $data, 'prog_id', $test);
+
+		$data = $this->db->getAll("select r.* from sotf_prog_stats r left join sotf_programmes p on (r.prog_id=p.id) where p.id is null");
+		$this->cleanOrphans('sotf_prog_stats', $data, 'prog_id', $test);
+
 		$data = $this->db->getAll("select r.* from sotf_media_files r left join sotf_programmes p on (r.prog_id=p.id) where p.id is null");
 		$this->cleanOrphans('sotf_media_files', $data, 'prog_id', $test);
+
+		$data = $this->db->getAll("select r.* from sotf_rights r left join sotf_programmes p on (r.prog_id=p.id) where p.id is null");
+		$this->cleanOrphans('sotf_rights', $data, 'prog_id', $test);
 
 
 	}
