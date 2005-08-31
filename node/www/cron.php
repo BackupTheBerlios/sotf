@@ -1,6 +1,6 @@
 <?php
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: cron.php,v 1.30 2005/05/27 15:10:03 micsik Exp $
+ * $Id: cron.php,v 1.31 2005/08/31 12:09:02 micsik Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
@@ -36,6 +36,10 @@ line("CRON STARTED");
 set_time_limit(18000);
 // don't garble reply message with warnings in HTML
 //ini_set("display_errors", 0);
+
+//******** cascading deletes may have problems.
+
+  //$repository->cleanTables();
 
 //******** Perform expensive updates on objects
 

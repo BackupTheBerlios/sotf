@@ -1,6 +1,6 @@
 <?php 
 // -*- tab-width: 3; indent-tabs-mode: 1; -*-
-// $Id: sotf_Blob.class.php,v 1.7 2004/05/24 11:36:42 micsik Exp $
+// $Id: sotf_Blob.class.php,v 1.8 2005/08/31 12:09:02 micsik Exp $
 
 /**
 * @author Andras Micsik - micsik@sztaki.hu
@@ -90,8 +90,11 @@ class sotf_Blob extends sotf_NodeObject {
         return true;
       else {
 	debug("cached icon of $id expired");
-	if(!unlink($fname))
-	  logError("Could not delete $fname");
+	if(!unlink($fname)) {
+	  clearstatcache();
+	  if(file_exists($fname))
+	    logError("Could not delete $fname");
+	}
       }
     }
     $icon = sotf_Blob::findBlob($id, 'icon');

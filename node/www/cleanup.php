@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: cleanup.php,v 1.1 2005/08/29 08:34:03 micsik Exp $
+ * $Id: cleanup.php,v 1.2 2005/08/31 12:09:02 micsik Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -22,7 +22,9 @@ checkPerm('node', "change");
 
 <?php
 
-$config['debug_type'] = 'now';
+ //$config['debug_type'] = 'now';
+
+set_time_limit(18000);
 
 $repository->cleanTables();
 
