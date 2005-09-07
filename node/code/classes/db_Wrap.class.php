@@ -1,6 +1,6 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 /*  -*- tab-width: 3; indent-tabs-mode: 1; -*-
- * $Id: db_Wrap.class.php,v 1.25 2005/06/25 23:03:20 wreutz Exp $
+ * $Id: db_Wrap.class.php,v 1.26 2005/09/07 17:02:58 xir Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 

@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 2; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: init.inc.php,v 1.60 2005/08/11 15:11:27 micsik Exp $
+ * $Id: init.inc.php,v 1.61 2005/09/07 17:02:58 xir Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -126,6 +126,7 @@ $config['sqlDSN'] = 'pgsql://' . $config['nodeDbUser'] . ':' . $config['nodeDbPa
 debug("sqlDSN", $config['sqlDSN']);
 
 $db = new db_Wrap;
+
 $db->debug = $config['debug'];
 $success = $db->makeConnection($config['sqlDSN'], false, 'node');
 if (DB::isError($success))
