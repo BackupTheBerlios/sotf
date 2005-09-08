@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: manageFiles.php,v 1.5 2003/03/05 09:11:40 andras Exp $
+ * $Id: manageFiles.php,v 1.6 2005/09/08 10:21:44 xir Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -18,12 +18,21 @@ $page->forceLogin();
 
 // upload to my files
 $upload = sotf_Utils::getParameter('upload');
+
+//-------- mod by buddhafly/wolfi_fhstp 05-08-31
 if($upload) {
-  $file =  $user->getUserDir() . '/' . $_FILES['userfile']['name'];
+  $userDir =  $user->getUserDir() . '/';
+  $filename=$_FILES['userfile']['name'];
+  $extension = substr($filename, strrpos($filename, '.') +1);
+  $restname = substr($filename, 0, (-1*(strlen($extension)+1)));
+  $newname = convert_special_chars(utf8_decode($restname)); //UTF-Module for PHP REQUIRED!!!
+  $file = $userDir . $newname . "." . $extension;
+
   moveUploadedFile('userfile',  $file);
   $page->redirect("manageFiles.php");
   exit;
 }
+//---------
 
 // delete files
 $del = sotf_Utils::getParameter('del');

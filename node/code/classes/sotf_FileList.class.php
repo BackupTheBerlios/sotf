@@ -4,6 +4,8 @@ require_once($config['getid3dir'] . "/getid3.php");
 require_once("sotf_File.class.php");
 require_once("sotf_AudioFile.class.php");
 
+// $Id: sotf_FileList.class.php,v 1.7 2005/09/08 10:23:58 xir Exp $
+
 /**
 * This is a class for handling list of files.
 *
@@ -120,8 +122,26 @@ class sotf_FileList
 			if ($handle = opendir($path))
 			{
         while (false !== ($filename = readdir($handle))) {
-          if(!$prefix || preg_match("/^$prefix/", $filename))
-            $this->add($path . '/' . $filename);
+          if(!$prefix || preg_match("/^$prefix/", $filename))			
+		  
+		  	// START ----- added by buddhafly 05-08-30
+			if(!preg_match('/^\./', $filename)){
+
+				 $extension = substr($filename, strrpos($filename, '.') +1);
+
+               		 $restname = substr($filename, 0, (-1*(strlen($extension)+1)));
+               		 
+               		 
+               		$newname = convert_special_chars($restname);
+
+				$newname .= "." . $extension;
+ 
+				rename($path . '/' . $filename, $path . '/' . $newname);
+				$filename = $newname;
+			}
+			// END ------- added by buddhafly 05-08-30
+			
+			$this->add($path . '/' . $filename);
         }
         closedir($handle); 
 				$retval = true;
