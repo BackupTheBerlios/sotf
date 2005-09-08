@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*- 
 
 /*  
- * $Id: editContact.php,v 1.15 2003/06/16 16:13:40 andras Exp $
+ * $Id: editContact.php,v 1.16 2005/09/08 10:13:40 xir Exp $
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri 
  *          at MTA SZTAKI DSD, http://dsd.sztaki.hu
@@ -65,7 +65,11 @@ $uploadicon = sotf_Utils::getParameter('uploadicon');
 if($uploadicon) {
   $file =  $user->getUserDir() . '/' . $_FILES['userfile']['name'];
   moveUploadedFile('userfile',  $file);
-  $contact->setIcon($file);
+  
+  //----- change from wolfi_fhstp (change person icons to 50x50)
+  $contact->setIcon($file, true);
+  //----------------------------------------------------------- 
+  
   $page->redirect("editContact.php?id=$contactId#icon");
   exit;
 }
@@ -95,14 +99,18 @@ $seticon = sotf_Utils::getParameter('seticon');
 if($seticon) {
   $filename = sotf_Utils::getParameter('filename');
   $file =  sotf_Utils::getFileInDir($user->getUserDir(), $filename);
-  if ($contact->setIcon($file)) {
+  
+  //----- change from wolfi_fhstp (change person icons to 50x50)
+  if ($contact->setIcon($file, true)) {
     //$page->addStatusMsg("icon_ok");
   } else {
     $page->addStatusMsg("icon_error");
   }
   $page->redirect("editContact.php?id=$contactId#icon");
 }
-
+  //---------------------------------------------------------------
+  
+  
 // general data
 $smarty->assign('CONTACT_DATA',$contact->getAllForHTML());
 
