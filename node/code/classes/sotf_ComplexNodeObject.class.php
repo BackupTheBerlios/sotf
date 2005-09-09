@@ -1,7 +1,7 @@
 <?php // -*- tab-width: 3; indent-tabs-mode: 1; -*-
 
 /*
- * $Id: sotf_ComplexNodeObject.class.php,v 1.36 2005/09/08 10:12:59 xir Exp $
+ * $Id: sotf_ComplexNodeObject.class.php,v 1.37 2005/09/09 14:35:51 xir Exp $
  *
  * Created for the StreamOnTheFly project (IST-2001-32226)
  * Authors: András Micsik, Máté Pataki, Tamás Déri
@@ -283,12 +283,13 @@ class sotf_ComplexNodeObject extends sotf_NodeObject {
 	/**
 	* Sets icon for object.
 	*
+  * @internal change person icons to 50x50 done by wofli_fhsp and buddafly
 	* @param	object	$file	pathname of file
 	* @return	boolean	True if the function succeeded, else false
 	*/
-	//----- change from wolfi_fhstp and buddhafly (change person icons to 50x50)
 	function setIcon($file, $ispersonicon = false)
 	{
+    // change from wolfi_fhstp and buddhafly (change person icons to 50x50)
 		global $config;
 		$tmpfile = $config['tmpDir'].'/'.time().".png";
 		if($ispersonicon) {
